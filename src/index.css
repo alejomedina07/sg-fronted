@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    /*font-family: "Poppins", sans-serif!important;*/
+    background-color: #fafafb!important;
+}
+#root {
+    max-width: 100%;
+    text-align: start;
+}
+
+.MuiButtonBase-root {
+    text-transform: capitalize!important;
+}

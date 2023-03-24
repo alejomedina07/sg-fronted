@@ -1,0 +1,17 @@
+{
+  "semi": false,
+  "tabWidth": 2,
+  "printWidth": 100,
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": ["**/*.css", "**/*.scss", "**/*.json"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ],
+  "trailingComrma": "all",
+  "jsxSingleQuote": true,
+  "bracketSpacing": true
+}
