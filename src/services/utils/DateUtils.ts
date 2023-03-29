@@ -1,4 +1,4 @@
-import moment from 'moment';
+// import moment from 'moment';
 
 // moment.locale('es', {
 //   months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
@@ -39,7 +39,8 @@ class DateUtils {
       return '';
     }
 
-    return moment(date).format(format);
+    // return moment(date).format(format);
+    return date;
   }
 
   /**

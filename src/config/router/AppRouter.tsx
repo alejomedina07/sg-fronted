@@ -11,7 +11,8 @@ export const AppRouter = () => {
 
   return (
     <>
-      { (authenticated) ? <AdminRoutes/> : <PublicRoutes/> }
+      <AdminRoutes/>
+      {/* { (authenticated) ? <AdminRoutes/> : <PublicRoutes/> } */}
     </>
   );
 }

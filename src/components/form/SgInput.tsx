@@ -9,7 +9,7 @@ const FORM_ELEMENT_TYPE = {
 }
 
 export const SgInput = (props: any) => {
-  const {control, errors, name, label, onChange, required = false, size = "small", type = FORM_ELEMENT_TYPE.TEXT, ...rest} = props
+  const {control, errors, name, label, onChange, required = false, size = "small", type = FORM_ELEMENT_TYPE.TEXT, rows, ...rest} = props
   const onValueChange = (e:any, field: any) => {
 
     if(type === FORM_ELEMENT_TYPE.NUMBER || type === FORM_ELEMENT_TYPE.DECIMAL) {
@@ -43,6 +43,8 @@ export const SgInput = (props: any) => {
           {...rest}
           {...field}
           size={size}
+          multiline={rows}
+          rows={rows || 1}
           label={required ? `${label}*` : label}
           onChange={(e) => onValueChange(e, field)}
           fullWidth

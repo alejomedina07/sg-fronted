@@ -20,6 +20,9 @@ export const appointmentApi = createApi({
         return rawResult.data.map( (item: AppointmentDto) => AppointmentModel(item) )
       },
     }),
+    getAppointmentType: build.query({
+      query: ( )=> '/appointment/type',
+    }),
     addAppointment: build.mutation<any, any>({
       query: ( body: any ) => ({
         url:'/appointment',
@@ -32,5 +35,5 @@ export const appointmentApi = createApi({
 
 })
 
-export const { useGetAppointmentsQuery, useAddAppointmentMutation } = appointmentApi;
+export const { useGetAppointmentsQuery, useGetAppointmentTypeQuery, useAddAppointmentMutation } = appointmentApi;
 

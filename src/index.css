@@ -14,3 +14,7 @@ body {
 .MuiButtonBase-root {
     text-transform: capitalize!important;
 }
+
+.react-datepicker-popper {
+    z-index: 10!important;
+}

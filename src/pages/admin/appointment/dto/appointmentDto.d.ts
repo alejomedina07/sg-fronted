@@ -13,7 +13,7 @@ interface AppointmentDto {
   description?:string | null
   name:string
   duration:number
-  date:Date
+  date:Date | null
   createdAt?:Date | string
   id?:number
   appointmentType?: AppointmentType | null

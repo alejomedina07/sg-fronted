@@ -10,7 +10,7 @@ export default function AppointmentModel( data: AppointmentDto ): AppointmentEve
     appointment: AppointmentDtoModel(data),
     // start: parseISO( `${data.date}` ),
     start: managerDate.transformStringToDate( `${data.date}` ),
-    end: addMinutes( parseISO(`${data.date}`), 30 )
+    end: addMinutes( parseISO(`${data.date}`), data.duration )
   }
 }
 

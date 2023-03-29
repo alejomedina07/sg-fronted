@@ -12,8 +12,6 @@ export const AdminRoutes = () => {
   return (
     <Routes>
       <Route path='admin' element={ <ProtectedRoute> <Admin /> </ProtectedRoute> }>
-        {/* <Route path='users' element={<ListUser />} /> */}
-
         <Route path='users'>
           <Route path='' element={<ListUser />} />
           <Route path='create' element={<FormUser />} />

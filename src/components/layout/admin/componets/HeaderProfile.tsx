@@ -24,14 +24,14 @@ export const HeaderProfile = () => {
   return (
     <Grid item>
       <Grid container direction='row' alignItems='center'>
-        <div> Hola: {`${ userConnected.firstName }  ${ userConnected.lastName }` || 'Usuario'} </div>
+        <div> Hola: {`${ userConnected?.firstName || '' }  ${ userConnected?.lastName || '' }` || 'Usuario'} </div>
         <div>
           <IconButton
             aria-label="more" id="long-button"
             aria-controls={open ? 'long-menu' : undefined}
             aria-expanded={open ? 'true' : undefined}
             aria-haspopup="true" onClick={handleClick}>
-            <Avatar>{ userConnected.firstName?.split(' ')[0][0]}</Avatar>
+            <Avatar>{ userConnected?.firstName?.split(' ')[0][0] || 'a'}</Avatar>
           </IconButton>
           <Menu
             anchorEl={anchorEl} id="account-menu" open={open}
