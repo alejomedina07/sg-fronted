@@ -4,7 +4,7 @@ import { addLogin, addLogout } from '../slices/authSlice';
 function useAuth() {
   const { dispatch, useTypedSelector } = useGlobalStore();
 
-  const { authenticated } = useTypedSelector(({ core }: any) => core.auth);
+  const { authenticated, userConnected } = useTypedSelector(({ core }: any) => core.auth);
 
   const addLoginAction = (data: any) => dispatch( addLogin(data) )
 
@@ -15,7 +15,8 @@ function useAuth() {
   return {
     addLoginAction,
     addLogoutAction,
-    authenticated
+    authenticated,
+    userConnected
   }
 
 }

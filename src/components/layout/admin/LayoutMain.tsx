@@ -6,17 +6,18 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar                  from '@mui/material/Toolbar';
 import List                     from '@mui/material/List';
 import CssBaseline              from '@mui/material/CssBaseline';
-import Typography               from '@mui/material/Typography';
-import Divider                  from '@mui/material/Divider';
-import IconButton               from '@mui/material/IconButton';
-import MenuIcon                 from '@mui/icons-material/Menu';
-import ChevronLeftIcon          from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon         from '@mui/icons-material/ChevronRight';
+import Typography                        from '@mui/material/Typography';
+import Divider                           from '@mui/material/Divider';
+import IconButton                        from '@mui/material/IconButton';
+import MenuIcon                          from '@mui/icons-material/Menu';
+import ChevronLeftIcon                   from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon                  from '@mui/icons-material/ChevronRight';
 import { Grid }                          from '@mui/material';
 import { NavBarItem, NavItem, navItems } from './componets';
-import { Languages }   from './componets/nav/Languages';
-import { Environment } from '../../../utils/env/Environment';
-import { ReactNode }   from 'react';
+import { Languages }                     from './componets/nav/Languages';
+import { Environment }                   from '../../../utils/env/Environment';
+import { ReactNode }                     from 'react';
+import { HeaderProfile }                 from './componets/HeaderProfile';
 
 const drawerWidth = 240;
 
@@ -124,7 +125,10 @@ export const LayoutMain = ( props: LayoutMainProps) => {
                 <Typography variant="h6" noWrap component="div">Odontología CRIS</Typography>
               </Grid>
             </Grid>
-            <Languages/>
+            <div className="flex flex-row items-center">
+              <HeaderProfile/>
+              <Languages/>
+            </div>
           </Grid>
         </Toolbar>
       </AppBar>

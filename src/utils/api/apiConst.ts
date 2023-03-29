@@ -4,8 +4,7 @@ import { Environment } from '../env/Environment';
 const env = new Environment;
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: 'http://localhost:3000/api', // TODO EnvVariables().VITE_API_URL,
-  baseUrl: env.baseUrl, // TODO EnvVariables().VITE_API_URL,
+  baseUrl: env.baseUrl,
   prepareHeaders: (headers, { getState }: any) => {
     const token = getState().core?.auth?.token || null;
     if (token) headers.set('authorization', `Bearer ${token}`)

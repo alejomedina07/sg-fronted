@@ -1,48 +1,29 @@
-import { SyntheticEvent, useState }                                               from 'react';
-import { useDispatch }                                                            from 'react-redux';
-import { Grid, TextField, Button, CircularProgress, Snackbar, Alert, AlertColor } from '@mui/material';
+import { SyntheticEvent }                                               from 'react';
+import { Grid, TextField, Button, CircularProgress } from '@mui/material';
 import { AuthLayout }                                                             from '../layout/AuthLayout.js';
 
 import { UserLogin }        from '../dto/user';
 import useAuth              from '../redux/hooks/useAuth';
 import { useForm }          from '../redux/hooks/useForm';
 import { useLoginMutation } from '../redux/api/authApi';
+import useSnackbar          from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 
 export const Login = () => {
-  const [open, setOpen] = useState<boolean>(false);
-
   const { addLoginAction } = useAuth();
-
-  const [severity, setSeverity] = useState<AlertColor>( 'success' );
-
-  const [message, setMessage] = useState<string>( '' );
-
-  const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') return;
-    setOpen(false);
-  };
-
-  const dispatch = useDispatch()
-
+  const { openSnackbarAction } = useSnackbar();
+  const initialForm: UserLogin = { phoneNumber: '', password: '' };
+  const { phoneNumber, password, onInputChange }:any = useForm(initialForm);
   const [ login, { isLoading } ] = useLoginMutation()
 
-  const initialForm: UserLogin = { email: '', password: '' };
-
-  const { email, password, onInputChange }:any = useForm(initialForm) // TODO cambiar useForm
 
   const onSubmit = async ( event:SyntheticEvent ) => {
     event.preventDefault();
     try {
-      const data = await login( { email, password }).unwrap()
-      setSeverity('success')
-      setMessage(data?.msg)
+      const data = await login( { phoneNumber, password }).unwrap()
       addLoginAction( { ...data.user, token:data.token } )
-      // dispatch( addLoginAction( { ...data.user, token:data.token } ) )
+      openSnackbarAction({ messageAction: data.msg || 'Iniciando sessión', typeAction: 'success' })
     } catch (e:any) {
-      setSeverity('error')
-      setMessage(e?.data?.message?.msg)
-    } finally {
-      setOpen(true);
+      openSnackbarAction({ messageAction: e.msg || 'Error por favor vuelve a intentarlo', typeAction: 'error' })
     }
   }
 
@@ -56,10 +37,10 @@ export const Login = () => {
           <Grid container>
             <Grid item xs={12} sx={{ mt: 2 }}>
               <TextField
-                label="Correo" type="email"
+                label="Número de teléfono" type="text"
                 required={true} fullWidth
-                placeholder="Correo electrónico"
-                name="email" value={ email }
+                placeholder="Número de teléfono"
+                name="phoneNumber" value={ phoneNumber }
                 onChange={ onInputChange }
               />
 

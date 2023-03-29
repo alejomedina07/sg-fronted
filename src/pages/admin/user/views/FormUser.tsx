@@ -9,21 +9,9 @@ import { yupResolver }        from '@hookform/resolvers/yup';
 import useSnackbar            from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 import { useNavigate }        from 'react-router-dom';
 import { SgSelect }           from '../../../../components/form/SgSelect';
+import { BLOOD_TYPES }        from '../../../../utils/consts/shared/bloodTypes';
+import { defaultValues }      from '../helpers/userConst';
 
-
-const defaultValues: User = {
-  "firstName": "",
-  "lastName": "",
-  "phoneNumber": "",
-  "address": "",
-  "email": "",
-  "documentTypeId" : 0,
-  "rolId" : 0,
-  "statusId" : 0,
-  "documentNumber": "",
-  "password": "",
-  "passwordConfirm":""
-}
 
 export const FormUser = () => {
   const { handleSubmit, control, formState:{ errors } } = useForm<User>( {
@@ -33,13 +21,10 @@ export const FormUser = () => {
   const { openSnackbarAction } = useSnackbar();
   const navigate = useNavigate();
 
-  console.log(1, errors);
-
   const [ addUser, { isLoading } ] = useAddUserMutation()
 
   const submitForm  = async (data: any) => {
     try {
-      console.log(777, data);
       const res = await addUser( data ).unwrap();
       openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
       navigate('/admin/users')
@@ -58,7 +43,7 @@ export const FormUser = () => {
         {/* firstName lastname */}
         <div className="flex flex-row items-center">
           <SgInput
-            className="flex-1 !m-2"
+            className="flex-1 !m-3"
             name="firstName"
             control={control}
             errors={errors}
@@ -67,7 +52,7 @@ export const FormUser = () => {
             size="small"
           />
           <SgInput
-            className="flex-1 !m-2"
+            className="flex-1 !m-3"
             name="lastName"
             control={control}
             errors={errors}
@@ -76,17 +61,8 @@ export const FormUser = () => {
             size="small"
           />
         </div>
-        {/* phoneNumber status */}
+        {/* statusId rolId */}
         <div className="flex flex-row items-center">
-          <SgInput
-            className="flex-1 !m-2"
-            name="phoneNumber"
-            control={control}
-            errors={errors}
-            label="phoneNumber"
-            required
-            size="small"
-          />
           <SgSelect
             key="filter-field-select"
             control={control}
@@ -95,10 +71,10 @@ export const FormUser = () => {
             required
             fieldId='id'
             fieldLabel='name'
-            className="flex-1 !m-2"
+            className="flex-1 !m-3"
             size='small'
             errors={errors}
-            list="status"
+            list="statusUser"
           />
           <SgSelect
             key="rolId-select"
@@ -109,12 +85,38 @@ export const FormUser = () => {
             fieldId='id'
             fieldLabel='name'
             fieldDescription='description'
-            className="flex-1 !m-2"
+            className="flex-1 !m-3"
             size='small'
             errors={errors}
             list="rol"
           />
         </div>
+        {/* phoneNumber bloodType */}
+        <div className="flex flex-row items-center">
+          <SgInput
+            className="flex-1 !m-3"
+            name="phoneNumber"
+            control={control}
+            errors={errors}
+            label="phoneNumber"
+            required
+            size="small"
+          />
+          <SgSelect
+            key="bloodType-select"
+            control={control}
+            name='bloodType'
+            label="bloodType"
+            required
+            fieldId='value'
+            fieldLabel='value'
+            className="flex-1 !m-3"
+            size='small'
+            errors={errors}
+            options={ BLOOD_TYPES }
+          />
+        </div>
+
 
         {/* documentType documentNumber */}
         <div className="flex flex-row items-center">
@@ -127,13 +129,13 @@ export const FormUser = () => {
             fieldId='id'
             fieldLabel='name'
             fieldDescription='description'
-            className="flex-1 !m-2"
+            className="flex-1 !m-3"
             size='small'
             errors={errors}
             list="documentType"
           />
           <SgInput
-            className="flex-1 !m-2"
+            className="flex-1 !m-3"
             name="documentNumber"
             control={control}
             errors={errors}
@@ -145,7 +147,7 @@ export const FormUser = () => {
         {/* email address */}
         <div className="flex flex-row items-center">
           <SgInput
-            className="flex-1 !m-2"
+            className="flex-1 !m-3"
             name="email"
             control={control}
             errors={errors}
@@ -154,7 +156,7 @@ export const FormUser = () => {
             size="small"
           />
           <SgInput
-            className="flex-1 !m-2"
+            className="flex-1 !m-3"
             name="address"
             control={control}
             errors={errors}

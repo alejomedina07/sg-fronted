@@ -1,5 +1,7 @@
 import GroupIcon        from '@mui/icons-material/Group.js';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import { NavItem }      from '../index';
 
 export const navItems:NavItem[] = [
@@ -10,5 +12,13 @@ export const navItems:NavItem[] = [
   {
     id:3, name: 'add_user',
     link:'/admin/users/create', icon: <GroupAddIcon/>
+  },
+  {
+    id:4, name: 'appointment',
+    link:'/admin/appointment', icon: <CalendarMonthIcon/>
+  },
+  {
+    id:5, name: 'customer',
+    link:'/admin/customer', icon: <PermContactCalendarIcon/>
   },
 ]

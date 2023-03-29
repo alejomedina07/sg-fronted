@@ -6,6 +6,7 @@ export const userSchema = Yup.object().shape({
   firstName: Yup.string().required('field_is_required'),
   lastName: Yup.string().required('field_is_required'),
   address: Yup.string().required('field_is_required'),
+  bloodType: Yup.string(),
   phoneNumber: Yup.string()
     .required('field_is_required')
     .min(10, `${i18n.t('field_min_not_correctly')}  (10 ${i18n.t('min_characters')} )  `)

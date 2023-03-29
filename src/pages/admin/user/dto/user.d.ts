@@ -10,5 +10,6 @@ interface User {
   statusId: number;
   rolId: number;
   passwordConfirm?: string;
+  bloodType?: string;
 
 }
