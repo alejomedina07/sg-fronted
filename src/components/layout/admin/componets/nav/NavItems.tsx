@@ -4,6 +4,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import { NavItem }      from '../index';
+import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 
 export const navItems:NavItem[] = [
   {
@@ -25,5 +26,9 @@ export const navItems:NavItem[] = [
   {
     id:6, name: 'expense',
     link:'/admin/expense', icon: <AddBusinessIcon/>
+  },
+  {
+    id:7, name: 'inventory',
+    link:'/admin/inventory', icon: <PlaylistAddCircleIcon/>
   },
 ]

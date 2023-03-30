@@ -6,6 +6,7 @@ import { listApi }        from './apis/listApi';
 import { customerApi } from '../pages/admin/customer/redux/api/customerApi';
 import { appointmentApi } from '../pages/admin/appointment/redux/api/appointmentApi';
 import { expenseApi } from '../pages/admin/expense/redux/api/expenseApi';
+import {inventoryApi} from "../pages/admin/inventory/redux/api/inventoryApi";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     [ listApi.reducerPath ]: listApi.reducer,
     [ customerApi.reducerPath ]: customerApi.reducer,
     [ expenseApi.reducerPath ]: expenseApi.reducer,
+    [ inventoryApi.reducerPath ]: inventoryApi.reducer,
     [ appointmentApi.reducerPath ]: appointmentApi.reducer,
 
   },
@@ -25,6 +27,7 @@ export const store = configureStore({
     .concat(listApi.middleware)
     .concat(customerApi.middleware)
       .concat(expenseApi.middleware)
+      .concat(inventoryApi.middleware)
       .concat(appointmentApi.middleware)
 })
 
