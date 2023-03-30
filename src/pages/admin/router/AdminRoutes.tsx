@@ -6,6 +6,8 @@ import { FormUser }                from '../user/views/FormUser';
 import { AppointmentView }         from '../appointment/views/AppointmentView';
 import { ListCustomer }            from '../customer/views/ListCustomer';
 import { FormCustomer }            from '../customer/views/FormCustomer';
+import {ListExpense} from "../expense/views/ListExpense";
+import {FormExpense} from "../expense/views/FormExpense";
 
 
 export const AdminRoutes = () => {
@@ -20,6 +22,10 @@ export const AdminRoutes = () => {
           <Route path='' element={<ListCustomer />} />
           <Route path='create' element={<FormCustomer />} />
         </Route>
+          <Route path='expense'>
+              <Route path='' element={<ListExpense />} />
+              <Route path='create' element={<FormExpense />} />
+          </Route>
 
         <Route path='appointment' element={<AppointmentView />} />
       </Route>
