@@ -1,6 +1,7 @@
-import { createApi }       from '@reduxjs/toolkit/query/react';
-import baseQueryWithReauth from '../../../../../utils/api/apiConst';
-import AppointmentModel    from '../../models/AppointmentModel';
+import { createApi }             from '@reduxjs/toolkit/query/react';
+import baseQueryWithReauth       from '../../../../../utils/api/apiConst';
+import AppointmentModel          from '../../models/AppointmentModel';
+import { RangeAppointmentProps } from '../../../../../services/utils/DateFnsManager';
 
 
 export const appointmentApi = createApi({
@@ -13,7 +14,7 @@ export const appointmentApi = createApi({
   endpoints: (build)=> ({
 
     getAppointments: build.query({
-      query: ( )=> '/appointment',
+      query: ( range : RangeAppointmentProps)=> `/appointment?start=${range.start}&end=${range.end}`,
       keepUnusedDataFor: 5,
       transformResponse: (rawResult:any) => {
         // console.log(999, rawResult.data);

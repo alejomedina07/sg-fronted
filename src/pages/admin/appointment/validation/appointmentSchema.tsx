@@ -5,5 +5,5 @@ export const appointmentSchema = Yup.object().shape({
   duration: Yup.number().required('field_is_required'),
   description: Yup.string(),
   appointmentTypeId: Yup.number(),
-  customerId: Yup.number().optional(),
+  customerId: Yup.number().nullable(),
 });

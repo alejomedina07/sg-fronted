@@ -1,5 +1,5 @@
 import "react-datepicker/dist/react-datepicker.css";
-import { useState }                                     from 'react';
+import { useEffect, useState }                          from 'react';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import { SgTransition }                 from '../../../../components/utils/dialogs/SgTransition';
 import { SgDialogTitle }                                         from '../../../../components/utils/dialogs/SgDialogTitle';
@@ -24,19 +24,34 @@ export interface DialogFormAppointmentProps {
   open: boolean;
   onClose: () => void;
   refetch: () => void;
+  appointment?: AppointmentDto
 }
 
 export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
-  const { onClose, open, refetch } = props;
+  const { onClose, open, refetch, appointment } = props;
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [ addAppointment, { isLoading:isLoadingData  } ] = useAddAppointmentMutation()
   const { openSnackbarAction } = useSnackbar();
 
+  // console.log(9, appointment);
+
   const { data:appointmentTypes, isLoading:appointmentTypesLoading } = useGetAppointmentTypeQuery('')
 
+  const [defaultValues, setDefaultValues] = useState<AppointmentDto>(appointment || defaultValuesFormAppointment);
 
-  const { register, setValue, handleSubmit, control, formState:{ errors }, reset } = useForm<AppointmentDto>( {
-    defaultValues: defaultValuesFormAppointment,
+  // const defaultValues = appointment || defaultValuesFormAppointment;
+
+
+  useEffect( () => {
+    if (appointment) {
+      console.log('useEffect');
+      setDefaultValues( { ...appointment } );
+    }
+  }, [appointment] );
+
+
+  const { setValue, handleSubmit, control, formState:{ errors }, reset } = useForm( {
+    defaultValues,
     resolver: yupResolver(appointmentSchema)
   });
 
@@ -51,6 +66,9 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
 
   const submitForm = async(data: object) => {
     try {
+
+      console.log('data:::: ', data);
+
       const res = await addAppointment( data ).unwrap();
       openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
       refetch();

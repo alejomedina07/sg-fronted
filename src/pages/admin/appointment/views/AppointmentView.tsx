@@ -1,24 +1,42 @@
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { Calendar, EventProps }           from 'react-big-calendar';
+import { Calendar, EventProps, View }     from 'react-big-calendar';
 import { getMessagesCalendar, localizer } from '../../../../helpers';
 import { CalendarEvent }                  from '../components/CalendarEvent';
 import { useState }                       from 'react';
-import { useGetAppointmentsQuery } from '../redux/api/appointmentApi';
-import { Fab, LinearProgress }     from '@mui/material';
-import AddIcon                     from '@mui/icons-material/Add';
+import { useGetAppointmentsQuery }        from '../redux/api/appointmentApi';
+import { Fab, LinearProgress }            from '@mui/material';
+import AddIcon                            from '@mui/icons-material/Add';
 import { DialogFormAppointment }          from '../components/DialogFormAppointment';
+import useAppointment                            from '../redux/hooks/useAppointment';
+import DateFnsManager, { RangeAppointmentProps } from '../../../../services/utils/DateFnsManager';
+
+
+const managerDate = new DateFnsManager()
 
 export const MyCalendarEvent = (props: EventProps<AppointmentEvent>) => {
   const { event } = props;
+
   return <CalendarEvent appointment={event.appointment} start={event.start} end={event.end} {...props} />;
 };
 
 
+interface onRangeChange {
+  range: Date[] | { start: Date, end: Date }
+  view?: View
+}
+
 export const AppointmentView = () => {
-  const { refetch, data, isLoading } = useGetAppointmentsQuery('')
+  // const range = managerDate.currentMonth
+
+  const [range, setRange] = useState<RangeAppointmentProps>( managerDate.currentMonth );
+
+  // console.log(12, range);
+
+  const { appointment, changeRangeAction, selectAppointmentAction, closeModalAppointmentAction } = useAppointment()
+
+  const { refetch, data, isLoading } = useGetAppointmentsQuery(range, { skip: !range })
 
   const [open, setOpen] = useState<boolean>(false);
-  // console.log(123, data);
 
   const [lastView, setLastView] = useState<"month" | "week" | "work_week" | "day" | "agenda">(
     () => {
@@ -36,11 +54,33 @@ export const AppointmentView = () => {
   }
 
   const handleClose = () => {
+    closeModalAppointmentAction();
     setOpen(false);
   };
 
   const onSelect = (event: any) => {
-    console.log(12, event);
+    selectAppointmentAction(event.appointment);
+    setOpen(true);
+  }
+
+
+  const onRangeChange = (props: onRangeChange) => {
+    const { range:newRange, view } = props;
+    console.log('onRangeChange:::', newRange);
+    if (Array.isArray(newRange) && newRange.length > 1) {
+      // newRange is an array with two Date objects
+      const startDate = newRange[0];
+      const endDate = newRange[newRange.length -1];
+      setRange({ start: managerDate.dateToString(newRange[0]), end: managerDate.addDaysString( newRange[newRange.length -1], 1) })
+      // refetch();
+      console.log('array',range);
+      // handle the rest of the logic for this case
+    } else if (typeof newRange === 'object' && newRange !== null && 'start' in newRange && 'end' in newRange) {
+      // range is an object with start and end properties
+      const { start, end } = newRange;
+      setRange({ start: managerDate.dateToString(start), end: managerDate.addDaysString( end, 1) })
+      console.log('objec', range );
+    }
   }
 
   return (
@@ -57,12 +97,20 @@ export const AppointmentView = () => {
         messages={ getMessagesCalendar() }
         components={ { event: MyCalendarEvent } }
         onView={onViewChange}
+        onRangeChange={ (range, view)=> onRangeChange( { range, view })}
         onSelectEvent={onSelect}
       />
       <Fab className="!absolute bottom-5 right-8" aria-label={'Agregar'} color="primary" onClick={()=> setOpen(!open)}>
         <AddIcon />
       </Fab>
-      <DialogFormAppointment open={open} onClose={handleClose} refetch={refetch}/>
+      { !!open && (
+        <DialogFormAppointment
+          open={open}
+          onClose={handleClose}
+          refetch={refetch}
+          appointment={appointment}
+        />
+      )}
     </div>
   );
 };

@@ -43,7 +43,7 @@ export const SgInput = (props: any) => {
           {...rest}
           {...field}
           size={size}
-          multiline={rows}
+          multiline={!!rows}
           rows={rows || 1}
           label={required ? `${label}*` : label}
           onChange={(e) => onValueChange(e, field)}

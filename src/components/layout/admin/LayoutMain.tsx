@@ -121,7 +121,7 @@ export const LayoutMain = ( props: LayoutMainProps) => {
                 >
                   <MenuIcon />
                 </IconButton>
-                <img src={`${env.basePatch}/images/logo.png`} alt="" width={50}/>
+                <img src={`${env.basePatch}/images/logo2.png`} alt="" width={60}/>
                 <Typography variant="h6" noWrap component="div">Odontología CRIS</Typography>
               </Grid>
             </Grid>

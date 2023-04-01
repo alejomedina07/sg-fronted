@@ -7,12 +7,10 @@ export const AppRouter = () => {
 
   const { authenticated } = useAuth();
 
-  console.log(78, authenticated);
-
   return (
     <>
-      <AdminRoutes/>
-      {/* { (authenticated) ? <AdminRoutes/> : <PublicRoutes/> } */}
+      {/* <AdminRoutes/> */}
+      { (authenticated) ? <AdminRoutes /> : <PublicRoutes /> }
     </>
   );
 }
