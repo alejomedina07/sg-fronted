@@ -12,7 +12,7 @@ export const inventoryApi = createApi({
     endpoints: (build)=> ({
 
         getInventory: build.query({
-            query: ( )=> '/expense',
+            query: ( )=> '/inventory',
             keepUnusedDataFor: 30,
         }),
         addInventory: build.mutation<any, any>({

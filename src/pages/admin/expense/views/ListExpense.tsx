@@ -6,7 +6,7 @@ import {useGetExpenseQuery} from "../redux/api/expenseApi";
 
 export const ListExpense = () => {
     const { data, isLoading } = useGetExpenseQuery('');
-
+  console.log(23, data);
     return (
         <>
             <ViewTitle title="list_expense">

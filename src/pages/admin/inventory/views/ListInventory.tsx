@@ -6,7 +6,7 @@ import {useGetInventoryQuery} from "../redux/api/inventoryApi";
 
 export const ListInventory = () => {
     const { data, isLoading } = useGetInventoryQuery('');
-
+    console.log(22, data);
     return (
         <>
             <ViewTitle title="list_inventory">
@@ -19,5 +19,7 @@ export const ListInventory = () => {
     isLoading={isLoading}/>
     </div>
     </>
+
 )
+
 }

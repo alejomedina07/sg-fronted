@@ -55,6 +55,7 @@ export const FormExpense = () => {
                     <SgInput
                         className="flex-1 !m-3"
                         name="amount"
+                        type="number"
                         control={control}
                         errors={errors}
                         label="amount"

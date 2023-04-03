@@ -1,15 +1,17 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { ListUser }                from '../user/views/ListUser';
-import { Admin }                   from "../components/layout/Admin";
-import { ProtectedRoute }          from "../../../components/auth/ProtectedRoute";
-import { FormUser }                from '../user/views/FormUser';
-import { AppointmentView }         from '../appointment/views/AppointmentView';
-import { ListCustomer }            from '../customer/views/ListCustomer';
-import { FormCustomer }            from '../customer/views/FormCustomer';
-import {ListExpense} from "../expense/views/ListExpense";
-import {FormExpense} from "../expense/views/FormExpense";
-import {ListInventory} from "../inventory/views/ListInventory";
-import {FormInventory} from "../inventory/views/FormInventory";
+import { ListUser }        from '../user/views/ListUser';
+import { Admin }           from "../components/layout/Admin";
+import { ProtectedRoute }  from "../../../components/auth/ProtectedRoute";
+import { FormUser }        from '../user/views/FormUser';
+import { AppointmentView } from '../appointment/views/AppointmentView';
+import { ListCustomer }    from '../customer/views/ListCustomer';
+import { FormCustomer }    from '../customer/views/FormCustomer';
+import {ListExpense}       from "../expense/views/ListExpense";
+import {FormExpense}       from "../expense/views/FormExpense";
+import {ListInventory}     from "../inventory/views/ListInventory";
+import {FormInventory}     from "../inventory/views/FormInventory";
+import { ListService }     from '../service/views/ListService';
+import { FormService }     from '../service/views/FormService';
 
 
 export const AdminRoutes = () => {
@@ -32,6 +34,10 @@ export const AdminRoutes = () => {
               <Route path='' element={<ListInventory />} />
               <Route path='create' element={<FormInventory />} />
           </Route>
+        <Route path='service'>
+          <Route path='' element={<ListService />} />
+          <Route path='create' element={<FormService />} />
+        </Route>
 
         <Route path='appointment' element={<AppointmentView />} />
       </Route>

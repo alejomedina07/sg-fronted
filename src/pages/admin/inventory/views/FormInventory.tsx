@@ -31,6 +31,7 @@ export const FormInventory = () => {
             openSnackbarAction({messageAction: res.msg || 'Creado', typeAction: 'success'})
             navigate('/admin/expense')
         } catch (e) {
+            console.log(777, data);
             openSnackbarAction({messageAction: 'Error al guardar', typeAction: 'error'})
         }
     }
@@ -39,7 +40,7 @@ export const FormInventory = () => {
         <>
             <ViewTitle title="create_inventory">
                 {/* <SgButton label="list_user" href="/admin/users"/> */}
-                <SgLink label="list_expense" to="/admin/inventory"/>
+                <SgLink label="list_inventory" to="/admin/inventory"/>
             </ViewTitle>
             <form onSubmit={handleSubmit(submitForm)}>
                 {/* name quantity */}
@@ -56,6 +57,7 @@ export const FormInventory = () => {
                     <SgInput
                         className="flex-1 !m-3"
                         name="quantity"
+                        type= "number"
                         control={control}
                         errors={errors}
                         label="quantity"
@@ -75,28 +77,18 @@ export const FormInventory = () => {
                         required
                         size="small"
                     />
-                    <SgInput
-                        className="flex-1 !m-3"
-                        name="status"
-                        control={control}
-                        errors={errors}
-                        label="status"
-                        required
-                        size="small"
-                    />
                     <SgSelect
-                        key="status-select"
+                        key="statusInventory-select"
                         control={control}
                         name='status'
                         label="status"
                         required
                         fieldId='id'
                         fieldLabel='name'
-                        fieldDescription='description'
                         className="flex-1 !m-3"
                         size='small'
                         errors={errors}
-                        list="status"
+                        list="statusInventory"
                     />
                 </div>
                 <div className="mt-4 mb-4 flex flex-row items-end justify-end">

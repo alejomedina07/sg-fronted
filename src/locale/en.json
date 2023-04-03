@@ -23,5 +23,13 @@
     "view_consent_form_es": "View consent form Spanish",
     "message_success_generic": "Successfully created",
     "message_error_generic": "An error has occurred, please try again.",
-    "email_invalid": "Email invalid"
+    "email_invalid": "Email invalid",
+    "field_is_required": "This field is required",
+    "field_min_not_correctly": "The minimum of characters is not correct",
+    "field_max_not_correctly": "The maximum of characters is not correct",
+    "min_characters": "Characters minimum",
+    "max_characters": "Characters maximum",
+    "min_password": "Password must be at least 6 characters",
+    "max_password": "Password must not exceed 40 characters",
+    "confirm_password": "Passwords do not match"
 }

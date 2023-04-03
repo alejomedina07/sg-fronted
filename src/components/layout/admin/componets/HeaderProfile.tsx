@@ -80,7 +80,7 @@ export const HeaderProfile = () => {
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
-              Cerrar Sessión
+              Cerrar Sesión
             </MenuItem>
           </Menu>
         </div>

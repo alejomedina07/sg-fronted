@@ -1,10 +1,11 @@
-import * as React         from 'react';
-import IconButton         from '@mui/material/IconButton';
-import Menu               from '@mui/material/Menu';
-import MenuItem           from '@mui/material/MenuItem';
-import { useTranslation } from 'react-i18next';
-import TranslateIcon      from '@mui/icons-material/Translate';
+import * as React                   from 'react';
+import IconButton                   from '@mui/material/IconButton';
+import Menu                         from '@mui/material/Menu';
+import MenuItem                     from '@mui/material/MenuItem';
+import { useTranslation }           from 'react-i18next';
+import TranslateIcon                from '@mui/icons-material/Translate';
 import { useLocation, useNavigate } from 'react-router-dom';
+import i18next                      from '../../../../../config/i18n/i18n';
 
 
 const options = [
@@ -15,7 +16,7 @@ const ITEM_HEIGHT = 48;
 export const Languages = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { t, i18n } = useTranslation();
+ const { t, i18n } = useTranslation();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -23,11 +24,12 @@ export const Languages = () => {
     setAnchorEl(null);
   };
 
+
   const location = useLocation();
   const navigate = useNavigate();
 
   const changeLanguage = async (option: string) => {
-    await i18n.changeLanguage(option);
+    await i18next.changeLanguage(option); // lo cambié
     navigate(location.pathname);
   };
 
@@ -60,7 +62,7 @@ export const Languages = () => {
       >
         {options.map((option) => (
           <MenuItem key={option.value} onClick={()=> changeLanguage(option.value)} >
-            {t(option.label)}
+            {i18next.t(option.label)}
           </MenuItem>
         ))}
       </Menu>
