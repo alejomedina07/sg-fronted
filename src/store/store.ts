@@ -3,8 +3,11 @@ import core               from './slices'
 import { authApi }        from '../pages/public/auth/redux/api/authApi';
 import { userApi }        from '../pages/admin/user/redux/api/userApi';
 import { listApi }        from './apis/listApi';
-import { customerApi } from '../pages/admin/customer/redux/api/customerApi';
+import { customerApi }    from '../pages/admin/customer/redux/api/customerApi';
 import { appointmentApi } from '../pages/admin/appointment/redux/api/appointmentApi';
+import { expenseApi }     from '../pages/admin/expense/redux/api/expenseApi';
+import {inventoryApi}     from "../pages/admin/inventory/redux/api/inventoryApi";
+import { serviceApi }     from '../pages/admin/service/redux/api/serviceApi';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +16,9 @@ export const store = configureStore({
     [ userApi.reducerPath ]: userApi.reducer,
     [ listApi.reducerPath ]: listApi.reducer,
     [ customerApi.reducerPath ]: customerApi.reducer,
+    [ expenseApi.reducerPath ]: expenseApi.reducer,
+    [ inventoryApi.reducerPath ]: inventoryApi.reducer,
+    [ serviceApi.reducerPath ]: serviceApi.reducer,
     [ appointmentApi.reducerPath ]: appointmentApi.reducer,
 
   },
@@ -22,7 +28,10 @@ export const store = configureStore({
     .concat(userApi.middleware)
     .concat(listApi.middleware)
     .concat(customerApi.middleware)
-    .concat(appointmentApi.middleware)
+      .concat(expenseApi.middleware)
+      .concat(inventoryApi.middleware)
+    .concat(serviceApi.middleware)
+      .concat(appointmentApi.middleware)
 })
 
 

@@ -5,6 +5,7 @@ import { Controller }                                      from 'react-hook-form
 import MenuItem                                            from '@mui/material/MenuItem';
 import { SgSpinner }                                       from '../utils/spinner/SgSpinner';
 import { useGetListByKeyQuery }                            from '../../store/apis/listApi';
+import i18next                                             from '../../config/i18n/i18n';
 
 
 export const SgSelect = (props: any) => {
@@ -23,7 +24,7 @@ export const SgSelect = (props: any) => {
   const optionsFromList = list ? data?.data : null
 
   useEffect(() => {
-    if(options) {
+    if(options?.length) {
       setSelectOptions(options)
       setReady(true)
     }
@@ -76,7 +77,7 @@ export const SgSelect = (props: any) => {
                 )
               }
             </Select>
-            {isError && <FormHelperText>Requerido</FormHelperText>}
+            {isError && <FormHelperText>{i18next.t('field_is_required')}</FormHelperText>}
           </>
         )}
         name={name}

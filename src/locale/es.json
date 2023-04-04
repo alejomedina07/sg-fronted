@@ -23,5 +23,13 @@
     "view_consent_form_es": "Ver consentimiento informado en español",
     "message_success_generic": "Creado exitosamente",
     "message_error_generic": "ha ocurrido un error, por favor vuelve a intentarlo.",
-    "email_invalid": "Email incorrecto"
+    "email_invalid": "Email incorrecto",
+    "field_is_required": "Este campo es requerido",
+    "field_min_not_correctly": "El mínimo de caracteres no es correcto",
+    "field_max_not_correctly": "El máximo de caracteres no es correcto",
+    "min_characters": "Caracteres como mínimo",
+    "max_characters": "Caracteres como máximo",
+    "min_password": "La contraseña debe tener al menos 6 caracteres",
+    "max_password": "La contraseña no debe exceder los 40 caracteres",
+    "confirm_password": "Las contraseñas no coinciden"
 }
