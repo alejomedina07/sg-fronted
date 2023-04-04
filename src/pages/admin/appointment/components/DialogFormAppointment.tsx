@@ -6,15 +6,18 @@ import { SgDialogTitle }                                         from '../../../
 import DatePicker, { registerLocale }                            from 'react-datepicker';
 import es                                                        from 'date-fns/locale/es';
 import { useForm }                                               from 'react-hook-form';
-import { yupResolver }                                           from '@hookform/resolvers/yup';
-import { defaultValuesFormAppointment }                          from '../AppontmentConst';
-import { appointmentSchema }                                     from '../validation/appointmentSchema';
-import { SgInput }                                               from '../../../../components/form/SgInput';
-import { SgSelect }                                              from '../../../../components/form/SgSelect';
-import { SgButton }                                              from '../../../../components/form/button/SgButton';
-import { useAddAppointmentMutation, useGetAppointmentTypeQuery } from '../redux/api/appointmentApi';
-import useSnackbar
-                                                                 from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { yupResolver }                  from '@hookform/resolvers/yup';
+import { defaultValuesFormAppointment } from '../AppontmentConst';
+import { appointmentSchema }            from '../validation/appointmentSchema';
+import { SgInput }                      from '../../../../components/form/SgInput';
+import { SgSelect }                     from '../../../../components/form/SgSelect';
+import { SgButton }                     from '../../../../components/form/button/SgButton';
+import {
+  useAddAppointmentMutation,
+  useGetAppointmentTypeQuery,
+  useUpdateAppointmentMutation
+}                                       from '../redux/api/appointmentApi';
+import useSnackbar                      from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 
 
 registerLocale('es', es)
@@ -30,7 +33,9 @@ export interface DialogFormAppointmentProps {
 export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
   const { onClose, open, refetch, appointment } = props;
   const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [ addAppointment, { isLoading:isLoadingData  } ] = useAddAppointmentMutation()
+  const [ addAppointment, { isLoading:isLoadingData  } ] = useAddAppointmentMutation();
+  const [ updateAppointment, { isLoading:isLoadingUpdate  } ] = useUpdateAppointmentMutation()
+
   const { openSnackbarAction } = useSnackbar();
 
   // console.log(9, appointment);
@@ -45,6 +50,7 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
   useEffect( () => {
     if (appointment) {
       console.log('useEffect');
+      setStartDate(new Date(`${appointment.date}`))
       setDefaultValues( { ...appointment } );
     }
   }, [appointment] );
@@ -64,12 +70,12 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
     setStartDate(event)
   };
 
-  const submitForm = async(data: object) => {
+  const submitForm = async(data: AppointmentDto) => {
     try {
 
       console.log('data:::: ', data);
 
-      const res = await addAppointment( data ).unwrap();
+      const res = data.id ?  await updateAppointment( data ).unwrap() : await addAppointment( data ).unwrap();
       openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
       refetch();
       reset();

@@ -6,6 +6,7 @@ import { FormUser }                from '../user/views/FormUser';
 import { AppointmentView }         from '../appointment/views/AppointmentView';
 import { ListCustomer }            from '../customer/views/ListCustomer';
 import { FormCustomer }            from '../customer/views/FormCustomer';
+import { MainReports }             from '../reports/view/main';
 
 
 export const AdminRoutes = () => {
@@ -22,6 +23,7 @@ export const AdminRoutes = () => {
         </Route>
 
         <Route path='appointment' element={<AppointmentView />} />
+        <Route path='report' element={<MainReports />} />
       </Route>
       <Route path="*" element={ <Navigate to="admin"/> } />
     </Routes>

@@ -31,10 +31,22 @@ export const appointmentApi = createApi({
         body,
       }),
     }),
+    updateAppointment: build.mutation<any, any>({
+      query: ( body: any ) => ({
+        url:`/appointment/${ body.id }`,
+        method: 'PUT',
+        body,
+      }),
+    }),
+
+    getServiceReport: build.query({
+      query: ( )=> '/service/report',
+      keepUnusedDataFor: 1,
+    }),
 
   })
 
 })
 
-export const { useGetAppointmentsQuery, useGetAppointmentTypeQuery, useAddAppointmentMutation } = appointmentApi;
+export const { useGetAppointmentsQuery, useGetAppointmentTypeQuery, useAddAppointmentMutation, useUpdateAppointmentMutation, useGetServiceReportQuery } = appointmentApi;
 
