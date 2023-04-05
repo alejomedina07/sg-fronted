@@ -6,7 +6,7 @@ import { listApi }        from './apis/listApi';
 import { customerApi }    from '../pages/admin/customer/redux/api/customerApi';
 import { appointmentApi } from '../pages/admin/appointment/redux/api/appointmentApi';
 import { expenseApi }     from '../pages/admin/expense/redux/api/expenseApi';
-import {inventoryApi}     from "../pages/admin/inventory/redux/api/inventoryApi";
+import {inventoryApi}     from '../pages/admin/inventory/redux/api/inventoryApi';
 import { serviceApi }     from '../pages/admin/service/redux/api/serviceApi';
 
 export const store = configureStore({

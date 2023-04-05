@@ -7,6 +7,7 @@ import { useGetAppointmentsQuery }        from '../redux/api/appointmentApi';
 import { Fab, LinearProgress }            from '@mui/material';
 import AddIcon                            from '@mui/icons-material/Add';
 import { DialogFormAppointment }          from '../components/DialogFormAppointment';
+import { t }                              from 'i18next';
 import useAppointment                            from '../redux/hooks/useAppointment';
 import DateFnsManager, { RangeAppointmentProps } from '../../../../services/utils/DateFnsManager';
 
@@ -15,7 +16,6 @@ const managerDate = new DateFnsManager()
 
 export const MyCalendarEvent = (props: EventProps<AppointmentEvent>) => {
   const { event } = props;
-
   return <CalendarEvent appointment={event.appointment} start={event.start} end={event.end} {...props} />;
 };
 
@@ -38,7 +38,7 @@ export const AppointmentView = () => {
 
   const [open, setOpen] = useState<boolean>(false);
 
-  const [lastView, setLastView] = useState<"month" | "week" | "work_week" | "day" | "agenda">(
+  const [lastView, setLastView] = useState< 'month' | 'week' | 'work_week' | 'day' | 'agenda'>(
     () => {
       const storedValue = localStorage.getItem('lastView');
       if (storedValue && (storedValue === 'month' || storedValue === 'week' || storedValue === 'work_week' || storedValue === 'day' || storedValue === 'agenda')) {
@@ -48,7 +48,7 @@ export const AppointmentView = () => {
     }
   );
 
-  const onViewChange = (event: "month" | "week" | "work_week" | "day" | "agenda") => {
+  const onViewChange = (event: 'month' | 'week' | 'work_week' | 'day' | 'agenda') => {
     localStorage.setItem('lastView', event);
     setLastView(event);
   }
@@ -96,7 +96,7 @@ export const AppointmentView = () => {
         onRangeChange={ (range, view)=> onRangeChange( { range, view })}
         onSelectEvent={onSelect}
       />
-      <Fab className="!absolute bottom-5 right-8" aria-label={'Agregar'} color="primary" onClick={()=> setOpen(!open)}>
+      <Fab className="!absolute bottom-5 right-8" aria-label={t('add')} color="primary" onClick={()=> setOpen(!open)}>
         <AddIcon />
       </Fab>
       { !!open && (

@@ -6,6 +6,7 @@ import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { NavItem }      from '../index';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 export const navItems:NavItem[] = [
   {
@@ -13,7 +14,7 @@ export const navItems:NavItem[] = [
     link:'/admin/users', icon: <GroupIcon/>
   },
   {
-    id:3, name: 'add_user',
+    id:3, name: 'create_user',
     link:'/admin/users/create', icon: <GroupAddIcon/>
   },
   {
@@ -31,6 +32,10 @@ export const navItems:NavItem[] = [
   {
     id:7, name: 'inventory',
     link:'/admin/inventory', icon: <PlaylistAddCircleIcon/>
+  },
+  {
+    id:8, name: 'service',
+    link:'/admin/service', icon: <MonetizationOnIcon/>
   },
   {
     id:1, name: 'reports',

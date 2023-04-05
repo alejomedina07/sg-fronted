@@ -4,7 +4,7 @@ import App               from './App'
 import { Provider }      from 'react-redux';
 import './index.css'
 import './config/i18n/i18n'
-import "@fontsource/poppins";
+import '@fontsource/poppins';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 

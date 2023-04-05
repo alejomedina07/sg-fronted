@@ -4,7 +4,7 @@ import { Link }                                                            from 
 import { Logout, Settings }                                                from '@mui/icons-material';
 import useAuth
                                                                            from '../../../../pages/public/auth/redux/hooks/useAuth';
-
+import {t} from 'i18next';
 export const HeaderProfile = () => {
   const { addLogoutAction, userConnected } = useAuth();
 
@@ -24,7 +24,7 @@ export const HeaderProfile = () => {
   return (
     <Grid item>
       <Grid container direction='row' alignItems='center'>
-        <div> Hola: {`${ userConnected?.firstName || '' }  ${ userConnected?.lastName || '' }` || 'Usuario'} </div>
+        <div> {t('hello')}: {`${ userConnected?.firstName || '' }  ${ userConnected?.lastName || '' }` || 'Usuario'} </div>
         <div>
           <IconButton
             aria-label="more" id="long-button"
@@ -66,7 +66,7 @@ export const HeaderProfile = () => {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <Link to='/profile' className='link-nav-bar'>
-              <MenuItem ><Avatar /> Mi perfil</MenuItem>
+              <MenuItem ><Avatar /> {t('my_profile')}</MenuItem>
             </Link>
             {/* <MenuItem><Avatar /> Mi cuenta</MenuItem> */}
             <Divider />
@@ -74,13 +74,13 @@ export const HeaderProfile = () => {
               <ListItemIcon>
                 <Settings fontSize="small" />
               </ListItemIcon>
-              Configuración
+              {t('configuration')}
             </MenuItem>
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
-              Cerrar Sesión
+              {t('log_out')}
             </MenuItem>
           </Menu>
         </div>

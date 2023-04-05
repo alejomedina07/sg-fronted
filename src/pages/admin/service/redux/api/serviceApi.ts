@@ -13,7 +13,7 @@ export const serviceApi = createApi({
 
     getService: build.query({
       query: ( )=> '/service',
-      keepUnusedDataFor: 30,
+      keepUnusedDataFor: 0,
     }),
     addService: build.mutation<any, any>({
       query: ( body: any ) => ({

@@ -6,10 +6,11 @@ import { useForm }                from 'react-hook-form';
 import { yupResolver }            from '@hookform/resolvers/yup';
 import useSnackbar                from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 import { useNavigate }            from 'react-router-dom';
-import {defaultValues} from "../helpers/inventoryConst";
-import {inventoryScheme} from "../validation/inventoryScheme";
-import {useAddInventoryMutation} from "../redux/api/inventoryApi";
-import {SgSelect} from "../../../../components/form/SgSelect";
+import {defaultValues}            from '../helpers/inventoryConst';
+import {inventoryScheme}          from '../validation/inventoryScheme';
+import {useAddInventoryMutation}  from '../redux/api/inventoryApi';
+import {SgSelect} from '../../../../components/form/SgSelect';
+import { t }                      from 'i18next';
 
 
 export const FormInventory = () => {
@@ -28,19 +29,18 @@ export const FormInventory = () => {
         try {
             console.log(777, data);
             const res = await addInventory(data).unwrap();
-            openSnackbarAction({messageAction: res.msg || 'Creado', typeAction: 'success'})
-            navigate('/admin/expense')
+            openSnackbarAction({messageAction: res.msg || `${t('created')}`, typeAction: 'success'})
+            navigate('/admin/inventory')
         } catch (e) {
-            console.log(777, data);
-            openSnackbarAction({messageAction: 'Error al guardar', typeAction: 'error'})
+            openSnackbarAction({messageAction: `${t('error_save')}`, typeAction: 'error'})
         }
     }
 
     return (
         <>
-            <ViewTitle title="create_inventory">
+            <ViewTitle title={t('create_inventory')}>
                 {/* <SgButton label="list_user" href="/admin/users"/> */}
-                <SgLink label="list_inventory" to="/admin/inventory"/>
+                <SgLink label={t('list_inventory')} to="/admin/inventory"/>
             </ViewTitle>
             <form onSubmit={handleSubmit(submitForm)}>
                 {/* name quantity */}
@@ -50,7 +50,7 @@ export const FormInventory = () => {
                         name="name"
                         control={control}
                         errors={errors}
-                        label="name"
+                        label={t('name')}
                         required
                         size="small"
                     />
@@ -60,7 +60,7 @@ export const FormInventory = () => {
                         type= "number"
                         control={control}
                         errors={errors}
-                        label="quantity"
+                        label={t('quantity')}
                         required
                         size="small"
                     />
@@ -73,7 +73,7 @@ export const FormInventory = () => {
                         name="description"
                         control={control}
                         errors={errors}
-                        label="description"
+                        label={t('description')}
                         required
                         size="small"
                     />
@@ -81,10 +81,11 @@ export const FormInventory = () => {
                         key="statusInventory-select"
                         control={control}
                         name='status'
-                        label="status"
+                        label={t('status')}
                         required
                         fieldId='id'
                         fieldLabel='name'
+                        fieldDescription='description'
                         className="flex-1 !m-3"
                         size='small'
                         errors={errors}
@@ -92,7 +93,7 @@ export const FormInventory = () => {
                     />
                 </div>
                 <div className="mt-4 mb-4 flex flex-row items-end justify-end">
-                    <SgButton variant="contained" color="primary" type="submit" label="Guardar" sending={isLoading}/>
+                    <SgButton variant="contained" color="primary" type="submit" label={t('save')} sending={isLoading}/>
                 </div>
             </form>
         </>
