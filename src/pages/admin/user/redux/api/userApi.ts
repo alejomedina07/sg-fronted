@@ -22,10 +22,16 @@ export const userApi = createApi({
         body,
       }),
     }),
-
+    updateUser: build.mutation<any, any>({
+      query: ( body: any ) => ({
+        url:`/user/${ body.id }`,
+        method: 'PUT',
+        body,
+      }),
+    }),
   })
 
 })
 
-export const { useGetUsersQuery, useAddUserMutation } = userApi;
+export const { useGetUsersQuery, useAddUserMutation, useUpdateUserMutation } = userApi;
 

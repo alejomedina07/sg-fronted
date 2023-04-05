@@ -1,13 +1,11 @@
-import { SgTableProps }                                                from './dto/SgTableProps';
-import { useEffect, useState }                                         from 'react';
-import { DataGrid, GridColDef, GridToolbar, GridValueFormatterParams } from '@mui/x-data-grid';
-import { Avatar }                                                      from '@mui/material';
+
+import { useEffect, useState }                              from 'react';
+import { DataGrid, GridColDef, GridRowParams, GridToolbar } from '@mui/x-data-grid';
+import { SgTableProps }                                     from './dto/SgTableProps';
 
 
 export const SgTable = (props: SgTableProps) => {
-  const { data, columns, isLoading } = props;
-  console.log(78, data);
-  // const [pageSize, setPageSize] = useState(5);
+  const { data, columns, isLoading, onRowDoubleClick } = props;
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
     page: 0,
@@ -21,6 +19,12 @@ export const SgTable = (props: SgTableProps) => {
     }
   }, [data]);
 
+  const handleRowDoubleClick = (params: GridRowParams) => {
+    if (onRowDoubleClick) {
+      onRowDoubleClick( params );
+    }
+  }
+
   return (
     <DataGrid
       rows={data || []}
@@ -30,6 +34,7 @@ export const SgTable = (props: SgTableProps) => {
       paginationModel={paginationModel}
       onPaginationModelChange={setPaginationModel}
       loading={isLoading}
+      onRowDoubleClick={handleRowDoubleClick}
       // onSelectionModelChange={changeCheckBoxesSelection}
       slots={{
         toolbar: GridToolbar,

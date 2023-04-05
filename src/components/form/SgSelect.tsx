@@ -64,6 +64,7 @@ export const SgSelect = (props: any) => {
               labelId={labelId}
               label={_label}
               error={isError}
+              value={defaultValue !== undefined ? defaultValue : ""}
             >
               {!defaultValue &&
                 <MenuItem value="">---------------------</MenuItem>

@@ -1,38 +1,62 @@
 import { SgButton }           from '../../../../components/form/button/SgButton';
 import { ViewTitle }          from '../../components/share/title/ViewTitle';
-import { SgLink }             from '../../../../components/form/button/SgLink';
-import { SgInput }            from '../../../../components/form/SgInput';
-import { useForm }            from 'react-hook-form';
-import { useAddUserMutation } from '../redux/api/userApi';
-import { userSchema }         from '../validation/userScheme';
-import { yupResolver }        from '@hookform/resolvers/yup';
-import useSnackbar            from '../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { useNavigate }        from 'react-router-dom';
-import { SgSelect }           from '../../../../components/form/SgSelect';
-import { BLOOD_TYPES }        from '../../../../utils/consts/shared/bloodTypes';
-import { defaultValues }      from '../helpers/userConst';
+import { SgLink }                 from '../../../../components/form/button/SgLink';
+import { SgInput }                from '../../../../components/form/SgInput';
+import { useForm }                from 'react-hook-form';
+import { useAddUserMutation, useUpdateUserMutation }     from '../redux/api/userApi';
+import { userSchema }             from '../validation/userScheme';
+import { yupResolver }            from '@hookform/resolvers/yup';
+import useSnackbar                from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useNavigate, useParams } from 'react-router-dom';
+import { SgSelect }               from '../../../../components/form/SgSelect';
+import { BLOOD_TYPES }            from '../../../../utils/consts/shared/bloodTypes';
+import { defaultValues }          from '../helpers/userConst';
+import { useEffect, useState }    from 'react';
+import useForms                   from '../../../../store/hooks/form/useForms';
 
 
 export const FormUser = () => {
-  const { handleSubmit, control, formState:{ errors } } = useForm<User>( {
-    defaultValues,
+  const { userId } = useParams();
+  const { userEdit } = useForms();
+  const [defaultValuesActive, setDefaultValuesActive] = useState<User>();
+
+  const { handleSubmit, control, formState:{ errors }, reset } = useForm<User>( {
+    defaultValues: defaultValuesActive,
     resolver: yupResolver(userSchema)
   });
+
+
+  useEffect(() => {
+    if (userId && userEdit && userId === `${userEdit.id}`) {
+      setDefaultValuesActive(userEdit);
+    } else {
+      setDefaultValuesActive(defaultValues);
+    }
+  }, [userId, userEdit]);
+
+  useEffect(() => {
+    reset(defaultValuesActive);
+  }, [defaultValuesActive, reset]);
+
   const { openSnackbarAction } = useSnackbar();
   const navigate = useNavigate();
 
   const [ addUser, { isLoading } ] = useAddUserMutation()
+  const [ updateUser ] = useUpdateUserMutation()
 
   const submitForm  = async (data: any) => {
     try {
-      const res = await addUser( data ).unwrap();
+      console.log(7777, data);
+      let res;
+      if (data.id) res = await updateUser( data ).unwrap();
+      else res = await addUser( data ).unwrap();
       openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
-      navigate('/admin/users')
+      navigate('/admin/users');
     } catch (e) {
       openSnackbarAction({ messageAction: 'Error al guardar', typeAction: 'error' })
     }
   }
-  
+
   return (
     <>
       <ViewTitle title="create_user">
@@ -66,6 +90,7 @@ export const FormUser = () => {
           <SgSelect
             key="filter-field-select"
             control={control}
+            defaultValue={ userEdit?.statusId || '' }
             name='statusId'
             label="status"
             required
@@ -80,6 +105,7 @@ export const FormUser = () => {
             key="rolId-select"
             control={control}
             name='rolId'
+            defaultValue={ userEdit?.rolId || '' }
             label="rol"
             required
             fieldId='id'
@@ -106,6 +132,7 @@ export const FormUser = () => {
             key="bloodType-select"
             control={control}
             name='bloodType'
+            defaultValue={ userEdit?.bloodType || '' }
             label="bloodType"
             required
             fieldId='value'
@@ -124,6 +151,7 @@ export const FormUser = () => {
             key="documentTypeId-select"
             control={control}
             name='documentTypeId'
+            defaultValue={ userEdit?.documentTypeId || '' }
             label="documentType"
             required
             fieldId='id'
@@ -173,7 +201,6 @@ export const FormUser = () => {
             control={control}
             errors={errors}
             label="password"
-            required
             type="password"
             size="small"
           />
@@ -183,7 +210,6 @@ export const FormUser = () => {
             control={control}
             errors={errors}
             label="passwordConfirm"
-            required
             type="password"
             size="small"
           />

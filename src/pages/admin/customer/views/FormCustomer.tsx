@@ -5,7 +5,7 @@ import { SgInput }                from '../../../../components/form/SgInput';
 import { useForm }                from 'react-hook-form';
 import { yupResolver }            from '@hookform/resolvers/yup';
 import useSnackbar                from '../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { useNavigate }            from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SgSelect }               from '../../../../components/form/SgSelect';
 import { BLOOD_TYPES }            from '../../../../utils/consts/shared/bloodTypes';
 import { useAddCustomerMutation } from '../redux/api/customerApi';
@@ -14,6 +14,8 @@ import { defaultValues } from '../helpers';
 
 
 export const FormCustomer = () => {
+  const { customerId } = useParams();
+  console.log('customerId', customerId);
   const { handleSubmit, control, formState:{ errors } } = useForm<Customer>( {
     defaultValues,
     resolver: yupResolver(customerSchema)

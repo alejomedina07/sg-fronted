@@ -12,7 +12,7 @@ import IconButton                        from '@mui/material/IconButton';
 import MenuIcon                          from '@mui/icons-material/Menu';
 import ChevronLeftIcon                   from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon                  from '@mui/icons-material/ChevronRight';
-import { Grid }                          from '@mui/material';
+import { Grid, Tooltip }                 from '@mui/material';
 import { NavBarItem, NavItem, navItems } from './componets';
 import { Languages }                     from './componets/nav/Languages';
 import { Environment }                   from '../../../utils/env/Environment';

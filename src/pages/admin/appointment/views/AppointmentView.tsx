@@ -68,13 +68,9 @@ export const AppointmentView = () => {
     const { range:newRange, view } = props;
     console.log('onRangeChange:::', newRange);
     if (Array.isArray(newRange) && newRange.length > 1) {
-      // newRange is an array with two Date objects
-      const startDate = newRange[0];
-      const endDate = newRange[newRange.length -1];
-      setRange({ start: managerDate.dateToString(newRange[0]), end: managerDate.addDaysString( newRange[newRange.length -1], 1) })
-      // refetch();
+      const end: Date = managerDate.addDays(newRange[newRange.length -1], 1);
+      setRange({ start: managerDate.dateToString(newRange[0]), end: managerDate.getEndDayToString( end ) })
       console.log('array',range);
-      // handle the rest of the logic for this case
     } else if (typeof newRange === 'object' && newRange !== null && 'start' in newRange && 'end' in newRange) {
       // range is an object with start and end properties
       const { start, end } = newRange;

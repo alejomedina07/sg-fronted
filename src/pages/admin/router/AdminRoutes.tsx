@@ -22,10 +22,12 @@ export const AdminRoutes = () => {
         <Route path='users'>
           <Route path='' element={<ListUser />} />
           <Route path='create' element={<FormUser />} />
+          <Route path='edit/:userId' element={<FormUser />} />
         </Route>
         <Route path='customer'>
           <Route path='' element={<ListCustomer />} />
           <Route path='create' element={<FormCustomer />} />
+          <Route path='edit/:customerId' element={<FormCustomer />} />
         </Route>
           <Route path='expense'>
               <Route path='' element={<ListExpense />} />

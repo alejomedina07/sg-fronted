@@ -3,6 +3,7 @@ import i18next from '../../../../config/i18n/i18n';
 import i18n from 'i18next';
 
 export const userSchema = Yup.object().shape({
+  id: Yup.number().nullable(),
   firstName: Yup.string().required(`${i18next.t('field_is_required')}`),
   lastName: Yup.string().required(`${i18next.t('field_is_required')}`),
   address: Yup.string().required(`${i18next.t('field_is_required')}`),
@@ -19,12 +20,31 @@ export const userSchema = Yup.object().shape({
   statusId: Yup.number().required(`${i18next.t('field_is_required')}`),
   rolId: Yup.number().required(`${i18next.t('field_is_required')}`),
   password: Yup.string()
-    .required(`${i18next.t('field_is_required')}`)
-    .min(6, `${i18next.t('min_password')}`)
-    .max(40, `${i18next.t('max_password')}`),
+    .test('password-required', `${i18next.t('field_is_required')}`, function(value) {
+    const id = this.parent.id;
+    return !id ? Yup.string()
+      .required(`${i18next.t('field_is_required')}`)
+  .min(6, `${i18next.t('min_password')}`)
+  .max(40, `${i18next.t('max_password')}`)
+  .isValidSync(value)
+  : true;
+  }),
+  // password: Yup.string()
+  //   .required(`${i18next.t('field_is_required')}`)
+  //   .min(6, `${i18next.t('min_password')}`)
+  //   .max(40, `${i18next.t('max_password')}`),
+  // passwordConfirm: Yup.string()
+  //   .required(`${i18next.t('field_is_required')}`)
+  //   .oneOf([Yup.ref('password'), ''], `${i18next.t('confirm_password')}`),
   passwordConfirm: Yup.string()
-    .required(`${i18next.t('field_is_required')}`)
-    .oneOf([Yup.ref('password'), ''], `${i18next.t('confirm_password')}`),
+    .test('password-required', `${i18next.t('field_is_required')}`, function(value) {
+      const id = this.parent.id;
+      return !id ? Yup.string()
+          .required(`${i18next.t('field_is_required')}`)
+          .oneOf([Yup.ref('password'), ''], `${i18next.t('confirm_password')}`)
+          .isValidSync(value)
+        : true;
+    }),
 });
 
 // firstName: string;

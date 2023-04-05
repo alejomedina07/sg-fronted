@@ -13,7 +13,7 @@ const initialState = {
   openedDialogs: []
 };
 
-const referSlice = createSlice({
+const dialogsSlice = createSlice({
   name: SLICE_NAME,
   initialState,
   reducers: {
@@ -31,6 +31,6 @@ const referSlice = createSlice({
   },
 });
 
-export const { closeConfirmDialogAction, openConfirmDialogAction } = referSlice.actions;
+export const { closeConfirmDialogAction, openConfirmDialogAction } = dialogsSlice.actions;
 
-export default referSlice.reducer;
+export default dialogsSlice.reducer;

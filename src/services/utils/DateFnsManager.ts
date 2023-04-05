@@ -1,5 +1,5 @@
-import { addDays, endOfMonth, formatISO, parseISO, startOfMonth } from 'date-fns';
-import { utcToZonedTime }                                         from 'date-fns-tz';
+import { addDays, endOfDay, endOfMonth, formatISO, parseISO, setHours, startOfMonth } from 'date-fns';
+import { utcToZonedTime }                                                   from 'date-fns-tz';
 
 class DateFnsManager {
 
@@ -14,6 +14,10 @@ class DateFnsManager {
     return utcToZonedTime(date, this.timezone)
   }
 
+  addDays(date:Date, days: number): Date {
+    return addDays(date, days)
+  }
+
   dateToString(date: Date): string {
     return formatISO(date)
   }
@@ -21,6 +25,18 @@ class DateFnsManager {
   addDaysString(date:Date, days: number): string {
     return formatISO( addDays(date, days) )
   }
+
+  addHoursAndMinutes(date:Date, hours: number, minutes: number): string {
+    const endDay = endOfDay(date)
+    console.log('addHoursAndMinutes::', endDay);
+    return formatISO( setHours(date, hours) )
+  }
+
+  getEndDayToString(date:Date): string {
+    return formatISO( endOfDay(date) )
+  }
+
+
 
 }
 

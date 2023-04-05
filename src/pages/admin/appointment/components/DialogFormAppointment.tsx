@@ -18,6 +18,7 @@ import {
   useUpdateAppointmentMutation
 }                                       from '../redux/api/appointmentApi';
 import useSnackbar                      from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useGetCustomersQuery }         from '../../customer/redux/api/customerApi';
 
 
 registerLocale('es', es)
@@ -34,18 +35,14 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
   const { onClose, open, refetch, appointment } = props;
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [ addAppointment, { isLoading:isLoadingData  } ] = useAddAppointmentMutation();
-  const [ updateAppointment, { isLoading:isLoadingUpdate  } ] = useUpdateAppointmentMutation()
+  const [ updateAppointment ] = useUpdateAppointmentMutation()
+  const { data:appointmentTypes } = useGetAppointmentTypeQuery('')
+  const { data:customers } = useGetCustomersQuery('')
 
   const { openSnackbarAction } = useSnackbar();
 
-  // console.log(9, appointment);
-
-  const { data:appointmentTypes, isLoading:appointmentTypesLoading } = useGetAppointmentTypeQuery('')
 
   const [defaultValues, setDefaultValues] = useState<AppointmentDto>(appointment || defaultValuesFormAppointment);
-
-  // const defaultValues = appointment || defaultValuesFormAppointment;
-
 
   useEffect( () => {
     if (appointment) {
@@ -74,7 +71,10 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
     try {
 
       console.log('data:::: ', data);
-
+      if (data.id) {
+        delete data.customer
+        delete data.appointmentType
+      }
       const res = data.id ?  await updateAppointment( data ).unwrap() : await addAppointment( data ).unwrap();
       openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
       refetch();
@@ -146,12 +146,12 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
               control={control}
               name='customerId'
               label="customerId"
-              fieldId='value'
-              fieldLabel='value'
+              fieldId='id'
+              fieldLabel='name'
               className="flex-1 !m-3"
               size='small'
               errors={errors}
-              options={[]}
+              options={customers?.data || []}
             />
           </div>
           <div className="flex flex-row items-center mb-4">

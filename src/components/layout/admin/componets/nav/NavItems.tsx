@@ -25,15 +25,15 @@ export const navItems:NavItem[] = [
     link:'/admin/customer', icon: <PermContactCalendarIcon/>
   },
   {
-    id:6, name: 'customer',
-    link:'/admin/report', icon: <TrendingUpIcon/>
-  },
-  {
     id:6, name: 'expense',
     link:'/admin/expense', icon: <AddBusinessIcon/>
   },
   {
     id:7, name: 'inventory',
     link:'/admin/inventory', icon: <PlaylistAddCircleIcon/>
+  },
+  {
+    id:1, name: 'reports',
+    link:'/admin/report', icon: <TrendingUpIcon/>
   },
 ]
