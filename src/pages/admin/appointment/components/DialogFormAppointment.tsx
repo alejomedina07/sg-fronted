@@ -1,4 +1,4 @@
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 import { useState }                                     from 'react';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import { SgTransition }                 from '../../../../components/utils/dialogs/SgTransition';
@@ -7,7 +7,7 @@ import DatePicker, { registerLocale }                            from 'react-dat
 import es                                                        from 'date-fns/locale/es';
 import { useForm }                                               from 'react-hook-form';
 import { yupResolver }                                           from '@hookform/resolvers/yup';
-import { defaultValuesFormAppointment }                          from '../AppontmentConst';
+import { defaultValuesFormAppointment }                          from '../AppointmentConst';
 import { appointmentSchema }                                     from '../validation/appointmentSchema';
 import { SgInput }                                               from '../../../../components/form/SgInput';
 import { SgSelect }                                              from '../../../../components/form/SgSelect';
@@ -15,6 +15,7 @@ import { SgButton }                                              from '../../../
 import { useAddAppointmentMutation, useGetAppointmentTypeQuery } from '../redux/api/appointmentApi';
 import useSnackbar
                                                                  from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import {t} from 'i18next';
 
 
 registerLocale('es', es)
@@ -52,23 +53,23 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
   const submitForm = async(data: object) => {
     try {
       const res = await addAppointment( data ).unwrap();
-      openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
+      openSnackbarAction({ messageAction: res.msg || `${t('created')}`, typeAction: 'success' })
       refetch();
       reset();
       onClose();
     } catch (e) {
-      openSnackbarAction({ messageAction: 'Error al guardar', typeAction: 'error' })
+      openSnackbarAction({ messageAction: `${t('error_save')}`, typeAction: 'error' })
     }
   }
 
 
   return (
     <Dialog onClose={handleClose} open={open} fullWidth maxWidth={'md'} TransitionComponent={SgTransition}>
-      <SgDialogTitle id={'appointment-dialog'} onClose={onClose}> Agregar appointment</SgDialogTitle>
+      <SgDialogTitle id={'appointment-dialog'} onClose={onClose}>{t('add_appointment')} </SgDialogTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         <DialogContent dividers>
           <div className="flex flex-row items-center mb-4">
-            <span className="pl-4">Fecha: </span>
+            <span className="pl-4">{t('date')}: </span>
             <span className="flex-1 !m-3 border rounded border-gray-300 pr-3">
               <DatePicker
                 selected={startDate}
@@ -86,7 +87,7 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
               type="number"
               control={control}
               errors={errors}
-              label="duration appointment"
+              label={t('appointment_duration')}
               required
               size="small"
             />
@@ -97,7 +98,7 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
               name="name"
               control={control}
               errors={errors}
-              label="name appointment"
+              label={t('appointment_name')}
               size="small"
             />
           </div>
@@ -106,7 +107,7 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
               key="appointmentType-select"
               control={control}
               name='appointmentTypeId'
-              label="appointmentTypeId"
+              label={t('appointment_type')}
               fieldId='id'
               fieldLabel='name'
               className="flex-1 !m-3"
@@ -118,10 +119,10 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
 
           <div className="flex flex-row items-center mb-4">
             <SgSelect
-              key="appointmentType-select"
+              key="customerId-select"
               control={control}
               name='customerId'
-              label="customerId"
+              label={t('customer')}
               fieldId='value'
               fieldLabel='value'
               className="flex-1 !m-3"
@@ -136,7 +137,7 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
               name="description"
               control={control}
               errors={errors}
-              label="description appointment"
+              label={t('description')}
               size="small"
               multiline
               rows={4}
@@ -145,8 +146,8 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
 
         </DialogContent>
         <DialogActions>
-          <Button  variant="outlined" color="warning" onClick={handleClose} className="mx-4" >Cerrar</Button>
-          <SgButton variant="contained" color="primary" type="submit" label="Guardar" sending={isLoadingData}/>
+          <Button  variant="outlined" color="warning" onClick={handleClose} className="mx-4" >{t('close')}</Button>
+          <SgButton variant="contained" color="primary" type="submit" label={t('save')} sending={isLoadingData}/>
         </DialogActions>
       </form>
 

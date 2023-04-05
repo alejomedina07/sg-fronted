@@ -9,9 +9,9 @@ import { useNavigate }            from 'react-router-dom';
 import { SgSelect }               from '../../../../components/form/SgSelect';
 import { BLOOD_TYPES }            from '../../../../utils/consts/shared/bloodTypes';
 import { useAddCustomerMutation } from '../redux/api/customerApi';
-import { customerSchema } from '../validation/customerSchema';
-import { defaultValues } from '../helpers';
-
+import { customerSchema }         from '../validation/customerSchema';
+import { defaultValues }          from '../helpers';
+import { t }                      from 'i18next';
 
 export const FormCustomer = () => {
   const { handleSubmit, control, formState:{ errors } } = useForm<Customer>( {
@@ -21,26 +21,23 @@ export const FormCustomer = () => {
   const { openSnackbarAction } = useSnackbar();
   const navigate = useNavigate();
 
-  console.log(1, errors);
-
   const [ addCustomer, { isLoading } ] = useAddCustomerMutation()
 
   const submitForm  = async (data: any) => {
     try {
-      console.log(777, data);
       const res = await addCustomer( data ).unwrap();
-      openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
+      openSnackbarAction({ messageAction: res.msg || `${t('created')}`, typeAction: 'success' })
       navigate('/admin/customer')
     } catch (e) {
-      openSnackbarAction({ messageAction: 'Error al guardar', typeAction: 'error' })
+      openSnackbarAction({ messageAction: `${t('error_save')}`, typeAction: 'error' })
     }
   }
   
   return (
     <>
-      <ViewTitle title="create_customer">
+      <ViewTitle title={t('create_customer')}>
         {/* <SgButton label="list_user" href="/admin/users"/> */}
-        <SgLink label="list_customer" to="/admin/customer"/>
+        <SgLink label={t('list_customer')} to="/admin/customer"/>
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         {/* name phoneNumber */}
@@ -50,7 +47,7 @@ export const FormCustomer = () => {
             name="name"
             control={control}
             errors={errors}
-            label="name"
+            label={t('name')}
             required
             size="small"
           />
@@ -60,7 +57,7 @@ export const FormCustomer = () => {
             name="phoneNumber"
             control={control}
             errors={errors}
-            label="phoneNumber"
+            label={t('phone_number')}
             required
             size="small"
           />
@@ -72,7 +69,7 @@ export const FormCustomer = () => {
             key="documentTypeId-select"
             control={control}
             name='documentTypeId'
-            label="documentType"
+            label= {t('document_type')}
             required
             fieldId='id'
             fieldLabel='name'
@@ -87,7 +84,7 @@ export const FormCustomer = () => {
             name="document"
             control={control}
             errors={errors}
-            label="documentNumber"
+            label= {t('document_number')}
             required
             size="small"
           />
@@ -98,7 +95,7 @@ export const FormCustomer = () => {
             key="filter-field-select"
             control={control}
             name='statusId'
-            label="status"
+            label= {t('status')}
             required
             fieldId='id'
             fieldLabel='name'
@@ -111,7 +108,7 @@ export const FormCustomer = () => {
             key="bloodType-select"
             control={control}
             name='bloodType'
-            label="bloodType"
+            label={t('blood_type')}
             fieldId='value'
             fieldLabel='value'
             className="flex-1 !m-3"
@@ -127,13 +124,13 @@ export const FormCustomer = () => {
             name="address"
             control={control}
             errors={errors}
-            label="address"
+            label={t('address')}
             required
             size="small"
           />
         </div>
         <div className="mt-4 mb-4 flex flex-row items-end justify-end">
-          <SgButton variant="contained" color="primary" type="submit" label="Guardar" sending={isLoading}/>
+          <SgButton variant="contained" color="primary" type="submit" label={t('save')} sending={isLoading}/>
         </div>
       </form>
     </>

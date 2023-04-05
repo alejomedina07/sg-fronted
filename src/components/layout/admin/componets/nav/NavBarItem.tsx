@@ -2,6 +2,7 @@ import * as React                                               from 'react';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link }                                                 from 'react-router-dom';
 import { NavItem }                                              from '../index';
+import {t} from 'i18next';
 
 interface NavBarItemProps {
   option: NavItem;
@@ -27,7 +28,7 @@ export const NavBarItem = (props:NavBarItemProps) => {
           >
             { option.icon }
           </ListItemIcon>
-          <ListItemText primary={option.name} sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary={t(option.name)} sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </ListItem>
     </Link>

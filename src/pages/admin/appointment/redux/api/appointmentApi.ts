@@ -22,10 +22,18 @@ export const appointmentApi = createApi({
     }),
     getAppointmentType: build.query({
       query: ( )=> '/appointment/type',
+      keepUnusedDataFor: 1,
     }),
     addAppointment: build.mutation<any, any>({
       query: ( body: any ) => ({
         url:'/appointment',
+        method: 'POST',
+        body,
+      }),
+    }),
+    addAppointmentType: build.mutation<any, any>({
+      query: ( body: any ) => ({
+        url:'/appointment/type',
         method: 'POST',
         body,
       }),
@@ -35,5 +43,5 @@ export const appointmentApi = createApi({
 
 })
 
-export const { useGetAppointmentsQuery, useGetAppointmentTypeQuery, useAddAppointmentMutation } = appointmentApi;
+export const { useGetAppointmentsQuery, useGetAppointmentTypeQuery, useAddAppointmentMutation, useAddAppointmentTypeMutation } = appointmentApi;
 

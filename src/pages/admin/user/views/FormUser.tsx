@@ -11,6 +11,7 @@ import { useNavigate }        from 'react-router-dom';
 import { SgSelect }           from '../../../../components/form/SgSelect';
 import { BLOOD_TYPES }        from '../../../../utils/consts/shared/bloodTypes';
 import { defaultValues }      from '../helpers/userConst';
+import { t }                  from 'i18next';
 
 
 export const FormUser = () => {
@@ -26,18 +27,18 @@ export const FormUser = () => {
   const submitForm  = async (data: any) => {
     try {
       const res = await addUser( data ).unwrap();
-      openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
+      openSnackbarAction({ messageAction: res.msg || `${t('created')}`, typeAction: 'success' })
       navigate('/admin/users')
     } catch (e) {
-      openSnackbarAction({ messageAction: 'Error al guardar', typeAction: 'error' })
+      openSnackbarAction({ messageAction: `${t('error_save')}`, typeAction: 'error' })
     }
   }
   
   return (
     <>
-      <ViewTitle title="create_user">
+      <ViewTitle title={t('create_user')}>
         {/* <SgButton label="list_user" href="/admin/users"/> */}
-        <SgLink label="list_user" to="/admin/users"/>
+        <SgLink label={t('list_user')} to="/admin/users"/>
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         {/* firstName lastname */}
@@ -47,7 +48,7 @@ export const FormUser = () => {
             name="firstName"
             control={control}
             errors={errors}
-            label="first_name"
+            label={t('first_name')}
             required
             size="small"
           />
@@ -56,7 +57,7 @@ export const FormUser = () => {
             name="lastName"
             control={control}
             errors={errors}
-            label="last_name"
+            label={t('last_name')}
             required
             size="small"
           />
@@ -67,7 +68,7 @@ export const FormUser = () => {
             key="filter-field-select"
             control={control}
             name='statusId'
-            label="status"
+            label={t('status')}
             required
             fieldId='id'
             fieldLabel='name'
@@ -80,7 +81,7 @@ export const FormUser = () => {
             key="rolId-select"
             control={control}
             name='rolId'
-            label="rol"
+            label={t('rol')}
             required
             fieldId='id'
             fieldLabel='name'
@@ -98,7 +99,7 @@ export const FormUser = () => {
             name="phoneNumber"
             control={control}
             errors={errors}
-            label="phoneNumber"
+            label={t('phone_number')}
             required
             size="small"
           />
@@ -106,7 +107,7 @@ export const FormUser = () => {
             key="bloodType-select"
             control={control}
             name='bloodType'
-            label="bloodType"
+            label={t('blood_type')}
             required
             fieldId='value'
             fieldLabel='value'
@@ -124,7 +125,7 @@ export const FormUser = () => {
             key="documentTypeId-select"
             control={control}
             name='documentTypeId'
-            label="documentType"
+            label={t('document_type')}
             required
             fieldId='id'
             fieldLabel='name'
@@ -139,7 +140,7 @@ export const FormUser = () => {
             name="documentNumber"
             control={control}
             errors={errors}
-            label="documentNumber"
+            label={t('document_number')}
             required
             size="small"
           />
@@ -151,7 +152,7 @@ export const FormUser = () => {
             name="email"
             control={control}
             errors={errors}
-            label="email"
+            label={t('email')}
             required
             size="small"
           />
@@ -160,7 +161,7 @@ export const FormUser = () => {
             name="address"
             control={control}
             errors={errors}
-            label="address"
+            label={t('address')}
             required
             size="small"
           />
@@ -172,7 +173,7 @@ export const FormUser = () => {
             name="password"
             control={control}
             errors={errors}
-            label="password"
+            label={t('password')}
             required
             type="password"
             size="small"
@@ -182,7 +183,7 @@ export const FormUser = () => {
             name="passwordConfirm"
             control={control}
             errors={errors}
-            label="passwordConfirm"
+            label={t('password_confirm')}
             required
             type="password"
             size="small"
@@ -190,7 +191,7 @@ export const FormUser = () => {
         </div>
 
         <div className="mt-4 mb-4 flex flex-row items-end justify-end">
-          <SgButton variant="contained" color="primary" type="submit" label="Guardar" sending={isLoading}/>
+          <SgButton variant="contained" color="primary" type="submit" label={t('save')} sending={isLoading}/>
         </div>
       </form>
     </>

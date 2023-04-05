@@ -7,6 +7,7 @@ import { useGetAppointmentsQuery } from '../redux/api/appointmentApi';
 import { Fab, LinearProgress }     from '@mui/material';
 import AddIcon                     from '@mui/icons-material/Add';
 import { DialogFormAppointment }          from '../components/DialogFormAppointment';
+import { t }                      from 'i18next';
 
 export const MyCalendarEvent = (props: EventProps<AppointmentEvent>) => {
   const { event } = props;
@@ -20,7 +21,7 @@ export const AppointmentView = () => {
   const [open, setOpen] = useState<boolean>(false);
   // console.log(123, data);
 
-  const [lastView, setLastView] = useState<"month" | "week" | "work_week" | "day" | "agenda">(
+  const [lastView, setLastView] = useState< 'month' | 'week' | 'work_week' | 'day' | 'agenda'>(
     () => {
       const storedValue = localStorage.getItem('lastView');
       if (storedValue && (storedValue === 'month' || storedValue === 'week' || storedValue === 'work_week' || storedValue === 'day' || storedValue === 'agenda')) {
@@ -30,7 +31,7 @@ export const AppointmentView = () => {
     }
   );
 
-  const onViewChange = (event: "month" | "week" | "work_week" | "day" | "agenda") => {
+  const onViewChange = (event: 'month' | 'week' | 'work_week' | 'day' | 'agenda') => {
     localStorage.setItem('lastView', event);
     setLastView(event);
   }
@@ -59,7 +60,7 @@ export const AppointmentView = () => {
         onView={onViewChange}
         onSelectEvent={onSelect}
       />
-      <Fab className="!absolute bottom-5 right-8" aria-label={'Agregar'} color="primary" onClick={()=> setOpen(!open)}>
+      <Fab className="!absolute bottom-5 right-8" aria-label={t('add')} color="primary" onClick={()=> setOpen(!open)}>
         <AddIcon />
       </Fab>
       <DialogFormAppointment open={open} onClose={handleClose} refetch={refetch}/>
