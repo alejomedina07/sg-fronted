@@ -13,7 +13,7 @@ export const inventoryApi = createApi({
 
         getInventory: build.query({
             query: ( )=> '/inventory',
-            keepUnusedDataFor: 30,
+            keepUnusedDataFor: 0,
         }),
         addInventory: build.mutation<any, any>({
             query: ( body: any ) => ({
@@ -22,9 +22,16 @@ export const inventoryApi = createApi({
                 body,
             }),
         }),
+        updateInventory: build.mutation<any, any>({
+            query: ( body: any ) => ({
+                url:`/inventory/${ body.id }`,
+                method: 'PUT',
+                body,
+            }),
+        }),
 
     })
 
 })
 
-export const { useGetInventoryQuery, useAddInventoryMutation } = inventoryApi;
+export const { useGetInventoryQuery, useAddInventoryMutation, useUpdateInventoryMutation } = inventoryApi;

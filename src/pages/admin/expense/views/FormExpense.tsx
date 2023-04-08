@@ -1,39 +1,60 @@
 import { SgButton }               from '../../../../components/form/button/SgButton';
 import { ViewTitle }              from '../../components/share/title/ViewTitle';
 import { SgLink }                 from '../../../../components/form/button/SgLink';
-import { SgInput }                from '../../../../components/form/SgInput';
-import { useForm }                from 'react-hook-form';
-import { yupResolver }            from '@hookform/resolvers/yup';
-import useSnackbar                from '../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { useNavigate }            from 'react-router-dom';
-import {useAddExpenseMutation} from '../redux/api/expenseApi';
-import {defaultValues} from '../helpers/expenseConst';
-import {expenseScheme} from '../validation/expenseScheme';
-import { t }                      from 'i18next';
+import { SgInput }                   from '../../../../components/form/SgInput';
+import { useForm }                   from 'react-hook-form';
+import { yupResolver }               from '@hookform/resolvers/yup';
+import useSnackbar                   from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useNavigate, useParams }                          from 'react-router-dom';
+import { useAddExpenseMutation, useUpdateExpenseMutation } from '../redux/api/expenseApi';
+import {defaultValues}                                     from '../helpers/expenseConst';
+import {expenseScheme}               from '../validation/expenseScheme';
+import { t }                         from 'i18next';
+import useForms                from '../../../../store/hooks/form/useForms';
+import { useEffect, useState } from 'react';
 
 
 export const FormExpense = () => {
-    const {handleSubmit, control, formState: {errors}} = useForm<Expense>({
-        defaultValues,
-        resolver: yupResolver(expenseScheme)
-    });
+    const { expenseId } = useParams();
+    const { expenseEdit } = useForms();
+    const [defaultValuesActive, setDefaultValuesActive] = useState<Expense>();
     const {openSnackbarAction} = useSnackbar();
     const navigate = useNavigate();
+    const [addExpense, {isLoading}] = useAddExpenseMutation();
+    const [ updateExpense ] = useUpdateExpenseMutation();
 
-    console.log(1, errors);
+    console.log('default values', defaultValuesActive);
 
-    const [addExpense, {isLoading}] = useAddExpenseMutation()
+    const {handleSubmit, control, formState: {errors}, reset} = useForm<Expense>({
+        defaultValues:defaultValuesActive,
+        resolver: yupResolver(expenseScheme)
+    });
+
+    useEffect(() => {
+        if (expenseId && expenseEdit && expenseId === `${expenseEdit.id}`) {
+            setDefaultValuesActive(expenseEdit);
+        } else {
+            setDefaultValuesActive(defaultValues);
+        }
+    }, [expenseId, expenseEdit]);
+
+    useEffect(() => {
+        reset(defaultValuesActive);
+    }, [defaultValuesActive, reset]);
+
 
     const submitForm = async (data: any) => {
         try {
-            console.log(777, data);
-            const res = await addExpense(data).unwrap();
+            let res;
+            if (data.id) res = await updateExpense( data ).unwrap();
+            else res = await addExpense(data).unwrap();
             openSnackbarAction({messageAction: res.msg || `${t('created')}`, typeAction: 'success'})
             navigate('/admin/expense')
         } catch (e) {
             openSnackbarAction({messageAction: `${t('error_save')}`, typeAction: 'error'})
         }
     }
+
 
     return (
         <>

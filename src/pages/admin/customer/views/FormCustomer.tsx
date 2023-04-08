@@ -8,27 +8,50 @@ import useSnackbar                from '../../../../store/hooks/notifications/sn
 import { useNavigate, useParams } from 'react-router-dom';
 import { SgSelect }               from '../../../../components/form/SgSelect';
 import { BLOOD_TYPES }            from '../../../../utils/consts/shared/bloodTypes';
-import { useAddCustomerMutation } from '../redux/api/customerApi';
+import { useAddCustomerMutation, useUpdateCustomerMutation } from '../redux/api/customerApi';
 import { customerSchema }         from '../validation/customerSchema';
 import { defaultValues }          from '../helpers';
 import { t }                      from 'i18next';
+import { useEffect, useState }    from 'react';
+import useForms                   from '../../../../store/hooks/form/useForms';
 
 export const FormCustomer = () => {
   const { customerId } = useParams();
-  console.log('customerId', customerId);
-  const { handleSubmit, control, formState:{ errors } } = useForm<Customer>( {
-    defaultValues,
-    resolver: yupResolver(customerSchema)
-  });
+  const { customerEdit } = useForms();
+  const [defaultValuesActive, setDefaultValuesActive] = useState<Customer>();
   const { openSnackbarAction } = useSnackbar();
   const navigate = useNavigate();
+  const [ addCustomer, { isLoading } ] = useAddCustomerMutation();
+  const [ updateCustomer ] = useUpdateCustomerMutation();
 
-  const [ addCustomer, { isLoading } ] = useAddCustomerMutation()
+  console.log('customerId', customerId);
+
+  const { handleSubmit, control, formState:{ errors }, reset } = useForm<Customer>( {
+    defaultValues:defaultValuesActive,
+    resolver: yupResolver(customerSchema)
+  });
+
+  console.log('default values', defaultValuesActive);
+
+
+  useEffect(() => {
+    if (customerId && customerEdit && customerId === `${customerEdit.id}`) {
+      setDefaultValuesActive(customerEdit);
+    } else {
+      setDefaultValuesActive(defaultValues);
+    }
+  }, [customerId, customerEdit]);
+
+  useEffect(() => {
+    reset(defaultValuesActive);
+  }, [defaultValuesActive, reset]);
 
   const submitForm  = async (data: any) => {
     try {
-      const res = await addCustomer( data ).unwrap();
-      openSnackbarAction({ messageAction: res.msg || `${t('created')}`, typeAction: 'success' })
+      let res;
+      if (data.id) res = await updateCustomer( data ).unwrap();
+      else res = await addCustomer( data ).unwrap();
+        openSnackbarAction({ messageAction: res.msg || `${t('created')}`, typeAction: 'success' })
       navigate('/admin/customer')
     } catch (e) {
       openSnackbarAction({ messageAction: `${t('error_save')}`, typeAction: 'error' })
@@ -38,7 +61,6 @@ export const FormCustomer = () => {
   return (
     <>
       <ViewTitle title={t('create_customer')}>
-        {/* <SgButton label="list_user" href="/admin/users"/> */}
         <SgLink label={t('list_customer')} to="/admin/customer"/>
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>
@@ -72,6 +94,7 @@ export const FormCustomer = () => {
             control={control}
             name='documentTypeId'
             label= {t('document_type')}
+            defaultValue={ customerEdit?.documentTypeId || '' }
             required
             fieldId='id'
             fieldLabel='name'
@@ -98,6 +121,7 @@ export const FormCustomer = () => {
             control={control}
             name='statusId'
             label= {t('status')}
+            defaultValue={ customerEdit?.statusId || '' }
             required
             fieldId='id'
             fieldLabel='name'
@@ -111,6 +135,7 @@ export const FormCustomer = () => {
             control={control}
             name='bloodType'
             label={t('blood_type')}
+            defaultValue={ customerEdit?.bloodType || '' }
             fieldId='value'
             fieldLabel='value'
             className="flex-1 !m-3"

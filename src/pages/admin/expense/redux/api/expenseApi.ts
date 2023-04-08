@@ -22,10 +22,17 @@ export const expenseApi = createApi({
                 body,
             }),
         }),
+        updateExpense: build.mutation<any, any>({
+            query: ( body: any ) => ({
+                url:`/expense/${ body.id }`,
+                method: 'PUT',
+                body,
+            }),
+        }),
 
     })
 
 })
 
-export const { useGetExpenseQuery, useAddExpenseMutation } = expenseApi;
+export const { useGetExpenseQuery, useAddExpenseMutation, useUpdateExpenseMutation } = expenseApi;
 

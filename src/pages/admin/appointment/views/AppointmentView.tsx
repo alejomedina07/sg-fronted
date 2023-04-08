@@ -96,7 +96,7 @@ export const AppointmentView = () => {
         onRangeChange={ (range, view)=> onRangeChange( { range, view })}
         onSelectEvent={onSelect}
       />
-      <Fab className="!absolute bottom-5 right-8" aria-label={t('add')} color="primary" onClick={()=> setOpen(!open)}>
+      <Fab className="!absolute bottom-5 right-8" aria-label={`${t('add')}`} color="primary" onClick={()=> setOpen(!open)}>
         <AddIcon />
       </Fab>
       { !!open && (

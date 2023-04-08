@@ -1,8 +1,8 @@
 import { GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
-import DateUtils                                from '../../../../services/utils/DateUtils';
-import { t }                      from 'i18next';
+import { t }                                    from 'i18next';
+import DateFnsManager                           from '../../../../services/utils/DateFnsManager';
 
-const { formatDate, FORMATS_DATE } = DateUtils;
+const dateManage = new DateFnsManager()
 
 export const ColumnsCustomer: GridColDef[] = [
   { field: 'id', headerName: 'ID', flex: 30 },
@@ -21,7 +21,7 @@ export const ColumnsCustomer: GridColDef[] = [
       if (params.value == null) {
         return '';
       }
-      return formatDate(params.value, FORMATS_DATE.MM_DD_YYYY);
+      return dateManage.getFormatStandard(new Date(params.value));
     },
   },
 ];

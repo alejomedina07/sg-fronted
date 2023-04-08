@@ -5,11 +5,21 @@ const SLICE_NAME = 'forms';
 
 interface initialStateFormProps {
   userEdit: null | User
+  customerEdit: null | Customer
+  expenseEdit: null | Expense
+  inventoryEdit: null | Inventory
+  serviceEdit: null | Service
+  appointmentTypeEdit: null | AppointmentType
 }
 
 // Slice
 const initialState: initialStateFormProps  = {
-  userEdit: null
+  userEdit: null,
+  customerEdit: null,
+  expenseEdit: null,
+  inventoryEdit: null,
+  serviceEdit: null,
+  appointmentTypeEdit: null,
 };
 
 const formSlice = createSlice({
@@ -35,9 +45,55 @@ const formSlice = createSlice({
         state.userEdit = user
       }
     },
+    setCustomerEdit: (state, action) => {
+      let customer = { ...action.payload };
+      if (customer) {
+        if (Object.getOwnPropertyDescriptor(customer, 'status')?.configurable) {
+          delete customer.status
+        }
+        if (Object.getOwnPropertyDescriptor(customer, 'documentType')?.configurable) {
+          delete customer.documentType
+        }
+        if (Object.getOwnPropertyDescriptor(customer, 'password')?.configurable) {
+          delete customer.password
+        }
+        state.customerEdit = customer
+      }
+    },
+    setExpenseEdit: (state, action) => {
+      let expense = { ...action.payload };
+      if (expense) {
+        state.expenseEdit = expense
+      }
+    },
+    setInventoryEdit: (state, action) => {
+      let inventory = { ...action.payload };
+      if (inventory) {
+        if (Object.getOwnPropertyDescriptor(inventory, 'status')?.configurable) {
+          delete inventory.status
+        }
+        state.inventoryEdit = inventory
+      }
+    },
+    setServiceEdit: (state, action) => {
+      let service = { ...action.payload };
+      if (service) {
+        if (Object.getOwnPropertyDescriptor(service, 'status')?.configurable) {
+          delete service.status
+        }
+        state.serviceEdit = service
+      }
+    },
+    setAppointmentTypeEdit: (state, action) => {
+      let appointmentType = { ...action.payload };
+      if (appointmentType) {
+
+        state.appointmentTypeEdit = appointmentType
+      }
+    },
   },
 });
 
-export const { setUserEdit } = formSlice.actions;
+export const { setUserEdit, setCustomerEdit, setExpenseEdit, setInventoryEdit, setServiceEdit, setAppointmentTypeEdit} = formSlice.actions;
 
 export default formSlice.reducer;

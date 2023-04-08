@@ -1,34 +1,55 @@
 import { SgButton }               from '../../../../components/form/button/SgButton';
 import { ViewTitle }              from '../../components/share/title/ViewTitle';
 import { SgLink }                 from '../../../../components/form/button/SgLink';
-import { SgInput }                from '../../../../components/form/SgInput';
-import { useForm }                from 'react-hook-form';
-import { yupResolver }            from '@hookform/resolvers/yup';
-import useSnackbar                from '../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { useNavigate }            from 'react-router-dom';
-import {defaultValues}            from '../helpers/inventoryConst';
-import {inventoryScheme}          from '../validation/inventoryScheme';
-import {useAddInventoryMutation}  from '../redux/api/inventoryApi';
-import {SgSelect} from '../../../../components/form/SgSelect';
-import { t }                      from 'i18next';
+import { SgInput }                                             from '../../../../components/form/SgInput';
+import { useForm }                                             from 'react-hook-form';
+import { yupResolver }                                         from '@hookform/resolvers/yup';
+import useSnackbar                                             from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useNavigate, useParams }                              from 'react-router-dom';
+import {defaultValues}                                         from '../helpers/inventoryConst';
+import {inventoryScheme}                                       from '../validation/inventoryScheme';
+import { useAddInventoryMutation, useUpdateInventoryMutation } from '../redux/api/inventoryApi';
+import {SgSelect}                                              from '../../../../components/form/SgSelect';
+import { t }                                                   from 'i18next';
+import { useEffect, useState }                                 from 'react';
+import useForms                                                from '../../../../store/hooks/form/useForms';
 
 
 export const FormInventory = () => {
-    const {handleSubmit, control, formState: {errors}} = useForm<Inventory>({
-        defaultValues,
-        resolver: yupResolver(inventoryScheme)
-    });
+    const { inventoryId } = useParams();
+    const { inventoryEdit } = useForms();
+    const [ defaultValuesActive, setDefaultValuesActive ] = useState<Inventory>();
+    const [ updateInventory ] = useUpdateInventoryMutation();
     const {openSnackbarAction} = useSnackbar();
     const navigate = useNavigate();
-
-    console.log(1, errors);
-
     const [addInventory, {isLoading}] = useAddInventoryMutation()
+
+    console.log('inventoryId', inventoryId);
+
+    const {handleSubmit, control, formState: {errors}, reset} = useForm<Inventory>({
+        defaultValues:defaultValuesActive,
+        resolver: yupResolver(inventoryScheme)
+    });
+
+    console.log('default values', defaultValuesActive);
+
+    useEffect(() => {
+        if ( inventoryId && inventoryEdit && inventoryId === `${inventoryEdit.id}`) {
+            setDefaultValuesActive(inventoryEdit);
+        } else {
+            setDefaultValuesActive(defaultValues);
+        }
+    }, [inventoryId, inventoryEdit]);
+
+    useEffect(() => {
+        reset(defaultValuesActive);
+    }, [defaultValuesActive, reset]);
 
     const submitForm = async (data: any) => {
         try {
-            console.log(777, data);
-            const res = await addInventory(data).unwrap();
+            let res;
+            if (data.id) res = await updateInventory( data ).unwrap();
+            else res = await addInventory( data ).unwrap();
             openSnackbarAction({messageAction: res.msg || `${t('created')}`, typeAction: 'success'})
             navigate('/admin/inventory')
         } catch (e) {
@@ -82,6 +103,7 @@ export const FormInventory = () => {
                         control={control}
                         name='status'
                         label={t('status')}
+                        defaultValue={ inventoryEdit?.status || '' }
                         required
                         fieldId='id'
                         fieldLabel='name'

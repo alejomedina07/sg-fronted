@@ -3,11 +3,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const SLICE_NAME = 'snackbar';
 
+export interface snackbarSliceProps {
+  open: boolean,
+  type: "error" | "info" | "success" | "warning"
+  message: string,
+}
+
 // Slice
-const initialState = {
+const initialState: snackbarSliceProps = {
   open: false,
+  type: "info",
   message: '',
-  type: '',
 };
 
 const snackbarSlice = createSlice({

@@ -1,38 +1,59 @@
 import { SgButton }              from '../../../../components/form/button/SgButton';
 import { ViewTitle }             from '../../components/share/title/ViewTitle';
 import { SgLink }                from '../../../../components/form/button/SgLink';
-import { SgInput }               from '../../../../components/form/SgInput';
-import { useForm }               from 'react-hook-form';
-import { yupResolver }           from '@hookform/resolvers/yup';
-import useSnackbar               from '../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { useNavigate }           from 'react-router-dom';
-import { serviceSchema }         from '../validation/serviceSchema';
-import { defaultValues }         from '../helpers/serviceConst';
-import { useAddServiceMutation } from '../redux/api/serviceApi';
-import { SgSelect }              from '../../../../components/form/SgSelect';
-import { useGetCustomersQuery }  from '../../customer/redux/api/customerApi';
-import { t }                     from 'i18next';
+import { SgInput }                from '../../../../components/form/SgInput';
+import { useForm }                from 'react-hook-form';
+import { yupResolver }            from '@hookform/resolvers/yup';
+import useSnackbar                from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useNavigate, useParams } from 'react-router-dom';
+import { serviceSchema }          from '../validation/serviceSchema';
+import { defaultValues }                                   from '../helpers/serviceConst';
+import { useAddServiceMutation, useUpdateServiceMutation } from '../redux/api/serviceApi';
+import { SgSelect }                                        from '../../../../components/form/SgSelect';
+import { useGetCustomersQuery }   from '../../customer/redux/api/customerApi';
+import { t }                      from 'i18next';
+import useForms                from '../../../../store/hooks/form/useForms';
+import { useEffect, useState } from 'react';
 
 
 export const FormService = () => {
+  const { serviceId } = useParams();
+  const { serviceEdit } = useForms();
+  const [defaultValuesActive, setDefaultValuesActive] = useState<Service>();
+  const navigate = useNavigate();
+  const { openSnackbarAction } = useSnackbar();
   const { data:customerData, isLoading:isLoadingCustomer } = useGetCustomersQuery('');
+  const [ addService, { isLoading } ] = useAddServiceMutation();
+  const [ updateService ] = useUpdateServiceMutation();
 
-  const { handleSubmit, control, formState:{ errors } } = useForm<Service>( {
-    defaultValues,
+  console.log('serviceEdit',serviceEdit);
+  console.log('serviceId', serviceId);
+
+  const { handleSubmit, control, formState:{ errors }, reset } = useForm<Service>( {
+    defaultValues: defaultValuesActive,
     resolver: yupResolver(serviceSchema)
   });
-  const { openSnackbarAction } = useSnackbar();
-  const navigate = useNavigate();
 
+  console.log('default values', defaultValuesActive);
 
+  useEffect(() => {
+    if (serviceId && serviceEdit && serviceId === `${serviceEdit.id}`) {
+      setDefaultValuesActive(serviceEdit);
+    } else {
+      setDefaultValuesActive(defaultValues);
+    }
+  }, [serviceId, serviceEdit]);
 
-  const [ addService, { isLoading } ] = useAddServiceMutation()
+  useEffect(() => {
+    reset(defaultValuesActive);
+  }, [defaultValuesActive, reset]);
 
 
   const submitForm  = async (data: any) => {
     try {
-      console.log(777, data);
-      const res = await addService( data ).unwrap();
+      let res
+      if (data.id) res = await updateService( data ).unwrap();
+      else res = await addService( data ).unwrap();
       openSnackbarAction({ messageAction: res.msg || `${t('created')}`, typeAction: 'success' })
       navigate('/admin/service')
     } catch (e) {
@@ -74,10 +95,11 @@ export const FormService = () => {
         </div>
         <div className="flex flex-row items-center">
           <SgSelect
-            key="statusService-select"
+            key="customerService-select"
             control={control}
             name='customerId'
             label={t('select_customer')}
+            defaultValue={ serviceEdit?.customerId || '' }
             required
             fieldId='id'
             fieldLabel='name'
@@ -91,6 +113,7 @@ export const FormService = () => {
                 control={control}
                 name='status'
                 label={t('status')}
+                defaultValue={ serviceEdit?.status || '' }
                 required
                 fieldId='id'
                 fieldLabel='name'

@@ -2,17 +2,18 @@ import { SgButton }           from '../../../../components/form/button/SgButton'
 import { ViewTitle }          from '../../components/share/title/ViewTitle';
 import { SgLink }                 from '../../../../components/form/button/SgLink';
 import { SgInput }                from '../../../../components/form/SgInput';
-import { useForm }                from 'react-hook-form';
-import { useAddUserMutation, useUpdateUserMutation }     from '../redux/api/userApi';
-import { userSchema }             from '../validation/userScheme';
-import { yupResolver }            from '@hookform/resolvers/yup';
-import useSnackbar                from '../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { useNavigate, useParams } from 'react-router-dom';
-import { SgSelect }               from '../../../../components/form/SgSelect';
-import { BLOOD_TYPES }            from '../../../../utils/consts/shared/bloodTypes';
-import { defaultValues }          from '../helpers/userConst';
-import { useEffect, useState }    from 'react';
-import useForms                   from '../../../../store/hooks/form/useForms';
+import { useForm }                                   from 'react-hook-form';
+import { useAddUserMutation, useUpdateUserMutation } from '../redux/api/userApi';
+import { userSchema }                                from '../validation/userScheme';
+import { yupResolver }                               from '@hookform/resolvers/yup';
+import useSnackbar                                   from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useNavigate, useParams }                    from 'react-router-dom';
+import { SgSelect }                                  from '../../../../components/form/SgSelect';
+import { BLOOD_TYPES }                               from '../../../../utils/consts/shared/bloodTypes';
+import { defaultValues }                             from '../helpers/userConst';
+import { useEffect, useState }                       from 'react';
+import useForms                                      from '../../../../store/hooks/form/useForms';
+import { t }                                         from 'i18next';
 
 
 export const FormUser = () => {
@@ -50,18 +51,17 @@ export const FormUser = () => {
       let res;
       if (data.id) res = await updateUser( data ).unwrap();
       else res = await addUser( data ).unwrap();
-      openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
+      openSnackbarAction({ messageAction: res.msg || `${t('created')}`, typeAction: 'success' })
       navigate('/admin/users');
     } catch (e) {
-      openSnackbarAction({ messageAction: 'Error al guardar', typeAction: 'error' })
+      openSnackbarAction({ messageAction: `${t('error_save')}`, typeAction: 'error' })
     }
   }
 
   return (
     <>
-      <ViewTitle title="create_user">
-        {/* <SgButton label="list_user" href="/admin/users"/> */}
-        <SgLink label="list_user" to="/admin/users"/>
+      <ViewTitle title={t('create_user')}>
+        <SgLink label={t('list_user')} to="/admin/users"/>
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         {/* firstName lastname */}
@@ -71,7 +71,7 @@ export const FormUser = () => {
             name="firstName"
             control={control}
             errors={errors}
-            label="first_name"
+            label={t('first_name')}
             required
             size="small"
           />
@@ -80,7 +80,7 @@ export const FormUser = () => {
             name="lastName"
             control={control}
             errors={errors}
-            label="last_name"
+            label={t('last_name')}
             required
             size="small"
           />
@@ -92,7 +92,7 @@ export const FormUser = () => {
             control={control}
             defaultValue={ userEdit?.statusId || '' }
             name='statusId'
-            label="status"
+            label={t('status')}
             required
             fieldId='id'
             fieldLabel='name'
@@ -106,7 +106,7 @@ export const FormUser = () => {
             control={control}
             name='rolId'
             defaultValue={ userEdit?.rolId || '' }
-            label="rol"
+            label={t('rol')}
             required
             fieldId='id'
             fieldLabel='name'
@@ -124,7 +124,7 @@ export const FormUser = () => {
             name="phoneNumber"
             control={control}
             errors={errors}
-            label="phoneNumber"
+            label={t('phone_number')}
             required
             size="small"
           />
@@ -133,7 +133,7 @@ export const FormUser = () => {
             control={control}
             name='bloodType'
             defaultValue={ userEdit?.bloodType || '' }
-            label="bloodType"
+            label={t('blood_type')}
             required
             fieldId='value'
             fieldLabel='value'
@@ -152,7 +152,7 @@ export const FormUser = () => {
             control={control}
             name='documentTypeId'
             defaultValue={ userEdit?.documentTypeId || '' }
-            label="documentType"
+            label={t('document_type')}
             required
             fieldId='id'
             fieldLabel='name'
@@ -167,7 +167,7 @@ export const FormUser = () => {
             name="documentNumber"
             control={control}
             errors={errors}
-            label="documentNumber"
+            label={t('document_number')}
             required
             size="small"
           />
@@ -179,7 +179,7 @@ export const FormUser = () => {
             name="email"
             control={control}
             errors={errors}
-            label="email"
+            label={t('email')}
             required
             size="small"
           />
@@ -188,7 +188,7 @@ export const FormUser = () => {
             name="address"
             control={control}
             errors={errors}
-            label="address"
+            label={t('address')}
             required
             size="small"
           />
@@ -200,7 +200,7 @@ export const FormUser = () => {
             name="password"
             control={control}
             errors={errors}
-            label="password"
+            label={t('password')}
             type="password"
             size="small"
           />
@@ -209,14 +209,14 @@ export const FormUser = () => {
             name="passwordConfirm"
             control={control}
             errors={errors}
-            label="passwordConfirm"
+            label={t('password_confirm')}
             type="password"
             size="small"
           />
         </div>
 
         <div className="mt-4 mb-4 flex flex-row items-end justify-end">
-          <SgButton variant="contained" color="primary" type="submit" label="Guardar" sending={isLoading}/>
+          <SgButton variant="contained" color="primary" type="submit" label={t('save')} sending={isLoading}/>
         </div>
       </form>
     </>

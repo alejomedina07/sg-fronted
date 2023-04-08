@@ -1,5 +1,5 @@
-import useGlobalStore                  from '../../useGlobalStore';
-import { closeSnackbar, openSnackbar } from '../../../slices/snackbarSlice';
+import useGlobalStore                                      from '../../useGlobalStore';
+import { closeSnackbar, openSnackbar, snackbarSliceProps } from '../../../slices/snackbarSlice';
 
 
 function useSnackbar() {
@@ -7,10 +7,8 @@ function useSnackbar() {
 
   const { open, message, type } = useTypedSelector(({ core }: any) => core.snackbar);
 
+  const openSnackbarAction = (data: snackbarSliceProps) => dispatch( openSnackbar(data) )
 
-  // @ts-ignore
-  const openSnackbarAction = (data) => dispatch( openSnackbar(data) )
-  // @ts-ignore
   const closeSnackbarAction = () => dispatch( closeSnackbar() )
 
   return {

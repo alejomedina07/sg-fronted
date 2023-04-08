@@ -37,6 +37,7 @@ export const Login = () => {
           <Grid container>
             <Grid item xs={12} sx={{ mt: 2 }}>
               <TextField
+                focused
                 label="Número de teléfono" type="text"
                 required={true} fullWidth
                 placeholder="Número de teléfono"
@@ -48,6 +49,7 @@ export const Login = () => {
             <Grid item xs={12} sx={{ mt: 3 }}>
               <TextField
                 label="Contraseña" type="password"
+                focused
                 placeholder="Contraseña"
                 name="password" fullWidth
                 required={true} value={ password }

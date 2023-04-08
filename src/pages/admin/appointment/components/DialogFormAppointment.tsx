@@ -7,7 +7,6 @@ import DatePicker, { registerLocale }                            from 'react-dat
 import es                                                        from 'date-fns/locale/es';
 import { useForm }                                               from 'react-hook-form';
 import { yupResolver }                  from '@hookform/resolvers/yup';
-import { defaultValuesFormAppointment } from '../AppontmentConst';
 import { appointmentSchema }            from '../validation/appointmentSchema';
 import { SgInput }                      from '../../../../components/form/SgInput';
 import { SgSelect }                     from '../../../../components/form/SgSelect';
@@ -19,6 +18,7 @@ import {
 }                                       from '../redux/api/appointmentApi';
 import useSnackbar                      from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 import { useGetCustomersQuery }         from '../../customer/redux/api/customerApi';
+import { defaultValuesFormAppointment } from '../AppointmentConst';
 
 
 registerLocale('es', es)

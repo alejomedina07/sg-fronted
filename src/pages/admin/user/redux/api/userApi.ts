@@ -13,7 +13,7 @@ export const userApi = createApi({
 
     getUsers: build.query({
       query: ( )=> '/user',
-      keepUnusedDataFor: 30,
+      keepUnusedDataFor: 0,
     }),
     addUser: build.mutation<any, any>({
       query: ( body: any ) => ({

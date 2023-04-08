@@ -22,10 +22,17 @@ export const serviceApi = createApi({
         body,
       }),
     }),
+    updateService: build.mutation<any, any>({
+      query: ( body: any ) => ({
+        url:`/service/${ body.id }`,
+        method: 'PUT',
+        body,
+      }),
+    }),
 
   })
 
 })
 
-export const { useGetServiceQuery, useAddServiceMutation } = serviceApi;
+export const { useGetServiceQuery, useAddServiceMutation, useUpdateServiceMutation } = serviceApi;
 

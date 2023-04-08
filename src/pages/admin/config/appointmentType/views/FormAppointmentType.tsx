@@ -1,34 +1,62 @@
 import { SgButton }               from '../../../../../components/form/button/SgButton';
 import { ViewTitle }              from '../../../components/share/title/ViewTitle';
 import { SgLink }                 from '../../../../../components/form/button/SgLink';
-import { SgInput }                from '../../../../../components/form/SgInput';
-import { useForm }                from 'react-hook-form';
-import { yupResolver }            from '@hookform/resolvers/yup';
-import useSnackbar                from '../../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { useNavigate }            from 'react-router-dom';
-import {defaultValues} from '../helpers/appointmentTypeConst';
+import { SgInput }                                                 from '../../../../../components/form/SgInput';
+import { useForm }                                                 from 'react-hook-form';
+import { yupResolver }                                             from '@hookform/resolvers/yup';
+import useSnackbar                                                 from '../../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useNavigate, useParams }                                  from 'react-router-dom';
+import {defaultValues}                                             from '../helpers/appointmentTypeConst';
 import {appointmentTypeScheme} from '../validation/appointmentTypeScheme';
-import {useAddAppointmentTypeMutation, useGetAppointmentTypeQuery} from '../../../appointment/redux/api/appointmentApi';
-import Switch from '@mui/material/Switch';
-import {FormControlLabel} from '@mui/material';
-import { t }                                                         from 'i18next';
+import {
+  useAddAppointmentTypeMutation,
+  useGetAppointmentTypeQuery,
+  useUpdateAppointmentTypeMutation
+}                              from '../../../appointment/redux/api/appointmentApi';
+import Switch                  from '@mui/material/Switch';
+import {FormControlLabel}                                          from '@mui/material';
+import { t }                                                       from 'i18next';
+import useForms                from '../../../../../store/hooks/form/useForms';
+import { useEffect, useState } from 'react';
 
 
 export const FormAppointmentType = () => {
-  const {handleSubmit, control, formState: {errors}} = useForm<AppointmentType>({
-    defaultValues,
-    resolver: yupResolver(appointmentTypeScheme)
-  });
+  const { appointmentTypeId } = useParams();
+  const { appointmentTypeEdit } = useForms();
+  const [defaultValuesActive, setDefaultValuesActive] = useState<AppointmentType>();
   const {openSnackbarAction} = useSnackbar();
   const navigate = useNavigate();
-
-
   const [addAppointmentType, {isLoading}] = useAddAppointmentTypeMutation();
-  const { data:appointmentTypeData, isLoading:isLoadingAppointmentType } = useGetAppointmentTypeQuery('')
+  const [ updateAppointmentType ] = useUpdateAppointmentTypeMutation();
+  const { data:appointmentTypeData, isLoading:isLoadingAppointmentType } = useGetAppointmentTypeQuery('');
+
+
+  const {handleSubmit, control, formState: {errors}, reset} = useForm<AppointmentType>({
+    defaultValues: defaultValuesActive,
+    resolver: yupResolver(appointmentTypeScheme)
+  });
+  console.log('appointment type errors', errors);
+
+  console.log(defaultValuesActive);
+
+  useEffect(() => {
+    if (appointmentTypeId && appointmentTypeEdit && appointmentTypeId === `${appointmentTypeEdit.id}`) {
+      setDefaultValuesActive(appointmentTypeEdit);
+    } else {
+      setDefaultValuesActive(defaultValues);
+    }
+  }, [appointmentTypeId, appointmentTypeEdit]);
+
+  useEffect(() => {
+    reset(defaultValuesActive);
+  }, [defaultValuesActive, reset]);
 
   const submitForm = async (data: any) => {
     try {
-      const res = await addAppointmentType(data).unwrap();
+      console.log(432);
+      let res;
+      if ( data.id ) res = await updateAppointmentType(data).unwrap();
+      else res = await addAppointmentType(data).unwrap();
       openSnackbarAction({messageAction: res.msg || `${t('created')}`, typeAction: 'success'})
       navigate('/admin/appointment-type')
     } catch (e) {
@@ -58,6 +86,7 @@ export const FormAppointmentType = () => {
           value="start"
           control={<Switch color="primary" />}
           label={t('active')}
+          /* defaultValue={ appointmentTypeEdit?.start || '' } */
           labelPlacement="start"
         />
       </div>
