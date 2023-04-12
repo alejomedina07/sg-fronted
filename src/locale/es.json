@@ -44,6 +44,7 @@
     "blood_type": "Tipo de sangre",
     "address": "Dirección",
     "create_customer": "Añadir nuevo cliente",
+    "edit_customer": "Editar cliente",
     "list_customer": "Lista de clientes",
     "create_appointment_type": "Añadir nuevo tipo de cita",
     "list_appointment_type": "Lista de tipos de citas",

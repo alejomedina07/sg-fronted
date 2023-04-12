@@ -18,7 +18,7 @@ export const appointmentSlice = createSlice({
       state.end = action.payload.end
     },
     selectAppointment: (state, action) => {
-      console.log(78, action);
+      console.log(78, action.payload);
       state.appointment = action.payload
     },
     closeModalAppointment: (state) => {

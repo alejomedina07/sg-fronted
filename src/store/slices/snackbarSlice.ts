@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const SLICE_NAME = 'snackbar';
 
 export interface snackbarSliceProps {
-  open: boolean,
+  open?: boolean,
   type: "error" | "info" | "success" | "warning"
   message: string,
 }

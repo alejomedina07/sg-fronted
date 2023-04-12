@@ -42,6 +42,7 @@ export const AdminRoutes = () => {
         <Route path='service'>
           <Route path='' element={<ListService />} />
           <Route path='create' element={<FormService />} />
+          <Route path='edit/:serviceId' element={<FormService />} />
         </Route>
         <Route path='appointment-type'>
           <Route path='' element={<ListAppointmentType />} />

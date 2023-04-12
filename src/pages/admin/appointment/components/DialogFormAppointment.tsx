@@ -76,12 +76,12 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
         delete data.appointmentType
       }
       const res = data.id ?  await updateAppointment( data ).unwrap() : await addAppointment( data ).unwrap();
-      openSnackbarAction({ messageAction: res.msg || 'Creado', typeAction: 'success' })
+      openSnackbarAction({ message: res.msg || 'Creado', type: 'success' })
       refetch();
       reset();
       onClose();
     } catch (e) {
-      openSnackbarAction({ messageAction: 'Error al guardar', typeAction: 'error' })
+      openSnackbarAction({ message: 'Error al guardar', type: 'error' })
     }
   }
 
@@ -136,6 +136,7 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
               className="flex-1 !m-3"
               size='small'
               errors={errors}
+              defaultValue={ appointment?.appointmentTypeId || '' }
               options={appointmentTypes?.data}
             />
           </div>
@@ -149,6 +150,7 @@ export const DialogFormAppointment = (props: DialogFormAppointmentProps) => {
               fieldId='id'
               fieldLabel='name'
               className="flex-1 !m-3"
+              defaultValue={appointment?.customerId || ''}
               size='small'
               errors={errors}
               options={customers?.data || []}

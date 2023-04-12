@@ -44,6 +44,7 @@
     "blood_type": "Blood type",
     "address": "Address",
     "create_customer": "Add new customer",
+    "edit_customer": "Edit customer",
     "list_customer": "List customer",
     "create_appointment_type": "Add a new appointment type",
     "list_appointment_type": "List of appointment types",

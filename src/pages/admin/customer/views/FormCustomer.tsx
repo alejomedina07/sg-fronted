@@ -24,7 +24,7 @@ export const FormCustomer = () => {
   const [ addCustomer, { isLoading } ] = useAddCustomerMutation();
   const [ updateCustomer ] = useUpdateCustomerMutation();
 
-  console.log('customerId', customerId);
+  console.log('customerEdit', customerEdit);
 
   const { handleSubmit, control, formState:{ errors }, reset } = useForm<Customer>( {
     defaultValues:defaultValuesActive,
@@ -51,16 +51,16 @@ export const FormCustomer = () => {
       let res;
       if (data.id) res = await updateCustomer( data ).unwrap();
       else res = await addCustomer( data ).unwrap();
-        openSnackbarAction({ messageAction: res.msg || `${t('created')}`, typeAction: 'success' })
+        openSnackbarAction({ message: res.msg || `${t('created')}`, type: 'success' })
       navigate('/admin/customer')
     } catch (e) {
-      openSnackbarAction({ messageAction: `${t('error_save')}`, typeAction: 'error' })
+      openSnackbarAction({ message: `${t('error_save')}`, type: 'error' })
     }
   }
   
   return (
     <>
-      <ViewTitle title={t('create_customer')}>
+      <ViewTitle title={ customerId ?  t('edit_customer') : t('create_customer')}>
         <SgLink label={t('list_customer')} to="/admin/customer"/>
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>

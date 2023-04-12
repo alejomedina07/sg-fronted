@@ -64,7 +64,6 @@ export const SgSelect = (props: any) => {
               labelId={labelId}
               label={_label}
               error={isError}
-              value={defaultValue !== undefined ? defaultValue : ""}
             >
               {!defaultValue &&
                 <MenuItem value="">---------------------</MenuItem>
@@ -83,6 +82,7 @@ export const SgSelect = (props: any) => {
         )}
         name={name}
         control={control}
+        defaultValue={defaultValue}
       />
     </FormControl>
   )) || (<SgSpinner text="Cargando información..." />)
