@@ -14,6 +14,7 @@ import { defaultValues }                             from '../helpers/userConst'
 import { useEffect, useState }                       from 'react';
 import useForms                                      from '../../../../store/hooks/form/useForms';
 import { t }                                         from 'i18next';
+import { Password }                                  from '@mui/icons-material';
 
 
 export const FormUser = () => {
@@ -26,6 +27,8 @@ export const FormUser = () => {
     resolver: yupResolver(userSchema)
   });
 
+
+  console.log(999, errors);
 
   useEffect(() => {
     if (userId && userEdit && userId === `${userEdit.id}`) {
@@ -49,12 +52,19 @@ export const FormUser = () => {
     try {
       console.log(7777, data);
       let res;
-      if (data.id) res = await updateUser( data ).unwrap();
+      if (data.id) {
+        if (data.password === "" ) {
+          delete data.password;
+          delete data.passwordConfirm;
+        }
+        res = await updateUser( data ).unwrap();
+      }
       else res = await addUser( data ).unwrap();
-      openSnackbarAction({ messageAction: res.msg || `${t('created')}`, typeAction: 'success' })
+      console.log(12, res);
+      openSnackbarAction({ message: res.msg || `${t('created')}`, type: 'success' })
       navigate('/admin/users');
     } catch (e) {
-      openSnackbarAction({ messageAction: `${t('error_save')}`, typeAction: 'error' })
+      openSnackbarAction({ message: `${t('error_save')}`, type: 'error' })
     }
   }
 

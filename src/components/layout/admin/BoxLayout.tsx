@@ -7,7 +7,7 @@ interface BoxLayoutProps {
 export const BoxLayout = (props: BoxLayoutProps) => {
   const { children } = props;
   return (
-    <div className="container mx-auto">
+    <div className="mx-2">
       <div className=" border-2 rounded p-8">
         { children }
       </div>

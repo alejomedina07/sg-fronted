@@ -1,36 +1,31 @@
-
-import { useEffect, useState }                              from 'react';
-import { DataGrid, GridColDef, GridRowParams, GridToolbar } from '@mui/x-data-grid';
-import { SgTableProps }                                     from './dto/SgTableProps';
-
+import { useEffect, useState } from 'react';
+import {
+  DataGrid,
+  GridColDef,
+  GridRowParams,
+  GridToolbar,
+} from '@mui/x-data-grid';
+import { SgTableProps } from './dto/SgTableProps';
+import { useTranslation } from 'react-i18next';
 
 export const SgTable = (props: SgTableProps) => {
-  const { data, columns, isLoading, onRowDoubleClick } = props;
+  const { data, columns, isLoading, onRowDoubleClick, checkboxSelection } =
+    props;
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
     page: 0,
   });
-
-  const [newColumns, setNewColumns] = useState<GridColDef[]>([]);
-
-  useEffect(() => {
-    if (data.length && columns.length) {
-      setNewColumns(columns)
-    }
-  }, [data]);
-
   const handleRowDoubleClick = (params: GridRowParams) => {
     if (onRowDoubleClick) {
-      onRowDoubleClick( params );
+      onRowDoubleClick(params);
     }
-  }
+  };
 
   return (
     <DataGrid
       rows={data || []}
       columns={columns}
-      // getRowId={(row) => row.id || Math.random()}
-      checkboxSelection
+      checkboxSelection={checkboxSelection}
       paginationModel={paginationModel}
       onPaginationModelChange={setPaginationModel}
       loading={isLoading}
@@ -64,7 +59,7 @@ export const SgTable = (props: SgTableProps) => {
         filterOperatorStartsWith: 'Empieza por:',
         filterOperatorEndsWith: 'Finaliza en:',
         filterOperatorIsEmpty: 'Esta vacío',
-        filterOperatorIsNotEmpty: 'No esta vacío'
+        filterOperatorIsNotEmpty: 'No esta vacío',
       }}
     />
   );

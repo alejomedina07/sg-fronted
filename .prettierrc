@@ -1,8 +1,9 @@
 {
+  "printWidth": 80,
+  "singleQuote": true,
+  "trailingComma": "es5",
   "semi": false,
   "tabWidth": 2,
-  "printWidth": 100,
-  "singleQuote": true,
   "overrides": [
     {
       "files": ["**/*.css", "**/*.scss", "**/*.json"],
@@ -11,7 +12,6 @@
       }
     }
   ],
-  "trailingComrma": "all",
   "jsxSingleQuote": true,
   "bracketSpacing": true
 }

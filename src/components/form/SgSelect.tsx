@@ -82,7 +82,7 @@ export const SgSelect = (props: any) => {
         )}
         name={name}
         control={control}
-        defaultValue={defaultValue}
+        defaultValue={ defaultValue === null ? undefined : defaultValue || ''}
       />
     </FormControl>
   )) || (<SgSpinner text="Cargando información..." />)

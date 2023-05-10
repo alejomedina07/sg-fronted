@@ -9,7 +9,7 @@ const FORM_ELEMENT_TYPE = {
 }
 
 export const SgInput = (props: any) => {
-  const {control, errors, name, label, onChange, required = false, size = "small", type = FORM_ELEMENT_TYPE.TEXT, rows, ...rest} = props
+  const {control, errors, name, label, onChange, required = false, size = "small", type = FORM_ELEMENT_TYPE.TEXT, rows, InputProps, ...rest} = props
   const onValueChange = (e:any, field: any) => {
 
     if(type === FORM_ELEMENT_TYPE.NUMBER || type === FORM_ELEMENT_TYPE.DECIMAL) {
@@ -37,6 +37,7 @@ export const SgInput = (props: any) => {
     <Controller
       name={name}
       control={control}
+      defaultValue={''}
       rules={{ required: required }}
       render={({ field }) => (
         <TextField
@@ -56,6 +57,7 @@ export const SgInput = (props: any) => {
               root: {margin: 0}
             }
           }}
+          InputProps={ InputProps ? {inputComponent: InputProps as any, } : null}
         />
       )}
     />

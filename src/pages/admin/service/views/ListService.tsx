@@ -1,35 +1,64 @@
-import { ViewTitle }          from '../../components/share/title/ViewTitle';
-import { SgLink }             from '../../../../components/form/button/SgLink';
-import { SgTable }            from '../../../../components/table/SgTable';
-import { ColumnsService }     from '../helpers/columnsService';
+import { t } from 'i18next';
+import { IconButton } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useGetServiceQuery } from '../redux/api/serviceApi';
-import {t}                    from 'i18next';
-import { useNavigate }        from 'react-router-dom';
-import useForms               from '../../../../store/hooks/form/useForms';
-import { GridRowParams }      from '@mui/x-data-grid';
-
+import useService from '../redux/hooks/useService';
+import { ColumnsService } from '../helpers/columnsService';
+import { ViewTitle } from '../../components/share/title/ViewTitle';
+import { SgButton } from '../../../../components/form/button/SgButton';
+import { SgTable } from '../../../../components/table/SgTable';
+import { ColumnsUser } from '../../user/helpers';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
 
 export const ListService = () => {
-  const { data, isLoading } = useGetServiceQuery('');
-  const navigate = useNavigate();
-  const { setServiceEditAction } = useForms();
-  const handleRowDoubleClick = (params: GridRowParams) => {
-    console.log('handleRowDoubleClick', params);
-    setServiceEditAction(params.row);
-    navigate(`/admin/service/edit/${params.row.id}`);
-  }
+  const { openModalServiceAction, selectServiceAction } = useService();
+  const { data, isLoading, refetch } = useGetServiceQuery('');
+  const { t, i18n } = useTranslation();
+  const [columns, setColumns] = useState<GridColDef[]>([]);
+
+  const onClickEdit = (params: GridRenderCellParams) => {
+    openModalServiceAction({ refresh: refetch });
+    selectServiceAction(params.row);
+  };
+  const columnsService = ColumnsService();
+
+  useEffect(() => {
+    setColumns([
+      ...columnsService,
+      {
+        field: 'actions',
+        headerName: `${t('actions')}`,
+        flex: 40,
+        renderCell: (params) => {
+          return (
+            <div className="flex flex-row items-center">
+              <IconButton onClick={() => onClickEdit(params)} aria-label="view">
+                <VisibilityIcon />
+              </IconButton>
+            </div>
+          );
+        },
+      },
+    ]);
+  }, [i18n.language]);
 
   return (
     <>
       <ViewTitle title={t('list_service')}>
-        <SgLink label={t('create_service')} to="/admin/service/create"/>
+        <SgButton
+          label={t('create_service')}
+          variant="outlined"
+          onClickAction={() => openModalServiceAction({ refresh: refetch })}
+        />
       </ViewTitle>
       <div style={{ height: '70vh', width: '100%' }}>
         <SgTable
-          columns={ColumnsService}
-          onRowDoubleClick={ handleRowDoubleClick }
-          data={ data?.data || []}
-          isLoading={isLoading}/>
+          columns={columns}
+          data={data?.data || []}
+          isLoading={isLoading}
+        />
       </div>
     </>
   );

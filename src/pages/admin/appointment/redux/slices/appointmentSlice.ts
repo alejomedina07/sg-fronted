@@ -3,10 +3,18 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface appointmentSliceProps {
   start?: string;
   end?: string;
-  appointment?: AppointmentDto
+  isOpenModalAppointment: boolean;
+  appointment?: AppointmentDto | null;
+  refresh?: () => void
+  onClose?: () => void
 }
 
-const initialState: appointmentSliceProps = {};
+export interface openModalAppointmentProps {
+  refresh?: () => void
+  onClose?: () => void
+}
+
+const initialState: appointmentSliceProps = { isOpenModalAppointment:false };
 
 
 export const appointmentSlice = createSlice({
@@ -18,17 +26,26 @@ export const appointmentSlice = createSlice({
       state.end = action.payload.end
     },
     selectAppointment: (state, action) => {
-      console.log(78, action.payload);
-      state.appointment = action.payload
+      // console.log(78, action.payload);
+      state.appointment = action.payload;
+      state.isOpenModalAppointment = true;
     },
     closeModalAppointment: (state) => {
-      state.appointment = undefined;
+      state.appointment = null;
+      state.isOpenModalAppointment = false;
+    },
+    openModalAppointment: (state, action) => {
+      console.log(action.payload);
+      state.appointment = null;
+      state.isOpenModalAppointment = true;
+      state.refresh = action.payload.refresh;
+      state.onClose = action.payload.onClose;
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { changeRange, closeModalAppointment, selectAppointment } = appointmentSlice.actions;
+export const { changeRange, closeModalAppointment, selectAppointment, openModalAppointment } = appointmentSlice.actions;
 
 
 export default appointmentSlice.reducer;

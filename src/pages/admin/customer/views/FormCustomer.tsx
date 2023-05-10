@@ -1,38 +1,44 @@
-import { SgButton }               from '../../../../components/form/button/SgButton';
-import { ViewTitle }              from '../../components/share/title/ViewTitle';
-import { SgLink }                 from '../../../../components/form/button/SgLink';
-import { SgInput }                from '../../../../components/form/SgInput';
-import { useForm }                from 'react-hook-form';
-import { yupResolver }            from '@hookform/resolvers/yup';
-import useSnackbar                from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useEffect, useState } from 'react';
+import { t } from 'i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { SgSelect }               from '../../../../components/form/SgSelect';
-import { BLOOD_TYPES }            from '../../../../utils/consts/shared/bloodTypes';
-import { useAddCustomerMutation, useUpdateCustomerMutation } from '../redux/api/customerApi';
-import { customerSchema }         from '../validation/customerSchema';
-import { defaultValues }          from '../helpers';
-import { t }                      from 'i18next';
-import { useEffect, useState }    from 'react';
-import useForms                   from '../../../../store/hooks/form/useForms';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SgButton } from '../../../../components/form/button/SgButton';
+import { ViewTitle } from '../../components/share/title/ViewTitle';
+import { SgLink } from '../../../../components/form/button/SgLink';
+import { SgInput } from '../../../../components/form/SgInput';
+import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { SgSelect } from '../../../../components/form/SgSelect';
+import { BLOOD_TYPES } from '../../../../utils/consts/shared/bloodTypes';
+import {
+  useAddCustomerMutation,
+  useUpdateCustomerMutation,
+} from '../redux/api/customerApi';
+import { customerSchema } from '../validation/customerSchema';
+import { defaultValues } from '../helpers';
 
-export const FormCustomer = () => {
+interface FormCustomerProps {
+  customerEdit?: Customer;
+}
+
+export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
   const { customerId } = useParams();
-  const { customerEdit } = useForms();
+  // const { customerEdit } = useForms();
   const [defaultValuesActive, setDefaultValuesActive] = useState<Customer>();
   const { openSnackbarAction } = useSnackbar();
   const navigate = useNavigate();
-  const [ addCustomer, { isLoading } ] = useAddCustomerMutation();
-  const [ updateCustomer ] = useUpdateCustomerMutation();
+  const [addCustomer, { isLoading }] = useAddCustomerMutation();
+  const [updateCustomer] = useUpdateCustomerMutation();
 
-  console.log('customerEdit', customerEdit);
-
-  const { handleSubmit, control, formState:{ errors }, reset } = useForm<Customer>( {
-    defaultValues:defaultValuesActive,
-    resolver: yupResolver(customerSchema)
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = useForm<Customer>({
+    defaultValues: defaultValuesActive,
+    resolver: yupResolver(customerSchema),
   });
-
-  console.log('default values', defaultValuesActive);
-
 
   useEffect(() => {
     if (customerId && customerEdit && customerId === `${customerEdit.id}`) {
@@ -46,22 +52,28 @@ export const FormCustomer = () => {
     reset(defaultValuesActive);
   }, [defaultValuesActive, reset]);
 
-  const submitForm  = async (data: any) => {
+  const submitForm = async (data: any) => {
     try {
       let res;
-      if (data.id) res = await updateCustomer( data ).unwrap();
-      else res = await addCustomer( data ).unwrap();
-        openSnackbarAction({ message: res.msg || `${t('created')}`, type: 'success' })
-      navigate('/admin/customer')
+      if (data.id) {
+        delete data.services;
+        delete data.appointments;
+        res = await updateCustomer(data).unwrap();
+      } else res = await addCustomer(data).unwrap();
+      openSnackbarAction({
+        message: res.msg || `${t('created')}`,
+        type: 'success',
+      });
+      navigate('/admin/customer');
     } catch (e) {
-      openSnackbarAction({ message: `${t('error_save')}`, type: 'error' })
+      openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
     }
-  }
-  
+  };
+
   return (
     <>
-      <ViewTitle title={ customerId ?  t('edit_customer') : t('create_customer')}>
-        <SgLink label={t('list_customer')} to="/admin/customer"/>
+      <ViewTitle title={customerId ? t('edit_customer') : t('create_customer')}>
+        <SgLink label={t('list_customer')} to="/admin/customer" />
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         {/* name phoneNumber */}
@@ -85,22 +97,21 @@ export const FormCustomer = () => {
             required
             size="small"
           />
-
         </div>
         {/* documentType document */}
         <div className="flex flex-row items-center">
           <SgSelect
             key="documentTypeId-select"
             control={control}
-            name='documentTypeId'
-            label= {t('document_type')}
-            defaultValue={ customerEdit?.documentTypeId || '' }
+            name="documentTypeId"
+            label={t('document_type')}
+            defaultValue={customerEdit?.documentTypeId ?? ''}
             required
-            fieldId='id'
-            fieldLabel='name'
-            fieldDescription='description'
+            fieldId="id"
+            fieldLabel="name"
+            fieldDescription="description"
             className="flex-1 !m-3"
-            size='small'
+            size="small"
             errors={errors}
             list="documentType"
           />
@@ -109,7 +120,7 @@ export const FormCustomer = () => {
             name="document"
             control={control}
             errors={errors}
-            label= {t('document_number')}
+            label={t('document_number')}
             required
             size="small"
           />
@@ -119,29 +130,29 @@ export const FormCustomer = () => {
           <SgSelect
             key="filter-field-select"
             control={control}
-            name='statusId'
-            label= {t('status')}
-            defaultValue={ customerEdit?.statusId || '' }
+            name="statusId"
+            label={t('status')}
+            defaultValue={customerEdit?.statusId ?? ''}
             required
-            fieldId='id'
-            fieldLabel='name'
+            fieldId="id"
+            fieldLabel="name"
             className="flex-1 !m-3"
-            size='small'
+            size="small"
             errors={errors}
             list="statusCustomer"
           />
           <SgSelect
             key="bloodType-select"
             control={control}
-            name='bloodType'
+            name="bloodType"
             label={t('blood_type')}
-            defaultValue={ customerEdit?.bloodType || '' }
-            fieldId='value'
-            fieldLabel='value'
+            defaultValue={customerEdit?.bloodType ?? null}
+            fieldId="value"
+            fieldLabel="value"
             className="flex-1 !m-3"
-            size='small'
+            size="small"
             errors={errors}
-            options={ BLOOD_TYPES }
+            options={BLOOD_TYPES}
           />
         </div>
         {/* address */}
@@ -157,7 +168,13 @@ export const FormCustomer = () => {
           />
         </div>
         <div className="mt-4 mb-4 flex flex-row items-end justify-end">
-          <SgButton variant="contained" color="primary" type="submit" label={t('save')} sending={isLoading}/>
+          <SgButton
+            variant="contained"
+            color="primary"
+            type="submit"
+            label={t('save')}
+            sending={isLoading}
+          />
         </div>
       </form>
     </>

@@ -24,36 +24,16 @@ export const userSchema = Yup.object().shape({
     const id = this.parent.id;
     return !id ? Yup.string()
       .required(`${i18next.t('field_is_required')}`)
-  .min(6, `${i18next.t('min_password')}`)
-  .max(40, `${i18next.t('max_password')}`)
-  .isValidSync(value)
-  : true;
+      .min(6, `${i18next.t('min_password')}`)
+      .max(40, `${i18next.t('max_password')}`)
+      .isValidSync(value)
+      : true;
   }),
-  // password: Yup.string()
-  //   .required(`${i18next.t('field_is_required')}`)
-  //   .min(6, `${i18next.t('min_password')}`)
-  //   .max(40, `${i18next.t('max_password')}`),
-  // passwordConfirm: Yup.string()
-  //   .required(`${i18next.t('field_is_required')}`)
-  //   .oneOf([Yup.ref('password'), ''], `${i18next.t('confirm_password')}`),
   passwordConfirm: Yup.string()
-    .test('password-required', `${i18next.t('field_is_required')}`, function(value) {
-      const id = this.parent.id;
-      return !id ? Yup.string()
-          .required(`${i18next.t('field_is_required')}`)
-          .oneOf([Yup.ref('password'), ''], `${i18next.t('confirm_password')}`)
-          .isValidSync(value)
-        : true;
-    }),
-});
+    .when('password', {
+      is: (password: string) => password?.length > 0,
+      then: () => Yup.string().required(`${i18next.t('field_is_required')}`).oneOf([Yup.ref('password'), ''], `${i18next.t('confirm_password')}`)
+    })
+    .oneOf([Yup.ref('password'), ''], `${i18next.t('confirm_password')}`),
 
-// firstName: string;
-// lastName: string;
-// address: string;
-// phoneNumber: string;
-// email: string;
-// documentType: string;
-// documentNumber: string;
-// password: string;
-// status: string;
-// passwordConfirm?: string;
+});

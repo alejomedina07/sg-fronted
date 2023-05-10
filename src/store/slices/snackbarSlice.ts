@@ -27,8 +27,8 @@ const snackbarSlice = createSlice({
     openSnackbar: (state,action) => {
       console.log(10, action.payload);
       state.open = true;
-      state.message = action.payload.messageAction;
-      state.type = action.payload.typeAction;
+      state.message = action.payload.message;
+      state.type = action.payload.type;
     },
   },
 });

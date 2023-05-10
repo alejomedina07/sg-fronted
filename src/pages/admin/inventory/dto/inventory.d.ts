@@ -1,6 +1,7 @@
 interface Inventory {
-    name: string;
-    description: string;
-    statusId: number;
-
+  id?: number;
+  name: string;
+  description: string;
+  statusId: number | '';
+  quantity: number;
 }

@@ -6,7 +6,6 @@ import { useState }                       from 'react';
 import { useGetAppointmentsQuery }        from '../redux/api/appointmentApi';
 import { Fab, LinearProgress }            from '@mui/material';
 import AddIcon                            from '@mui/icons-material/Add';
-import { DialogFormAppointment }          from '../components/DialogFormAppointment';
 import { t }                              from 'i18next';
 import useAppointment                            from '../redux/hooks/useAppointment';
 import DateFnsManager, { RangeAppointmentProps } from '../../../../services/utils/DateFnsManager';
@@ -26,13 +25,9 @@ interface onRangeChange {
 }
 
 export const AppointmentView = () => {
-  // const range = managerDate.currentMonth
-
   const [range, setRange] = useState<RangeAppointmentProps>( managerDate.currentMonth );
 
-  // console.log(12, range);
-
-  const { appointment, changeRangeAction, selectAppointmentAction, closeModalAppointmentAction } = useAppointment()
+  const { appointment, selectAppointmentAction, closeModalAppointmentAction, openModalAppointmentAction } = useAppointment();
 
   const { refetch, data, isLoading } = useGetAppointmentsQuery(range, { skip: !range })
 
@@ -55,12 +50,10 @@ export const AppointmentView = () => {
 
   const handleClose = () => {
     closeModalAppointmentAction();
-    setOpen(false);
   };
 
   const onSelect = (event: any) => {
     selectAppointmentAction(event.appointment);
-    setOpen(true);
   }
 
 
@@ -96,17 +89,9 @@ export const AppointmentView = () => {
         onRangeChange={ (range, view)=> onRangeChange( { range, view })}
         onSelectEvent={onSelect}
       />
-      <Fab className="!absolute bottom-5 right-8" aria-label={`${t('add')}`} color="primary" onClick={()=> setOpen(!open)}>
+      <Fab className="!absolute bottom-5 right-8" aria-label={`${t('add')}`} color="primary" onClick={()=> openModalAppointmentAction({ refresh:refetch, onClose:handleClose })}>
         <AddIcon />
       </Fab>
-      { !!open && (
-        <DialogFormAppointment
-          open={open}
-          onClose={handleClose}
-          refetch={refetch}
-          appointment={appointment}
-        />
-      )}
     </div>
   );
 };

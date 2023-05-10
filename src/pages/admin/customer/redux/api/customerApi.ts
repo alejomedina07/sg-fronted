@@ -15,6 +15,10 @@ export const customerApi = createApi({
       query: ( )=> '/customer',
       keepUnusedDataFor: 0,
     }),
+    getCustomerById: build.query({
+      query: ( id)=> `/customer/${id}`,
+      keepUnusedDataFor: 0,
+    }),
     addCustomer: build.mutation<any, any>({
       query: ( body: any ) => ({
         url:'/customer',
@@ -34,5 +38,5 @@ export const customerApi = createApi({
 
 })
 
-export const { useGetCustomersQuery, useAddCustomerMutation, useUpdateCustomerMutation } = customerApi;
+export const { useGetCustomersQuery, useGetCustomerByIdQuery, useAddCustomerMutation, useUpdateCustomerMutation } = customerApi;
 

@@ -70,12 +70,14 @@ export const HeaderProfile = () => {
             </Link>
             {/* <MenuItem><Avatar /> Mi cuenta</MenuItem> */}
             <Divider />
+            <Link to='/admin/config-options' className='link-nav-bar'>
             <MenuItem>
               <ListItemIcon>
                 <Settings fontSize="small" />
               </ListItemIcon>
               {t('configuration')}
             </MenuItem>
+            </Link>
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <Logout fontSize="small" />

@@ -1,54 +1,49 @@
 import { Autocomplete, TextField } from '@mui/material';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
-type AutocompleteOption = {
-  label: string;
-  value: string;
-};
-
-type AutocompleteFieldProps = {
+type AutocompleteProps = {
   name: string;
   label: string;
-  options: AutocompleteOption[];
-  control: Control;
-  defaultValue?: AutocompleteOption | null;
-  errors?: FieldErrors;
-  rules?: Record<string, unknown>;
+  options: any[];
+  control: any;
+  size: "small" | "medium" | undefined;
+  optionValue: string;
+  optionName: string;
+  defaultValue?: any;
 };
 
-export const SgAutocomplete = (props: AutocompleteFieldProps) => {
+export const SgAutocomplete = (props: AutocompleteProps) => {
   const {
     name,
     label,
     options,
     control,
-    defaultValue = null,
-    errors = {},
-    rules = {},
+    size = "small",
+    optionValue,
+    optionName,
+    defaultValue,
   } = props;
 
   return (
     <Controller
       name={name}
       control={control}
-      rules={rules}
-      defaultValue={defaultValue}
+      // defaultValue={
+      //   defaultValue
+      //     ? options.find((option) => option[optionValue] === defaultValue) || null
+      //     : null
+      // }
       render={({ field: { onChange, onBlur, value } }) => (
         <Autocomplete
           options={options}
-          getOptionLabel={(option) => option.label}
-          value={value}
-          onChange={(_, data) => onChange(data)}
+          getOptionLabel={(option: any) => option[optionName]}
+          onChange={(_, data) => onChange(data ? data[optionValue] : null)}
           onBlur={onBlur}
           renderInput={(params) => (
-            <TextField
-              className="flex-1 !m-3"
-              {...params}
-              label={label}
-              error={Boolean(errors[name])}
-              // helperText={errors[name]?.message}
-            />
+            <TextField {...params} label={label} size={size} />
           )}
+          value={options.find((option) => option[optionValue] === value)}
+          isOptionEqualToValue={(option, value) => option[optionValue] === value[optionValue]}
         />
       )}
     />

@@ -14,13 +14,23 @@ export const listApi = createApi({
     getListByKey: build.query({
       query: ( key: string )=> `/config/list?key=${key}`
     }),
+
     getAllOptions: build.query({
       query: ()=> '/config/list/all-options'
     }),
 
+    addOption: build.mutation<any, any>({
+      query: ( body: any ) => ({
+        url:'/config/list',
+        method: 'POST',
+        body,
+      }),
+
   })
 
 })
+})
 
-export const { useGetListByKeyQuery } = listApi;
+
+export const { useGetListByKeyQuery, useGetAllOptionsQuery, useAddOptionMutation } = listApi;
 

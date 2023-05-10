@@ -1,5 +1,6 @@
 import { addDays, endOfDay, endOfMonth, format, formatISO, parseISO, setHours, startOfMonth } from 'date-fns';
-import { utcToZonedTime }                                                   from 'date-fns-tz';
+import { utcToZonedTime }                                                                     from 'date-fns-tz';
+import { es }                                                                                 from 'date-fns/locale';
 
 class DateFnsManager {
 
@@ -38,6 +39,10 @@ class DateFnsManager {
 
   getFormatStandard(date: Date | number): string {
     return format( date, 'dd-MM-yyyy' )
+  }
+
+  getFormatMonthText(date: Date | number): string {
+    return format( date, 'dd MMMM yyyy', { locale: es } )
   }
 
 }

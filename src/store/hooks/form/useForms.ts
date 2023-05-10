@@ -1,29 +1,46 @@
-import useGlobalStore                                                                     from '../useGlobalStore';
+import useGlobalStore from '../useGlobalStore';
 import {
   setAppointmentTypeEdit,
   setCustomerEdit,
   setExpenseEdit,
   setInventoryEdit,
   setServiceEdit,
+  setConfigFormEdit,
   setUserEdit,
 } from '../../slices/formSlice';
 
 function useForms() {
   const { dispatch, useTypedSelector } = useGlobalStore();
 
-  const { userEdit, customerEdit, expenseEdit, inventoryEdit, serviceEdit, appointmentTypeEdit } = useTypedSelector(({ core }: any) => core.forms);
+  const {
+    userEdit,
+    customerEdit,
+    expenseEdit,
+    inventoryEdit,
+    appointmentTypeEdit,
+    serviceEdit,
+    configFormEdit,
+  } = useTypedSelector(({ core }: any) => core.forms);
 
-  const setUserEditAction = (user: User) => dispatch( setUserEdit(user) )
+  const setUserEditAction = (user: User) => dispatch(setUserEdit(user));
 
-  const setCustomerEditAction = (customer: Customer) => dispatch( setCustomerEdit(customer) )
+  const setCustomerEditAction = (customer: Customer) =>
+    dispatch(setCustomerEdit(customer));
 
-  const setExpenseEditAction = (expense: Expense) => dispatch( setExpenseEdit(expense) )
+  const setExpenseEditAction = (expense: Expense) =>
+    dispatch(setExpenseEdit(expense));
 
-  const setInventoryEditAction = (inventory: Inventory) => dispatch( setInventoryEdit(inventory) )
+  const setServiceEditAction = (service: Service) =>
+    dispatch(setExpenseEdit(service));
 
-  const setServiceEditAction = (service: Service) => dispatch( setServiceEdit(service) )
+  const setInventoryEditAction = (inventory: Inventory) =>
+    dispatch(setInventoryEdit(inventory));
 
-  const setAppointmentTypeEditAction = (appointmentType: AppointmentType) => dispatch( setAppointmentTypeEdit(appointmentType) )
+  const setAppointmentTypeEditAction = (appointmentType: AppointmentType) =>
+    dispatch(setAppointmentTypeEdit(appointmentType));
+
+  const setConfigFormEditAction = (configForm: OptionsList) =>
+    dispatch(setConfigFormEdit(configForm));
 
   return {
     customerEdit,
@@ -32,12 +49,14 @@ function useForms() {
     inventoryEdit,
     serviceEdit,
     appointmentTypeEdit,
+    configFormEdit,
     setCustomerEditAction,
     setExpenseEditAction,
     setInventoryEditAction,
-    setServiceEditAction,
     setUserEditAction,
+    setServiceEditAction,
     setAppointmentTypeEditAction,
+    setConfigFormEditAction,
   };
 }
 

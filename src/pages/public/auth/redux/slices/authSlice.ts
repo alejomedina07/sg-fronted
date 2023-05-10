@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state');
-    if(serializedState === null) {
+    if (serializedState === null) {
       return { userConnected: null, authenticated: false, token: '' };
     }
     return JSON.parse(serializedState);
@@ -12,16 +12,14 @@ const loadState = () => {
   }
 };
 
-const initialState =  loadState();
-
+const initialState = loadState();
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     addLogin: (state, action) => {
-      console.log(8888);
-      state.userConnected = action.payload
+      state.userConnected = action.payload;
       state.token = action.payload.token;
       state.authenticated = true;
       const serializedState = JSON.stringify(state);
@@ -34,10 +32,9 @@ export const authSlice = createSlice({
       localStorage.setItem('state', '');
     },
   },
-})
+});
 
 // Action creators are generated for each case reducer function
 export const { addLogin, addLogout } = authSlice.actions;
-
 
 export default authSlice.reducer;
