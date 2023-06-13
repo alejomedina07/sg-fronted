@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -16,6 +16,7 @@ import {
 } from '../redux/api/customerApi';
 import { customerSchema } from '../validation/customerSchema';
 import { defaultValues } from '../helpers';
+import DatePicker from 'react-datepicker';
 
 interface FormCustomerProps {
   customerEdit?: Customer;
@@ -23,14 +24,15 @@ interface FormCustomerProps {
 
 export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
   const { customerId } = useParams();
-  // const { customerEdit } = useForms();
   const [defaultValuesActive, setDefaultValuesActive] = useState<Customer>();
   const { openSnackbarAction } = useSnackbar();
   const navigate = useNavigate();
   const [addCustomer, { isLoading }] = useAddCustomerMutation();
   const [updateCustomer] = useUpdateCustomerMutation();
+  const [startDate, setStartDate] = useState<Date | null>();
 
   const {
+    setValue,
     handleSubmit,
     control,
     formState: { errors },
@@ -40,8 +42,15 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
     resolver: yupResolver(customerSchema),
   });
 
+  const handleChangeDate = (event: Date | null) => {
+    setValue('birthDate', event);
+    setStartDate(event);
+  };
+
   useEffect(() => {
     if (customerId && customerEdit && customerId === `${customerEdit.id}`) {
+      if (customerEdit.birthDate)
+        setStartDate(new Date(customerEdit.birthDate));
       setDefaultValuesActive(customerEdit);
     } else {
       setDefaultValuesActive(defaultValues);
@@ -164,6 +173,30 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
             errors={errors}
             label={t('address')}
             required
+            size="small"
+          />
+          <span className="flex-1 !m-3 border rounded border-gray-300 pr-2">
+            <DatePicker
+              selected={startDate}
+              onChange={handleChangeDate}
+              placeholderText={`${t('birth_date')}`}
+              className="m-2 w-full"
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              locale="es"
+            />
+          </span>
+        </div>
+        <div className="flex flex-row items-center">
+          <SgInput
+            rows={4}
+            className="flex-1 !m-3"
+            name="description"
+            control={control}
+            errors={errors}
+            label={t('note')}
             size="small"
           />
         </div>

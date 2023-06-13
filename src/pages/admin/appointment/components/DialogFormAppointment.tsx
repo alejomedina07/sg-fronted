@@ -1,6 +1,13 @@
 import 'react-datepicker/dist/react-datepicker.css';
-import { useEffect, useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Divider,
+  Paper,
+} from '@mui/material';
 import { SgTransition } from '../../../../components/utils/dialogs/SgTransition';
 import { SgDialogTitle } from '../../../../components/utils/dialogs/SgDialogTitle';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -21,6 +28,8 @@ import { useGetCustomersQuery } from '../../customer/redux/api/customerApi';
 import { defaultValuesFormAppointment } from '../AppointmentConst';
 import useAppointment from '../redux/hooks/useAppointment';
 import { t } from 'i18next';
+import { AmountFormatCustom } from '../../../../helpers';
+import { SgCheckbox } from '../../../../components/form/SgCheckbox';
 
 registerLocale('es', es);
 
@@ -62,17 +71,18 @@ export const DialogFormAppointment = () => {
     handleSubmit,
     control,
     formState: { errors },
+    watch,
     reset,
   } = useForm({
     defaultValues,
     resolver: yupResolver(appointmentSchema),
   });
 
-  console.log(789, errors);
-
   const handleClose = () => {
     closeDialog();
   };
+
+  const showServiceFields = watch('addService');
 
   const closeDialog = () => {
     if (onClose) onClose();
@@ -91,6 +101,9 @@ export const DialogFormAppointment = () => {
         delete data.customer;
         delete data.appointmentType;
       }
+
+      if (data.service) data.service.description = data.description;
+      delete data.addService;
       const res = data.id
         ? await updateAppointment(data).unwrap()
         : await addAppointment(data).unwrap();
@@ -102,6 +115,7 @@ export const DialogFormAppointment = () => {
       reset();
       closeDialog();
     } catch (e) {
+      console.log(666, e);
       openSnackbarAction({ message: `${t('error')}`, type: 'error' });
     }
   };
@@ -184,7 +198,66 @@ export const DialogFormAppointment = () => {
               errors={errors}
               options={customers?.data || []}
             />
+            <SgCheckbox
+              disabled={!!appointment?.service}
+              label={t('create_service')}
+              name="addService"
+              control={control}
+            />
           </div>
+
+          {!!showServiceFields && (
+            <Paper elevation={3} className=" p-2 m-4">
+              <span> Datos del servicio </span>
+              <Divider />
+              <div className="flex flex-row items-center mb-4">
+                <SgSelect
+                  disabled={!!appointment?.service}
+                  key="statusService-select-appointment"
+                  control={control}
+                  name="service.typeId"
+                  label={t('type')}
+                  required
+                  fieldId="id"
+                  fieldLabel="name"
+                  fieldDescription="description"
+                  className="flex-1 !m-3"
+                  size="small"
+                  errors={errors}
+                  list="typeService"
+                />
+
+                <SgInput
+                  disabled={!!appointment?.service}
+                  className="flex-1 !m-3"
+                  name="service.amount"
+                  control={control}
+                  errors={errors}
+                  label={t('amount')}
+                  required
+                  size="small"
+                  InputProps={AmountFormatCustom}
+                />
+
+                <SgSelect
+                  disabled={!!appointment?.service}
+                  key="statusService-select"
+                  control={control}
+                  name="service.statusId"
+                  label={t('status')}
+                  required
+                  fieldId="id"
+                  fieldLabel="name"
+                  fieldDescription="description"
+                  className="flex-1 !m-3"
+                  size="small"
+                  errors={errors}
+                  list="statusService"
+                />
+              </div>
+            </Paper>
+          )}
+
           <div className="flex flex-row items-center mb-4">
             <SgInput
               className="flex-1 !m-3"

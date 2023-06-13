@@ -4,8 +4,10 @@ import translationEn from '../../locale/en.json';
 import translationEs from '../../locale/es.json';
 import { initReactI18next } from 'react-i18next';
 
-// const DEFAULT_LANGUAGE = 'es';
-const DEFAULT_LANGUAGE = 'en';
+const languageDefault = localStorage.getItem('languageDefault') || 'es';
+
+const DEFAULT_LANGUAGE = languageDefault;
+// const DEFAULT_LANGUAGE = 'en';
 
 const resources = {
   en: { translation: translationEn },

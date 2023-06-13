@@ -22,19 +22,19 @@ export const SgAmchartCombined = (props: SgAmchartCombinedProps) => {
     // Add data
     chart.data = data;
 
-    // let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    chart.exporting.menu = new am4core.ExportMenu();
+    chart.exporting.menu.align = 'right';
+    chart.exporting.menu.verticalAlign = 'top';
 
     let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.dataFields.category = 'date';
     categoryAxis.renderer.minGridDistance = 60;
+    categoryAxis.renderer.labels.template.rotation = -60;
     categoryAxis.renderer.inversed = true;
     categoryAxis.renderer.grid.template.disabled = true;
 
     let { leftAxis, rightAxis } = axis;
-
-    console.log(9999, leftAxis);
-    console.log(rightAxis);
 
     let valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis1.title.text = leftAxis;
@@ -54,8 +54,6 @@ export const SgAmchartCombined = (props: SgAmchartCombinedProps) => {
           : chart.series.push(new am4charts.LineSeries());
 
       serie.dataFields.valueY = item.valueY;
-      console.log(777, serie.dataFields);
-      // serie.dataFields.dateX = item.dateX;
       serie.dataFields.categoryX = item.dateX;
       serie.yAxis = rightAxis && item.yAxisRight ? valueAxis2 : valueAxis1;
       serie.name = item.name;
@@ -80,71 +78,6 @@ export const SgAmchartCombined = (props: SgAmchartCombinedProps) => {
         bullet.circle.fill = am4core.color(item.bullet.fill || '#fff');
       }
     });
-
-    // let valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis());
-    // let valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis());
-    // valueAxis1.title.text = leftAxis.title;
-    //
-    // let valueAxis2;
-    // valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-    // valueAxis2.title.text = 'Market Days';
-    // valueAxis2.renderer.opposite = true;
-    // valueAxis2.renderer.grid.template.disabled = true;
-    // // if (axis.rightAxis) {
-    // // }
-    // // Create series
-
-    // let series1 = chart.series.push(new am4charts.ColumnSeries());
-    // series1.dataFields.valueY = 'sales1';
-    // series1.dataFields.dateX = 'date';
-    // series1.yAxis = valueAxis1;
-    // series1.name = 'Target Sales';
-    // series1.tooltipText = '{name}\n[bold font-size: 20]${valueY}M[/]';
-    // series1.fill = chart.colors.getIndex(0);
-    // series1.strokeWidth = 0;
-    // series1.clustered = false;
-    // series1.columns.template.width = am4core.percent(40);
-    //
-    // let series2 = chart.series.push(new am4charts.ColumnSeries());
-    // series2.dataFields.valueY = 'sales2';
-    // series2.dataFields.dateX = 'date';
-    // series2.yAxis = valueAxis1;
-    // series2.name = 'Actual Sales';
-    // series2.tooltipText = '{name}\n[bold font-size: 20]${valueY}M[/]';
-    // series2.fill = chart.colors.getIndex(0).lighten(0.5);
-    // series2.strokeWidth = 0;
-    // series2.clustered = false;
-    // series2.toBack();
-    //
-    // let series3 = chart.series.push(new am4charts.LineSeries());
-    // series3.dataFields.valueY = 'market1';
-    // series3.dataFields.dateX = 'date';
-    // series3.name = 'Market Days';
-    // series3.strokeWidth = 2;
-    // series3.tensionX = 0.7;
-    // series3.yAxis = valueAxis2;
-    // series3.tooltipText = '{name}\n[bold font-size: 20]{valueY}[/]';
-    //
-    // let bullet3 = series3.bullets.push(new am4charts.CircleBullet());
-    // bullet3.circle.radius = 3;
-    // bullet3.circle.strokeWidth = 2;
-    // bullet3.circle.fill = am4core.color('#fff');
-    //
-    // let series4 = chart.series.push(new am4charts.LineSeries());
-    // series4.dataFields.valueY = 'market2';
-    // series4.dataFields.dateX = 'date';
-    // series4.name = 'Market Days ALL';
-    // series4.strokeWidth = 2;
-    // series4.tensionX = 0.7;
-    // series4.yAxis = valueAxis2;
-    // series4.tooltipText = '{name}\n[bold font-size: 20]{valueY}[/]';
-    // series4.stroke = chart.colors.getIndex(0).lighten(0.5);
-    // series4.strokeDasharray = '3,3';
-    //
-    // let bullet4 = series4.bullets.push(new am4charts.CircleBullet());
-    // bullet4.circle.radius = 3;
-    // bullet4.circle.strokeWidth = 2;
-    // bullet4.circle.fill = am4core.color('#fff');
 
     // Add cursor
     chart.cursor = new am4charts.XYCursor();

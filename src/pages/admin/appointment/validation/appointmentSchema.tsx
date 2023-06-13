@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
-import { t }                      from 'i18next';
-
+import { t } from 'i18next';
 
 export const appointmentSchema = Yup.object().shape({
   name: Yup.string().required(`${t('field_is_required')}`),

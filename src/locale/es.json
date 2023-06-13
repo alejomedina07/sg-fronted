@@ -113,5 +113,10 @@
     "name_appointment": "Nombre de la cita",
     "customer_id": "Cliente",
     "see": "Ver",
-    "list_of": "Lista de"
+    "list_of": "Lista de",
+    "money": "Dinero",
+    "expense_count": "Cantidad de Gastos",
+    "service_count":  "Cantidad de Servicios",
+    "service_total_amount": "Total de Servicios",
+    "expense_total_amount":  "Total de Gastos"
 }

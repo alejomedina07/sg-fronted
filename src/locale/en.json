@@ -113,6 +113,11 @@
     "name_appointment": "Appointment name",
     "customer_id": "Customer",
     "see": "See",
-    "list_of": "List of"
+    "list_of": "List of",
+    "money": "money",
+    "expense_count": "Expense count",
+    "service_count":  "Service count",
+    "service_total_amount": "Service total amount",
+    "expense_total_amount":  "Expense total amount"
 
 }

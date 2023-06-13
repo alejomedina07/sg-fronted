@@ -16,7 +16,7 @@ export interface ExpenseData {
 }
 
 export interface CombinedData {
-  name: string;
+  date: string;
   serviceCount: string;
   serviceTotalAmount: number;
   expenseCount: string;

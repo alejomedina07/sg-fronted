@@ -28,6 +28,7 @@ export const Languages = () => {
 
   const changeLanguage = async (option: string) => {
     await i18n.changeLanguage(option); // lo cambié
+    localStorage.setItem('languageDefault', option);
     navigate(location.pathname);
   };
 
