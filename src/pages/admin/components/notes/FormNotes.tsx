@@ -12,8 +12,7 @@ import { SgCheckbox } from '../../../../components/form/SgCheckbox';
 import { Divider, Paper } from '@mui/material';
 
 export const FormNotes = () => {
-  const { notes, closeModalNotesAction, isOpenModalNotes, refresh, key, id } =
-    useNotes();
+  const { closeModalNotesAction, refresh, key, id } = useNotes();
   const [defaultValuesActive, setDefaultValuesActive] = useState<Notes>();
   const { openSnackbarAction } = useSnackbar();
   const [addNotes, { isLoading }] = useAddNotesMutation();
