@@ -11,6 +11,7 @@ import { SgButton } from '../../../../components/form/button/SgButton';
 import { CombinedData, InputData } from '../../components/chart/SgAmchart';
 import { SgAmchartDonut } from '../../components/chart/SgAmchartDonut';
 import { axisReportMain, seriesReportMain } from '../helpers/reportMainConst';
+import { FilterDates } from '../../components/share/filters/FilterDates';
 
 const dataDonut = [
   {
@@ -28,14 +29,14 @@ const dataDonut = [
 ];
 
 export const ReportMain = () => {
-  const { data: report, refetch } = useGetServiceReportQuery('');
   const [value, setValue] = useState(0);
+  const [filters, setFilters] = useState('?type=current_month');
+  const { data: report, refetch } = useGetServiceReportQuery(filters);
   const [dataReportMain, setDataReportMain] = useState<any[]>([]);
 
   useEffect(() => {
     if (report?.data) {
       const dataResult = combineData(report.data);
-      console.log(':::', dataResult);
       setDataReportMain(dataResult);
     }
   }, [report]);
@@ -50,7 +51,6 @@ export const ReportMain = () => {
     nameSet.forEach((date) => {
       const service = inputData.dataService.find((s) => s.name === date);
       const expense = inputData.dataExpense.find((e) => e.name === date);
-      console.log(12, expense);
       const combinedItem: CombinedData = {
         date,
         serviceCount: service ? service.count : '0',
@@ -69,8 +69,9 @@ export const ReportMain = () => {
     setValue(newValue);
   };
 
-  const refresh = () => {
-    refetch();
+  const refresh = (dataFilters: any) => {
+    console.log(7777777, dataFilters);
+    setFilters(dataFilters);
   };
 
   // const printChart = () => {
@@ -125,10 +126,11 @@ export const ReportMain = () => {
         </Tabs>
       </Box>
       <SgTabPanel value={value} index={0}>
-        <div className="flex flex-row items-center">
-          <SgButton label={t('refresh')} onClickAction={refresh} />
-          {/* <SgButton label={t('print')} onClickAction={printChart} /> */}
-        </div>
+        <FilterDates onChange={refresh} />
+        {/* <div className="flex flex-row items-center"> */}
+        {/*   <SgButton label={t('refresh')} onClickAction={refresh} /> */}
+        {/* </div> */}
+        {/* <SgButton label={t('print')} onClickAction={printChart} /> */}
         <SgAmchartCombined
           data={dataReportMain}
           axis={axisReportMain}

@@ -114,6 +114,8 @@
     "customer_id": "Customer",
     "see": "See",
     "list_of": "List of",
+    "notes": "Notes",
+    "title": "Title",
     "money": "money",
     "expense_count": "Expense count",
     "service_count":  "Service count",

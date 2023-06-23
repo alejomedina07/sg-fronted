@@ -1,39 +1,41 @@
-import { configureStore } from '@reduxjs/toolkit'
-import core               from './slices'
-import { authApi }        from '../pages/public/auth/redux/api/authApi';
-import { userApi }        from '../pages/admin/user/redux/api/userApi';
-import { listApi }        from './apis/listApi';
-import { customerApi }    from '../pages/admin/customer/redux/api/customerApi';
+import { configureStore } from '@reduxjs/toolkit';
+import core from './slices';
+import { authApi } from '../pages/public/auth/redux/api/authApi';
+import { userApi } from '../pages/admin/user/redux/api/userApi';
+import { listApi } from './apis/listApi';
+import { customerApi } from '../pages/admin/customer/redux/api/customerApi';
 import { appointmentApi } from '../pages/admin/appointment/redux/api/appointmentApi';
-import { expenseApi }     from '../pages/admin/expense/redux/api/expenseApi';
-import {inventoryApi}     from '../pages/admin/inventory/redux/api/inventoryApi';
-import { serviceApi }     from '../pages/admin/service/redux/api/serviceApi';
+import { expenseApi } from '../pages/admin/expense/redux/api/expenseApi';
+import { inventoryApi } from '../pages/admin/inventory/redux/api/inventoryApi';
+import { serviceApi } from '../pages/admin/service/redux/api/serviceApi';
+import { notesApi } from '../pages/admin/components/notes/notesApi';
 
 export const store = configureStore({
   reducer: {
     core,
-    [ authApi.reducerPath ]: authApi.reducer,
-    [ userApi.reducerPath ]: userApi.reducer,
-    [ listApi.reducerPath ]: listApi.reducer,
-    [ customerApi.reducerPath ]: customerApi.reducer,
-    [ expenseApi.reducerPath ]: expenseApi.reducer,
-    [ inventoryApi.reducerPath ]: inventoryApi.reducer,
-    [ serviceApi.reducerPath ]: serviceApi.reducer,
-    [ appointmentApi.reducerPath ]: appointmentApi.reducer,
-
+    [authApi.reducerPath]: authApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [listApi.reducerPath]: listApi.reducer,
+    [customerApi.reducerPath]: customerApi.reducer,
+    [expenseApi.reducerPath]: expenseApi.reducer,
+    [inventoryApi.reducerPath]: inventoryApi.reducer,
+    [serviceApi.reducerPath]: serviceApi.reducer,
+    [appointmentApi.reducerPath]: appointmentApi.reducer,
+    [notesApi.reducerPath]: notesApi.reducer,
   },
 
-  middleware: ( getDefaultMiddleware ) => getDefaultMiddleware({ serializableCheck: false})
-    .concat(authApi.middleware)
-    .concat(userApi.middleware)
-    .concat(listApi.middleware)
-    .concat(customerApi.middleware)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false })
+      .concat(authApi.middleware)
+      .concat(userApi.middleware)
+      .concat(listApi.middleware)
+      .concat(customerApi.middleware)
       .concat(expenseApi.middleware)
       .concat(inventoryApi.middleware)
-    .concat(serviceApi.middleware)
+      .concat(serviceApi.middleware)
       .concat(appointmentApi.middleware)
-})
+      .concat(notesApi.middleware),
+});
 
-
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

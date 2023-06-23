@@ -116,6 +116,8 @@
     "list_of": "Lista de",
     "money": "Dinero",
     "expense_count": "Cantidad de Gastos",
+    "title": "Título",
+    "notes": "Notas",
     "service_count":  "Cantidad de Servicios",
     "service_total_amount": "Total de Servicios",
     "expense_total_amount":  "Total de Gastos"

@@ -134,7 +134,7 @@ export const DialogFormAppointment = () => {
       </SgDialogTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         <DialogContent dividers>
-          <div className="flex flex-row items-center mb-4">
+          <div className="flex flex-col sm:flex-row items-center mb-4">
             <span className="pl-4">Fecha: </span>
             <span className="flex-1 !m-3 border rounded border-gray-300 pr-3">
               <DatePicker
@@ -158,7 +158,7 @@ export const DialogFormAppointment = () => {
               size="small"
             />
           </div>
-          <div className="flex flex-row items-center mb-4">
+          <div className="flex flex-col sm:flex-row items-center mb-4">
             <SgInput
               className="flex-1 !m-3"
               name={'name'}
@@ -168,7 +168,7 @@ export const DialogFormAppointment = () => {
               size="small"
             />
           </div>
-          <div className="flex flex-row items-center mb-4">
+          <div className="flex flex-col sm:flex-row items-center mb-4">
             <SgSelect
               key="appointmentType-select"
               control={control}
@@ -184,7 +184,7 @@ export const DialogFormAppointment = () => {
             />
           </div>
 
-          <div className="flex flex-row items-center mb-4">
+          <div className="flex flex-col sm:flex-row items-center mb-4">
             <SgSelect
               key="appointmentType-select"
               control={control}
@@ -210,7 +210,7 @@ export const DialogFormAppointment = () => {
             <Paper elevation={3} className=" p-2 m-4">
               <span> Datos del servicio </span>
               <Divider />
-              <div className="flex flex-row items-center mb-4">
+              <div className="flex flex-col sm:flex-row items-center mb-4">
                 <SgSelect
                   disabled={!!appointment?.service}
                   key="statusService-select-appointment"
@@ -258,7 +258,7 @@ export const DialogFormAppointment = () => {
             </Paper>
           )}
 
-          <div className="flex flex-row items-center mb-4">
+          <div className="flex flex-col sm:flex-row items-center mb-4">
             <SgInput
               className="flex-1 !m-3"
               name={'description'}

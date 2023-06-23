@@ -86,7 +86,7 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         {/* name phoneNumber */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="name"
@@ -108,7 +108,7 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
           />
         </div>
         {/* documentType document */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgSelect
             key="documentTypeId-select"
             control={control}
@@ -135,7 +135,7 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
           />
         </div>
         {/* statusId bloodType */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgSelect
             key="filter-field-select"
             control={control}
@@ -165,7 +165,7 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
           />
         </div>
         {/* address */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="address"
@@ -189,7 +189,7 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
             />
           </span>
         </div>
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             rows={4}
             className="flex-1 !m-3"
@@ -200,7 +200,7 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
             size="small"
           />
         </div>
-        <div className="mt-4 mb-4 flex flex-row items-end justify-end">
+        <div className="mt-4 mb-4 flex flex-col sm:flex-row items-end justify-end">
           <SgButton
             variant="contained"
             color="primary"

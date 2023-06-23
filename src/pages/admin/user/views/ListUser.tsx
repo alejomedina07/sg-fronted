@@ -10,9 +10,15 @@ import { ViewTitle } from '../../components/share/title/ViewTitle';
 import { SgLink } from '../../../../components/form/button/SgLink';
 import useForms from '../../../../store/hooks/form/useForms';
 import { useTranslation } from 'react-i18next';
+import { NotesButton } from '../../components/notes/components/NotesButton';
+// @ts-ignore
+import { useSpeechSynthesis } from 'react-speech-kit';
+import { useGetNotesQuery } from '../../components/notes/notesApi';
 
 export const ListUser = () => {
   const { data, isLoading } = useGetUsersQuery('');
+  const text = 'Hola, este es un ejemplo de narración de voz en React.';
+
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState<GridColDef[]>([]);
   const { setUserEditAction } = useForms();
@@ -20,6 +26,11 @@ export const ListUser = () => {
   const onClickView = (params: GridRenderCellParams) => {
     setUserEditAction(params.row);
     navigate(`/admin/users/edit/${params.row.id}`);
+  };
+  const { speak } = useSpeechSynthesis();
+
+  const handleSpeak = () => {
+    speak({ text });
   };
 
   const navigate = useNavigate();
@@ -44,6 +55,7 @@ export const ListUser = () => {
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
+              <NotesButton keyProp="user" id={params.row.id} />
             </div>
           );
         },
@@ -53,6 +65,7 @@ export const ListUser = () => {
 
   return (
     <>
+      <button onClick={handleSpeak}>Narrar</button>
       <ViewTitle title={t('list_user')}>
         <SgLink label={t('create_user')} to="/admin/users/create" />
       </ViewTitle>

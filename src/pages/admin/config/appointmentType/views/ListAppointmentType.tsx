@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { NotesButton } from '../../../components/notes/components/NotesButton';
 
 export const ListAppointmentType = () => {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ export const ListAppointmentType = () => {
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
+              <NotesButton keyProp="appointmentTypeId" id={params.row.id} />
             </div>
           );
         },

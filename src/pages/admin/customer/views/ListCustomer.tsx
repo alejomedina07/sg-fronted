@@ -18,6 +18,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import useService from '../../service/redux/hooks/useService';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { NotesButton } from '../../components/notes/components/NotesButton';
 
 export const ListCustomer = () => {
   const { data, isLoading, refetch } = useGetCustomersQuery('');
@@ -71,6 +72,7 @@ export const ListCustomer = () => {
                   <CalendarMonthIcon />
                 </IconButton>
               </Tooltip>
+              <NotesButton keyProp="customerId" id={params.row.id} />
             </div>
           );
         },

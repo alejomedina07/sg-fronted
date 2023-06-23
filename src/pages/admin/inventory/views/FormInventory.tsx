@@ -77,7 +77,7 @@ export const FormInventory = (props: FormInventoryProps) => {
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         {/* name status */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="name"
@@ -104,7 +104,7 @@ export const FormInventory = (props: FormInventoryProps) => {
           />
         </div>
         {/* description */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="description"
@@ -116,7 +116,7 @@ export const FormInventory = (props: FormInventoryProps) => {
             size="small"
           />
         </div>
-        <div className="mt-4 mb-4 flex flex-row items-end justify-end">
+        <div className="mt-4 mb-4 flex flex-col sm:flex-row items-end justify-end">
           <SgButton
             variant="contained"
             color="primary"

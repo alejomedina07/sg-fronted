@@ -71,7 +71,7 @@ export const FormExpense = () => {
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         {/* name amount */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="name"
@@ -92,7 +92,7 @@ export const FormExpense = () => {
             InputProps={AmountFormatCustom}
           />
         </div>
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgSelect
             key="documentTypeId-select"
             control={control}
@@ -110,7 +110,7 @@ export const FormExpense = () => {
           />
         </div>
         {/* description */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="description"
@@ -123,7 +123,7 @@ export const FormExpense = () => {
           />
         </div>
 
-        <div className="mt-4 mb-4 flex flex-row items-end justify-end">
+        <div className="mt-4 mb-4 flex flex-col sm:flex-row items-end justify-end">
           <SgButton
             variant="contained"
             color="primary"

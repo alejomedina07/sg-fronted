@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { IconButton } from '@mui/material';
+import { Badge, IconButton } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useGetServiceQuery } from '../redux/api/serviceApi';
@@ -11,6 +11,7 @@ import { SgTable } from '../../../../components/table/SgTable';
 import { ColumnsUser } from '../../user/helpers';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { NotesButton } from '../../components/notes/components/NotesButton';
 
 export const ListService = () => {
   const { openModalServiceAction, selectServiceAction } = useService();
@@ -22,6 +23,7 @@ export const ListService = () => {
     openModalServiceAction({ refresh: refetch });
     selectServiceAction(params.row);
   };
+
   const columnsService = ColumnsService();
 
   useEffect(() => {
@@ -37,6 +39,11 @@ export const ListService = () => {
               <IconButton onClick={() => onClickEdit(params)} aria-label="view">
                 <VisibilityIcon />
               </IconButton>
+              <NotesButton
+                keyProp="serviceId"
+                id={params.row.id}
+                count={params.row.id}
+              />
             </div>
           );
         },

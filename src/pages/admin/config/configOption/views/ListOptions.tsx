@@ -10,6 +10,7 @@ import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import useForms from '../../../../../store/hooks/form/useForms';
 import { IconButton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { NotesButton } from '../../../components/notes/components/NotesButton';
 
 export const ListOptions = () => {
   const { keyValue } = useParams();
@@ -43,6 +44,7 @@ export const ListOptions = () => {
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
+              <NotesButton keyProp="serviceId" id={params.row.id} />
             </div>
           );
         },

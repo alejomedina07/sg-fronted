@@ -1,57 +1,67 @@
-import { addDays, endOfDay, endOfMonth, format, formatISO, parseISO, setHours, startOfMonth } from 'date-fns';
-import { utcToZonedTime }                                                                     from 'date-fns-tz';
-import { es }                                                                                 from 'date-fns/locale';
+import {
+  addDays,
+  endOfDay,
+  endOfMonth,
+  format,
+  formatISO,
+  parseISO,
+  setHours,
+  startOfMonth,
+} from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
+import { es } from 'date-fns/locale';
 
 class DateFnsManager {
-
   private timezone: string = 'America/Bogota';
   private currentDate = new Date();
-  currentMonth : RangeAppointmentProps = {
-    start: formatISO(startOfMonth(this.currentDate)), end: formatISO(endOfMonth(this.currentDate))
-  }
+  currentMonth: RangeAppointmentProps = {
+    start: formatISO(startOfMonth(this.currentDate)),
+    end: formatISO(endOfMonth(this.currentDate)),
+  };
 
   transformStringToDate(dateString: string): Date {
     const date = parseISO(dateString);
-    return utcToZonedTime(date, this.timezone)
+    return utcToZonedTime(date, this.timezone);
   }
 
-  addDays(date:Date, days: number): Date {
-    return addDays(date, days)
+  addDays(date: Date, days: number): Date {
+    return addDays(date, days);
   }
 
   dateToString(date: Date): string {
-    return formatISO(date)
+    return formatISO(date);
   }
 
-  addDaysString(date:Date, days: number): string {
-    return formatISO( addDays(date, days) )
+  addDaysString(date: Date, days: number): string {
+    return formatISO(addDays(date, days));
   }
 
-  addHoursAndMinutes(date:Date, hours: number, minutes: number): string {
-    const endDay = endOfDay(date)
+  addHoursAndMinutes(date: Date, hours: number, minutes: number): string {
+    const endDay = endOfDay(date);
     console.log('addHoursAndMinutes::', endDay);
-    return formatISO( setHours(date, hours) )
+    return formatISO(setHours(date, hours));
   }
 
-  getEndDayToString(date:Date): string {
-    return formatISO( endOfDay(date) )
+  getEndDayToString(date: Date): string {
+    return formatISO(endOfDay(date));
   }
 
   getFormatStandard(date: Date | number): string {
-    return format( date, 'dd-MM-yyyy' )
+    return format(date, 'dd-MM-yyyy');
   }
 
   getFormatMonthText(date: Date | number): string {
-    return format( date, 'dd MMMM yyyy', { locale: es } )
+    return format(date, 'dd MMMM yyyy', { locale: es });
   }
 
+  getFormatStandardMonth(date: Date | number): string {
+    return format(date, 'MM-yyyy');
+  }
 }
-
 
 export interface RangeAppointmentProps {
   start: Date | string;
   end: Date | string;
 }
 
-
-export default DateFnsManager
+export default DateFnsManager;

@@ -13,6 +13,7 @@ import { InventoryInOut } from '../components/InventoryInOut';
 import useInventory from '../redux/hooks/useInventory';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { NotesButton } from '../../components/notes/components/NotesButton';
 
 export const ListInventory = () => {
   const { data, isLoading, refetch } = useGetInventoryQuery('');
@@ -61,6 +62,7 @@ export const ListInventory = () => {
                   <CompareArrowsIcon />
                 </IconButton>
               </Tooltip>
+              <NotesButton keyProp="inventoryId" id={params.row.id} />
             </div>
           );
         },

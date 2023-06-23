@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconButton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { NotesButton } from '../../components/notes/components/NotesButton';
 
 export const ListExpense = () => {
   const { setExpenseEditAction } = useForms();
@@ -47,6 +48,7 @@ export const ListExpense = () => {
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
+              <NotesButton keyProp="expenseId" id={params.row.id} />
             </div>
           );
         },

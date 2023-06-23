@@ -6,6 +6,7 @@ import auth from '../../pages/public/auth/redux/slices/authSlice';
 import appointment from '../../pages/admin/appointment/redux/slices/appointmentSlice';
 import service from '../../pages/admin/service/redux/slices/serviceSlice';
 import inventory from '../../pages/admin/inventory/redux/slices/inventorySlice';
+import notes from '../../pages/admin/components/notes/redux/slices/notesSlice';
 
 const coreReducers = combineReducers({
   appointment,
@@ -15,6 +16,7 @@ const coreReducers = combineReducers({
   inventory,
   service,
   snackbar,
+  notes,
 });
 
 export default coreReducers;
