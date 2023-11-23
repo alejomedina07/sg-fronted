@@ -12,9 +12,10 @@ import {
 } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Skeleton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { NotesButton } from '../../components/notes/components/NotesButton';
+import { CONFIG_CONST } from '../../config/configOption/const/configConst';
 
 export const ListExpense = () => {
   const { setExpenseEditAction } = useForms();
@@ -48,7 +49,10 @@ export const ListExpense = () => {
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
-              <NotesButton keyProp="expenseId" id={params.row.id} />
+              <NotesButton
+                entityType={CONFIG_CONST.NOTE.ENTITY_EXPENSE}
+                entityId={params.row.id}
+              />
             </div>
           );
         },
@@ -61,7 +65,7 @@ export const ListExpense = () => {
       <ViewTitle title={t('list_expense')}>
         <SgLink label={t('create_expense')} to="/admin/expense/create" />
       </ViewTitle>
-      <div style={{ height: '70vh', width: '100%' }}>
+      <div style={{ height: '70vh', width: '100%', minWidth: '700px' }}>
         <SgTable
           columns={columns}
           data={data?.data || []}

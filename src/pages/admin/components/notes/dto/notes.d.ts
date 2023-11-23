@@ -1,6 +1,9 @@
-interface Notes {
-  created_at: Date.now;
-  created_by: usuary;
+interface Note {
+  id?: number;
+  createdBy?: any;
+  createdAt?: any;
   title: string;
   description: string;
+  entityType: string;
+  entityId: number;
 }

@@ -13,11 +13,10 @@ import {
   useGetAppointmentTypeQuery,
   useUpdateAppointmentTypeMutation,
 } from '../../../appointment/redux/api/appointmentApi';
-import Switch from '@mui/material/Switch';
-import { FormControlLabel } from '@mui/material';
 import { t } from 'i18next';
 import useForms from '../../../../../store/hooks/form/useForms';
 import { useEffect, useState } from 'react';
+import { SgSwitch } from '../../../../../components/form/button/SgSwitch';
 
 export const FormAppointmentType = () => {
   const { appointmentTypeId } = useParams();
@@ -28,8 +27,8 @@ export const FormAppointmentType = () => {
   const navigate = useNavigate();
   const [addAppointmentType, { isLoading }] = useAddAppointmentTypeMutation();
   const [updateAppointmentType] = useUpdateAppointmentTypeMutation();
-  const { data: appointmentTypeData, isLoading: isLoadingAppointmentType } =
-    useGetAppointmentTypeQuery('');
+  // const { data: appointmentTypeData, isLoading: isLoadingAppointmentType } =
+  //   useGetAppointmentTypeQuery('');
 
   const {
     handleSubmit,
@@ -40,9 +39,6 @@ export const FormAppointmentType = () => {
     defaultValues: defaultValuesActive,
     resolver: yupResolver(appointmentTypeScheme),
   });
-  console.log('appointment type errors', errors);
-
-  console.log(defaultValuesActive);
 
   useEffect(() => {
     if (
@@ -60,12 +56,17 @@ export const FormAppointmentType = () => {
     reset(defaultValuesActive);
   }, [defaultValuesActive, reset]);
 
-
   const submitForm = async (data: any) => {
     try {
-      console.log(432);
+      console.log(432, data);
       let res;
-      if (data.id) res = await updateAppointmentType(data).unwrap();
+      if (data.id)
+        res = await updateAppointmentType({
+          id: data.id,
+          name: data.name,
+          description: data.description,
+          status: data.status,
+        }).unwrap();
       else res = await addAppointmentType(data).unwrap();
       openSnackbarAction({
         message: res.msg || `${t('created')}`,
@@ -77,9 +78,21 @@ export const FormAppointmentType = () => {
     }
   };
 
+  const handleSwitchChange = (value: boolean) => {
+    console.log('Switch value:', value);
+
+    // Realiza acciones adicionales según el valor del switch
+  };
+
   return (
     <>
-      <ViewTitle title={t('create_appointment_type')}>
+      <ViewTitle
+        title={t(
+          appointmentTypeId
+            ? 'edit_appointment_type'
+            : 'create_appointment_type'
+        )}
+      >
         <SgLink
           label={t('list_appointment_type')}
           to="/admin/appointment-type"
@@ -98,13 +111,20 @@ export const FormAppointmentType = () => {
             size="small"
           />
           <div>
-            <FormControlLabel
-              value="start"
-              control={<Switch color="primary" />}
-              label={t('active')}
-              /* defaultValue={ appointmentTypeEdit?.start || '' } */
-              labelPlacement="start"
+            <SgSwitch
+              label={t('status')}
+              name="status"
+              control={control}
+              // onChange={handleSwitchChange}
+              defaultChecked={appointmentTypeEdit?.status || true}
             />
+            {/* <FormControlLabel */}
+            {/*   value="start" */}
+            {/*   control={<Switch color="primary" />} */}
+            {/*   label={t('active')} */}
+            {/*    defaultValue={ appointmentTypeEdit?.start || '' }  */}
+            {/*   labelPlacement="start" */}
+            {/* /> */}
           </div>
         </div>
         {/* description  */}

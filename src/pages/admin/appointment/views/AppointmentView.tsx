@@ -105,8 +105,10 @@ export const AppointmentView = () => {
       // range is an object with start and end properties
       const { start, end } = newRange;
       setRange({
-        start: managerDate.dateToString(start),
-        end: managerDate.addDaysString(end, 1),
+        start: managerDate.getStartDayToString(start),
+        end: managerDate.getEndDayToString(
+          new Date(managerDate.addDaysString(end, 1))
+        ),
       });
       console.log('objec', range);
     }

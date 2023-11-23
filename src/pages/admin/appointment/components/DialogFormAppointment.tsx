@@ -55,13 +55,11 @@ export const DialogFormAppointment = () => {
   );
 
   useEffect(() => {
-    console.log(789);
     if (appointment) {
-      console.log('useEffect', appointment);
+      setShowServiceFields(appointment.service != null);
       setStartDate(new Date(`${appointment.date}`));
       setDefaultValues({ ...appointment });
     } else {
-      console.log('defaultValuesFormAppointment');
       setDefaultValues({ ...defaultValuesFormAppointment });
     }
   }, [appointment, isOpenModalAppointment]);
@@ -71,7 +69,6 @@ export const DialogFormAppointment = () => {
     handleSubmit,
     control,
     formState: { errors },
-    watch,
     reset,
   } = useForm({
     defaultValues,
@@ -82,7 +79,11 @@ export const DialogFormAppointment = () => {
     closeDialog();
   };
 
-  const showServiceFields = watch('addService');
+  const [showServiceFields, setShowServiceFields] = useState(false);
+
+  const handleClickAddService = (e: any) => {
+    setShowServiceFields(e);
+  };
 
   const closeDialog = () => {
     if (onClose) onClose();
@@ -130,7 +131,11 @@ export const DialogFormAppointment = () => {
     >
       <SgDialogTitle id={'appointment-dialog'} onClose={onClose}>
         {' '}
-        {t('add_appointment')}
+        {t(
+          appointment?.appointmentTypeId
+            ? 'edit_appointment'
+            : 'add_appointment'
+        )}
       </SgDialogTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         <DialogContent dividers>
@@ -198,11 +203,15 @@ export const DialogFormAppointment = () => {
               errors={errors}
               options={customers?.data || []}
             />
+            {/* {!appointment?.service && ( */}
+            {/* )} */}
             <SgCheckbox
               disabled={!!appointment?.service}
               label={t('create_service')}
+              onChange={handleClickAddService}
               name="addService"
               control={control}
+              defaultChecked={false}
             />
           </div>
 

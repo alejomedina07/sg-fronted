@@ -11,13 +11,16 @@ interface SgAmchartCombinedProps {
   data: any[];
   axis: AxisValues;
   series: any[];
+  idDiv: string;
+  category: string;
 }
 
 export const SgAmchartCombined = (props: SgAmchartCombinedProps) => {
-  const { data, axis, series } = props;
+  const { data, axis, series, idDiv, category } = props;
+  console.log(999, data);
   useEffect(() => {
     // Create chart instance
-    const chart = am4core.create('chartdiv', am4charts.XYChart);
+    const chart = am4core.create(idDiv, am4charts.XYChart);
 
     // Add data
     chart.data = data;
@@ -28,7 +31,7 @@ export const SgAmchartCombined = (props: SgAmchartCombinedProps) => {
 
     let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.renderer.grid.template.location = 0;
-    categoryAxis.dataFields.category = 'date';
+    categoryAxis.dataFields.category = category;
     categoryAxis.renderer.minGridDistance = 60;
     categoryAxis.renderer.labels.template.rotation = -60;
     categoryAxis.renderer.inversed = true;
@@ -97,5 +100,5 @@ export const SgAmchartCombined = (props: SgAmchartCombinedProps) => {
     };
   }, [data]);
 
-  return <div id="chartdiv" style={{ width: '100%', height: '500px' }}></div>;
+  return <div id={idDiv} style={{ width: '100%', height: '500px' }}></div>;
 };

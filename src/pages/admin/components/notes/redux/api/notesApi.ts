@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
-import baseQueryWithReauth from '../../../../utils/api/apiConst';
+import baseQueryWithReauth from '../../../../../../utils/api/apiConst';
 
 export const notesApi = createApi({
   reducerPath: 'notesApi',

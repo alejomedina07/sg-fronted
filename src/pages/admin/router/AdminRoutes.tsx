@@ -21,8 +21,13 @@ import { ListOptions } from '../config/configOption/views/ListOptions';
 import { FormOptions } from '../config/configOption/views/FormOptions';
 import { ViewInventory } from '../inventory/views/ViewInventory';
 import { AdminView } from '../components/AdminView';
+import useAuth from '../../public/auth/redux/hooks/useAuth';
+import { AdminTurnView } from '../turn/view/AdminTurnView';
 
 export const AdminRoutes = () => {
+  const { userConnected } = useAuth();
+  // console.log(33333, userConnected);
+
   return (
     <Routes>
       <Route
@@ -34,11 +39,32 @@ export const AdminRoutes = () => {
         }
       >
         <Route path="" element={<AdminView />}></Route>
-        <Route path="users">
-          <Route path="" element={<ListUser />} />
-          <Route path="create" element={<FormUser />} />
-          <Route path="edit/:userId" element={<FormUser />} />
-        </Route>
+        {userConnected.rol == 'Admin' && (
+          <>
+            <Route path="appointment-type">
+              <Route path="" element={<ListAppointmentType />} />
+              <Route path="create" element={<FormAppointmentType />} />
+              <Route
+                path="edit/:appointmentTypeId"
+                element={<FormAppointmentType />}
+              />
+            </Route>
+            <Route path="users">
+              <Route path="" element={<ListUser />} />
+              <Route path="create" element={<FormUser />} />
+              <Route path="edit/:userId" element={<FormUser />} />
+            </Route>
+            <Route path="config">
+              <Route path="config-options" element={<ConfigOptions />} />
+              <Route path="config-list/:keyValue" element={<ListOptions />} />
+              <Route path="config-form/:keyValue" element={<FormOptions />} />
+              <Route
+                path="config-edit/:keyValue/:idConfig"
+                element={<FormOptions />}
+              />
+            </Route>
+          </>
+        )}
         <Route path="customer">
           <Route path="" element={<ListCustomer />} />
           <Route path="create" element={<FormCustomer />} />
@@ -58,23 +84,9 @@ export const AdminRoutes = () => {
           <Route path="" element={<ListService />} />
           <Route path="create" element={<FormService />} />
         </Route>
-        <Route path="appointment-type">
-          <Route path="" element={<ListAppointmentType />} />
-          <Route path="create" element={<FormAppointmentType />} />
-          <Route
-            path="edit/:appointmentTypeId"
-            element={<FormAppointmentType />}
-          />
-        </Route>
-        <Route path="config-options" element={<ConfigOptions />} />
-        <Route path="config-list/:keyValue" element={<ListOptions />} />
-        <Route path="config-form/:keyValue" element={<FormOptions />} />
-        <Route
-          path="config-edit/:keyValue/:idConfig"
-          element={<FormOptions />}
-        />
 
         <Route path="appointment" element={<AppointmentView />} />
+        <Route path="turn" element={<AdminTurnView />} />
         <Route path="report" element={<ReportMain />} />
       </Route>
       <Route path="*" element={<Navigate to="admin" />} />

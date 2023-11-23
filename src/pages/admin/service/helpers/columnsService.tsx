@@ -9,7 +9,7 @@ export const ColumnsService = () => {
   const { t } = useTranslation();
 
   const columns: ColumnsProps[] = [
-    // { field: 'id', headerName: 'ID', flex: 30 },
+    { field: 'id', headerName: 'ID', flex: 30 },
     {
       field: 'createdAt',
       headerName: `${t('created_at')}`,

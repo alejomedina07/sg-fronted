@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { NotesButton } from '../../../components/notes/components/NotesButton';
+import { CONFIG_CONST } from '../../configOption/const/configConst';
 
 export const ListAppointmentType = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const ListAppointmentType = () => {
     navigate(`/admin/appointment-type/edit/${params.row.id}`);
   };
 
-  const { data, isLoading } = useGetAppointmentTypeQuery('');
+  const { data, isLoading } = useGetAppointmentTypeQuery(`?getAll=true`);
 
   useEffect(() => {
     setColumns([
@@ -44,7 +45,10 @@ export const ListAppointmentType = () => {
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
-              <NotesButton keyProp="appointmentTypeId" id={params.row.id} />
+              <NotesButton
+                entityType={CONFIG_CONST.NOTE.ENTITY_APPOINTMENT_TYPE}
+                entityId={params.row.id}
+              />
             </div>
           );
         },

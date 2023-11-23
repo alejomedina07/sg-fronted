@@ -17,6 +17,7 @@ import {
 import { customerSchema } from '../validation/customerSchema';
 import { defaultValues } from '../helpers';
 import DatePicker from 'react-datepicker';
+import { Skeleton } from '@mui/material';
 
 interface FormCustomerProps {
   customerEdit?: Customer;

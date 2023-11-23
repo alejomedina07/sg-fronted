@@ -8,9 +8,7 @@ export const BoxLayout = (props: BoxLayoutProps) => {
   const { children } = props;
   return (
     <div className="mx-2">
-      <div className=" border-2 rounded p-8">
-        { children }
-      </div>
+      <div className=" border-2 rounded sm:p-8 p-4">{children}</div>
     </div>
   );
-}
+};

@@ -12,7 +12,7 @@ export const appointmentApi = createApi({
     getAppointments: build.query({
       query: (range: RangeAppointmentProps) =>
         `/appointment?start=${range.start}&end=${range.end}`,
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 0,
       transformResponse: (rawResult: any) => {
         // console.log(999, rawResult.data);
         return rawResult.data.map((item: AppointmentDto) =>
@@ -21,8 +21,8 @@ export const appointmentApi = createApi({
       },
     }),
     getAppointmentType: build.query({
-      query: () => '/appointment/type',
-      keepUnusedDataFor: 1,
+      query: (params) => `/appointment/type${params}`,
+      keepUnusedDataFor: 0,
     }),
     addAppointment: build.mutation<any, any>({
       query: (body: any) => ({
@@ -39,10 +39,10 @@ export const appointmentApi = createApi({
       }),
     }),
 
-    getServiceReport: build.query({
-      query: (filters) => `/service/report${filters}`,
-      keepUnusedDataFor: 0,
-    }),
+    // getServiceReport: build.query({
+    //   query: (filters) => `/report${filters}`,
+    //   keepUnusedDataFor: 0,
+    // }),
     addAppointmentType: build.mutation<any, any>({
       query: (body: any) => ({
         url: '/appointment/type',
@@ -52,7 +52,7 @@ export const appointmentApi = createApi({
     }),
     updateAppointmentType: build.mutation<any, any>({
       query: (body: any) => ({
-        url: `/appointment-type/${body.id}`,
+        url: `/appointment/type/${body.id}`,
         method: 'PUT',
         body,
       }),
@@ -65,7 +65,7 @@ export const {
   useGetAppointmentTypeQuery,
   useAddAppointmentMutation,
   useUpdateAppointmentMutation,
-  useGetServiceReportQuery,
+  // useGetServiceReportQuery,
   useAddAppointmentTypeMutation,
   useUpdateAppointmentTypeMutation,
 } = appointmentApi;

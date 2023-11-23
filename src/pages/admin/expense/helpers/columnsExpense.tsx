@@ -10,6 +10,7 @@ export const ColumnsExpense = () => {
   const { t } = useTranslation();
 
   const columns: ColumnsProps[] = [
+    { field: 'id', headerName: `${t('ID')}`, flex: 50 },
     { field: 'name', headerName: `${t('name')}`, flex: 100 },
     { field: 'description', headerName: `${t('description')}`, flex: 70 },
     { field: 'amount', headerName: `${t('amount')}`, flex: 70 },

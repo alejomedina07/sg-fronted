@@ -1,5 +1,6 @@
 export const defaultValuesFormAppointment: AppointmentDto = {
-  name:'',
-  duration:30,
-  date:new Date()
-}
+  name: '',
+  addService: false,
+  duration: 30,
+  date: new Date(),
+};

@@ -6,10 +6,12 @@ type AutocompleteProps = {
   label: string;
   options: any[];
   control: any;
-  size: "small" | "medium" | undefined;
+  size: 'small' | 'medium' | undefined;
   optionValue: string;
   optionName: string;
   defaultValue?: any;
+  errors?: any;
+  // required?: any;
 };
 
 export const SgAutocomplete = (props: AutocompleteProps) => {
@@ -18,14 +20,15 @@ export const SgAutocomplete = (props: AutocompleteProps) => {
     label,
     options,
     control,
-    size = "small",
+    size = 'small',
     optionValue,
     optionName,
-    defaultValue,
+    errors,
   } = props;
 
   return (
     <Controller
+      // rules={{ required: required }}
       name={name}
       control={control}
       // defaultValue={
@@ -40,10 +43,18 @@ export const SgAutocomplete = (props: AutocompleteProps) => {
           onChange={(_, data) => onChange(data ? data[optionValue] : null)}
           onBlur={onBlur}
           renderInput={(params) => (
-            <TextField {...params} label={label} size={size} />
+            <TextField
+              {...params}
+              label={label}
+              size={size}
+              error={Boolean(errors[name])}
+              helperText={Boolean(errors[name]) && `${errors[name].message}`}
+            />
           )}
           value={options.find((option) => option[optionValue] === value)}
-          isOptionEqualToValue={(option, value) => option[optionValue] === value[optionValue]}
+          isOptionEqualToValue={(option, value) =>
+            option[optionValue] === value[optionValue]
+          }
         />
       )}
     />

@@ -1,25 +1,14 @@
-import useNotes from '../redux/hooks/useNotes';
-import { Dialog, DialogContent, IconButton } from '@mui/material';
-import { SgTransition } from '../../../../../components/utils/dialogs/SgTransition';
-import { t } from 'i18next';
-import { SgDialogTitle } from '../../../../../components/utils/dialogs/SgDialogTitle';
-import { FormNotes } from '../FormNotes';
 import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import useNotes from '../redux/hooks/useNotes';
+import { t } from 'i18next';
+import { Dialog, DialogContent } from '@mui/material';
+import { FormNotes } from './FormNotes';
 import { ListNotes } from './ListNotes';
-import { useGetNotesQuery } from '../notesApi';
+import { SgTransition } from '../../../../../components/utils/dialogs/SgTransition';
+import { SgDialogTitle } from '../../../../../components/utils/dialogs/SgDialogTitle';
 
 export const DialogNotes = () => {
-  const { isOpenModalNotes, onClose, refresh, closeModalNotesAction } =
-    useNotes();
+  const { isOpenModalNotes, onClose, closeModalNotesAction } = useNotes();
 
   const closeDialog = () => {
     if (onClose) onClose();
@@ -43,8 +32,6 @@ export const DialogNotes = () => {
           {t('notes')}
         </SgDialogTitle>
         <DialogContent dividers className="!p-0">
-          {' '}
-          {/* sx={{ minHeight: '240px' }} */}
           <FormNotes />
           <ListNotes />
         </DialogContent>

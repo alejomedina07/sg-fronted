@@ -74,14 +74,14 @@ export const FormService = () => {
     }
   };
 
-  // console.log(999, customerId);
+  console.log(999, errors);
 
   return (
     <>
       <form onSubmit={handleSubmit(submitForm)}>
         {/* create_at */}
-        <div className="flex flex-row items-center">
-          <div className="flex-1 !m-3">
+        <div className="flex flex-col sm:flex-row items-center">
+          <div className="flex-1 !w-full  sm:mx-3 mb-4 sm:mb-0">
             {!!customerData?.data && !customer && (
               <SgAutocomplete
                 name="customerId"
@@ -89,6 +89,8 @@ export const FormService = () => {
                 optionName="name"
                 optionValue="id"
                 size="small"
+                // required
+                errors={errors}
                 options={customerData?.data || []}
                 defaultValue={service?.customerId ?? null}
                 control={control}
@@ -116,7 +118,7 @@ export const FormService = () => {
         </div>
 
         {/* description */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="amount"
@@ -145,7 +147,7 @@ export const FormService = () => {
           />
         </div>
 
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="description"
@@ -157,7 +159,7 @@ export const FormService = () => {
             size="small"
           />
         </div>
-        <div className="mt-4 mb-4 flex flex-row items-end justify-end">
+        <div className="mt-4 mb-4 flex flex-col sm:flex-row items-end justify-end">
           <SgButton
             variant="contained"
             color="primary"

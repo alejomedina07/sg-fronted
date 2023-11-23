@@ -1,7 +1,7 @@
 import { useGetInventoryByIdQuery } from '../redux/api/inventoryApi';
 import { useParams } from 'react-router-dom';
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { Box, Tab, Tabs } from '@mui/material';
+import { Box, Skeleton, Tab, Tabs } from '@mui/material';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import { t } from 'i18next';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';

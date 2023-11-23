@@ -6,8 +6,13 @@ import { FormService } from '../views/FormService';
 import { t } from 'i18next';
 
 export const DialogService = () => {
-  const { isOpenModalService, onClose, refresh, closeModalServiceAction } =
-    useService();
+  const {
+    isOpenModalService,
+    onClose,
+    refresh,
+    closeModalServiceAction,
+    service,
+  } = useService();
 
   const handleClose = () => {
     closeDialog();
@@ -28,7 +33,7 @@ export const DialogService = () => {
     >
       <SgDialogTitle id={'appointment-dialog'} onClose={closeDialog}>
         {' '}
-        {t('edit_service')}{' '}
+        {t(service?.id ? 'edit_service' : 'create_service')}{' '}
       </SgDialogTitle>
       <DialogContent dividers>
         <FormService />

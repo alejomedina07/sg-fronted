@@ -8,7 +8,8 @@ import { appointmentApi } from '../pages/admin/appointment/redux/api/appointment
 import { expenseApi } from '../pages/admin/expense/redux/api/expenseApi';
 import { inventoryApi } from '../pages/admin/inventory/redux/api/inventoryApi';
 import { serviceApi } from '../pages/admin/service/redux/api/serviceApi';
-import { notesApi } from '../pages/admin/components/notes/notesApi';
+import { notesApi } from '../pages/admin/components/notes/redux/api/notesApi';
+import { reportApi } from '../pages/admin/reports/redux/api/reportApi';
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     [inventoryApi.reducerPath]: inventoryApi.reducer,
     [serviceApi.reducerPath]: serviceApi.reducer,
     [appointmentApi.reducerPath]: appointmentApi.reducer,
+    [reportApi.reducerPath]: reportApi.reducer,
     [notesApi.reducerPath]: notesApi.reducer,
   },
 
@@ -34,6 +36,7 @@ export const store = configureStore({
       .concat(inventoryApi.middleware)
       .concat(serviceApi.middleware)
       .concat(appointmentApi.middleware)
+      .concat(reportApi.middleware)
       .concat(notesApi.middleware),
 });
 

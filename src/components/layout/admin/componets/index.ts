@@ -8,4 +8,5 @@ export interface NavItem {
   link: string;
   icon: ReactElement;
   iconMenu: ReactElement;
+  onlyAdmin?: boolean;
 }

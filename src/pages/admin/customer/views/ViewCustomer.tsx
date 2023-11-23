@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import { useGetCustomerByIdQuery } from '../redux/api/customerApi';
 import { ViewServices } from '../../service/components/ViewServices';
 import { SgTabPanel } from '../../../../components/utils/tabs/SgTabPanel';
+import { ViewAppointments } from '../../appointment/components/ViewAppointments';
 
 export const ViewCustomer = () => {
   const { customerId } = useParams();
@@ -68,7 +69,7 @@ export const ViewCustomer = () => {
         <ViewServices services={services ?? []} />
       </SgTabPanel>
       <SgTabPanel value={value} index={2}>
-        Item Three
+        <ViewAppointments appointments={appointments ?? []} />
       </SgTabPanel>
     </>
   );

@@ -6,6 +6,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { NavItem } from '../index';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import SwipeRightIcon from '@mui/icons-material/SwipeRight';
 
 export const navItems: NavItem[] = [
   {
@@ -14,6 +15,7 @@ export const navItems: NavItem[] = [
     link: '/admin/users',
     icon: <GroupIcon />,
     iconMenu: <GroupIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
   },
   {
     id: 4,
@@ -21,6 +23,7 @@ export const navItems: NavItem[] = [
     link: '/admin/appointment',
     icon: <CalendarMonthIcon />,
     iconMenu: <CalendarMonthIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: false,
   },
   {
     id: 5,
@@ -28,6 +31,7 @@ export const navItems: NavItem[] = [
     link: '/admin/customer',
     icon: <PermContactCalendarIcon />,
     iconMenu: <PermContactCalendarIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: false,
   },
   {
     id: 6,
@@ -35,6 +39,7 @@ export const navItems: NavItem[] = [
     link: '/admin/expense',
     icon: <AddBusinessIcon />,
     iconMenu: <AddBusinessIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: false,
   },
   {
     id: 7,
@@ -42,6 +47,7 @@ export const navItems: NavItem[] = [
     link: '/admin/inventory',
     icon: <PlaylistAddCircleIcon />,
     iconMenu: <PlaylistAddCircleIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: false,
   },
   {
     id: 8,
@@ -49,6 +55,7 @@ export const navItems: NavItem[] = [
     link: '/admin/service',
     icon: <MonetizationOnIcon />,
     iconMenu: <MonetizationOnIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: false,
   },
   {
     id: 1,
@@ -56,5 +63,14 @@ export const navItems: NavItem[] = [
     link: '/admin/report',
     icon: <TrendingUpIcon />,
     iconMenu: <TrendingUpIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+  },
+  {
+    id: 10,
+    name: 'turns',
+    link: '/admin/turn',
+    icon: <SwipeRightIcon />,
+    iconMenu: <SwipeRightIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
   },
 ];

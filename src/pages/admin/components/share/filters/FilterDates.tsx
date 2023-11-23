@@ -8,9 +8,9 @@ import DateFnsManager from '../../../../../services/utils/DateFnsManager';
 const managerDate = new DateFnsManager();
 
 const types = [
-  { value: 'current_month', key: 'current_month' },
-  { value: 'month', key: 'month' },
-  { value: 'range', key: 'range' },
+  { key: `${t('current_month')}`, value: 'current_month' },
+  { key: `${t('month')}`, value: 'month' },
+  { key: `${t('range')}`, value: 'range' },
 ];
 
 export const FilterDates = (props: any) => {
@@ -68,7 +68,12 @@ export const FilterDates = (props: any) => {
               onChange={(date) => setStartDate(date)}
               startDate={startDate}
               endDate={endDate}
-              placeholderText="Seleccione inicio"
+              placeholderText={`${t('select_start')}`}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              locale="es"
             />
           </span>
 
@@ -79,7 +84,12 @@ export const FilterDates = (props: any) => {
               startDate={startDate}
               endDate={endDate}
               minDate={startDate}
-              placeholderText="Seleccione final"
+              placeholderText={`${t('select_end')}`}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              locale="es"
             />
           </span>
         </>
@@ -91,7 +101,7 @@ export const FilterDates = (props: any) => {
             selected={monthDate}
             showMonthYearPicker
             onChange={(date) => setMonthDate(date)}
-            placeholderText="Seleccione mes"
+            placeholderText={`${t('select_month')}`}
             dateFormat="MM/yyyy"
           />
         </span>

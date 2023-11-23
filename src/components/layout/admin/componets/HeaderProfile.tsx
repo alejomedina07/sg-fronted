@@ -1,16 +1,23 @@
-import { Avatar, Divider, Grid, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
-import { useState }                                                        from "react";
-import { Link }                                                            from "react-router-dom";
-import { Logout, Settings }                                                from '@mui/icons-material';
-import useAuth
-                                                                           from '../../../../pages/public/auth/redux/hooks/useAuth';
-import {t} from 'i18next';
+import {
+  Avatar,
+  Divider,
+  Grid,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+} from '@mui/material';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Logout, Settings } from '@mui/icons-material';
+import useAuth from '../../../../pages/public/auth/redux/hooks/useAuth';
+import { t } from 'i18next';
 export const HeaderProfile = () => {
   const { addLogoutAction, userConnected } = useAuth();
 
-  const handleLogout = ()=> {
-    addLogoutAction()
-  }
+  const handleLogout = () => {
+    addLogoutAction();
+  };
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -23,19 +30,27 @@ export const HeaderProfile = () => {
 
   return (
     <Grid item>
-      <Grid container direction='row' alignItems='center'>
-        <div> {t('hello')}: {`${ userConnected?.firstName || '' }  ${ userConnected?.lastName || '' }` || 'Usuario'} </div>
+      <Grid container direction="row" alignItems="center">
+        <div>
+          {t('hello')}: {`${userConnected?.firstName || ''} ` || 'Usuario'}{' '}
+        </div>
         <div>
           <IconButton
-            aria-label="more" id="long-button"
+            aria-label="more"
+            id="long-button"
             aria-controls={open ? 'long-menu' : undefined}
             aria-expanded={open ? 'true' : undefined}
-            aria-haspopup="true" onClick={handleClick}>
-            <Avatar>{ userConnected?.firstName?.split(' ')[0][0] || 'a'}</Avatar>
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <Avatar>{userConnected?.firstName?.split(' ')[0][0] || 'a'}</Avatar>
           </IconButton>
           <Menu
-            anchorEl={anchorEl} id="account-menu" open={open}
-            onClose={handleClose} onClick={handleClose}
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
             PaperProps={{
               elevation: 0,
               sx: {
@@ -65,19 +80,23 @@ export const HeaderProfile = () => {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            <Link to='/profile' className='link-nav-bar'>
-              <MenuItem ><Avatar /> {t('my_profile')}</MenuItem>
+            <Link to="/profile" className="link-nav-bar">
+              <MenuItem>
+                <Avatar /> {t('my_profile')}
+              </MenuItem>
             </Link>
             {/* <MenuItem><Avatar /> Mi cuenta</MenuItem> */}
             <Divider />
-            <Link to='/admin/config-options' className='link-nav-bar'>
-            <MenuItem>
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
-              {t('configuration')}
-            </MenuItem>
-            </Link>
+            {userConnected.rol == 'Admin' && (
+              <Link to="/admin/config/config-options" className="link-nav-bar">
+                <MenuItem>
+                  <ListItemIcon>
+                    <Settings fontSize="small" />
+                  </ListItemIcon>
+                  {t('configuration')}
+                </MenuItem>
+              </Link>
+            )}
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <Logout fontSize="small" />

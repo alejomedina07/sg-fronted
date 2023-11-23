@@ -66,7 +66,7 @@ export const FormExpense = () => {
 
   return (
     <>
-      <ViewTitle title={t('create_expense')}>
+      <ViewTitle title={t(expenseId ? 'edit_expense' : 'create_expense')}>
         <SgLink label={t('list_expense')} to="/admin/expense" />
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>

@@ -1,23 +1,22 @@
-import { SgButton } from '../../../../components/form/button/SgButton';
-import { ViewTitle } from '../../components/share/title/ViewTitle';
-import { SgLink } from '../../../../components/form/button/SgLink';
-import { SgInput } from '../../../../components/form/SgInput';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate, useParams } from 'react-router-dom';
+import { t } from 'i18next';
 import {
   useAddUserMutation,
   useUpdateUserMutation,
 } from '../redux/api/userApi';
+import { defaultValues } from '../helpers/userConst';
 import { userSchema } from '../validation/userScheme';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { SgButton } from '../../../../components/form/button/SgButton';
+import { ViewTitle } from '../../components/share/title/ViewTitle';
+import { SgLink } from '../../../../components/form/button/SgLink';
+import { SgInput } from '../../../../components/form/SgInput';
 import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { useNavigate, useParams } from 'react-router-dom';
 import { SgSelect } from '../../../../components/form/SgSelect';
 import { BLOOD_TYPES } from '../../../../utils/consts/shared/bloodTypes';
-import { defaultValues } from '../helpers/userConst';
-import { useEffect, useState } from 'react';
 import useForms from '../../../../store/hooks/form/useForms';
-import { t } from 'i18next';
-import { Password } from '@mui/icons-material';
 
 export const FormUser = () => {
   const { userId } = useParams();
@@ -33,8 +32,6 @@ export const FormUser = () => {
     defaultValues: defaultValuesActive,
     resolver: yupResolver(userSchema),
   });
-
-  console.log(999, errors);
 
   useEffect(() => {
     if (userId && userEdit && userId === `${userEdit.id}`) {
@@ -78,7 +75,7 @@ export const FormUser = () => {
 
   return (
     <>
-      <ViewTitle title={t('create_user')}>
+      <ViewTitle title={t(userId ? 'edit_user' : 'create_user')}>
         <SgLink label={t('list_user')} to="/admin/users" />
       </ViewTitle>
       <form onSubmit={handleSubmit(submitForm)}>
@@ -136,7 +133,7 @@ export const FormUser = () => {
           />
         </div>
         {/* phoneNumber bloodType */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="phoneNumber"
@@ -163,7 +160,7 @@ export const FormUser = () => {
         </div>
 
         {/* documentType documentNumber */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgSelect
             key="documentTypeId-select"
             control={control}
@@ -190,7 +187,7 @@ export const FormUser = () => {
           />
         </div>
         {/* email address */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="email"
@@ -211,7 +208,7 @@ export const FormUser = () => {
           />
         </div>
         {/* password */}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-2"
             name="password"

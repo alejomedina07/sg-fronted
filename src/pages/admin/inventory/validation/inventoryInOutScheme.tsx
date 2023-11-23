@@ -5,5 +5,7 @@ export const inventoryScheme = Yup.object().shape({
   note: Yup.string().required(`${t('field_is_required')}`),
   increment: Yup.boolean(),
   inventoryId: Yup.number().required(`${t('field_is_required')}`),
-  quantity: Yup.number().required(`${t('field_is_required')}`),
+  quantity: Yup.number()
+    .typeError(`${t('incorrect_field')}`)
+    .required(`${t('field_is_required')}`),
 });

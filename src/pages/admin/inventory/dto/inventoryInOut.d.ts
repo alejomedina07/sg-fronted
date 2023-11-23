@@ -1,6 +1,6 @@
 interface InventoryInOut {
   note: string;
-  increment: true;
+  increment: boolean;
   inventoryId: number;
   quantity: number;
 }

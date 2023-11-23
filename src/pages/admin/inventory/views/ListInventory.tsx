@@ -6,7 +6,7 @@ import { useGetInventoryQuery } from '../redux/api/inventoryApi';
 import { t } from 'i18next';
 import { useNavigate } from 'react-router-dom';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Skeleton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { InventoryInOut } from '../components/InventoryInOut';
@@ -14,6 +14,7 @@ import useInventory from '../redux/hooks/useInventory';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { NotesButton } from '../../components/notes/components/NotesButton';
+import { CONFIG_CONST } from '../../config/configOption/const/configConst';
 
 export const ListInventory = () => {
   const { data, isLoading, refetch } = useGetInventoryQuery('');
@@ -24,7 +25,6 @@ export const ListInventory = () => {
     useInventory();
 
   const onClickInOut = (param: GridRenderCellParams) => {
-    console.log(param);
     selectInventoryAction({
       inventory: param.row,
       isOpenModalInventory: true,
@@ -40,7 +40,7 @@ export const ListInventory = () => {
       {
         field: 'actions',
         headerName: `${t('actions')}`,
-        flex: 50,
+        flex: 80,
         renderCell: (params) => {
           return (
             <div className="flex flex-row items-center">
@@ -62,7 +62,10 @@ export const ListInventory = () => {
                   <CompareArrowsIcon />
                 </IconButton>
               </Tooltip>
-              <NotesButton keyProp="inventoryId" id={params.row.id} />
+              <NotesButton
+                entityType={CONFIG_CONST.NOTE.ENTITY_INVENTORY}
+                entityId={params.row.id}
+              />
             </div>
           );
         },
@@ -75,7 +78,7 @@ export const ListInventory = () => {
       <ViewTitle title={t('list_inventory')}>
         <SgLink label={t('create_inventory')} to="/admin/inventory/create" />
       </ViewTitle>
-      <div style={{ height: '70vh', width: '100%' }}>
+      <div style={{ height: '70vh', width: '100%', minWidth: '700px' }}>
         <SgTable
           columns={columns}
           data={data?.data || []}

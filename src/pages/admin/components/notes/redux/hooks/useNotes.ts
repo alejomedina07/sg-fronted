@@ -3,15 +3,24 @@ import useGlobalStore from '../../../../../../store/hooks/useGlobalStore';
 import {
   notesSliceProps,
   closeModalNotes,
+  editNote,
   openModalNotes,
   selectNotes,
   openModalNotesProps,
+  setRefreshList,
 } from '../slices/notesSlice';
 
 function useNotes() {
   const { dispatch, useTypedSelector } = useGlobalStore();
-  const { notes, isOpenModalNotes, refresh, onClose, key, id } =
-    useTypedSelector(({ core }: any) => core.notes);
+  const {
+    notes,
+    isOpenModalNotes,
+    refresh,
+    onClose,
+    entityType,
+    entityId,
+    noteEdit,
+  } = useTypedSelector(({ core }: any) => core.notes);
 
   const selectNotesAction = (payload: notesSliceProps) =>
     dispatch(selectNotes(payload));
@@ -21,16 +30,24 @@ function useNotes() {
   const openModalNotesAction = (data: openModalNotesProps) =>
     dispatch(openModalNotes(data));
 
+  const editNoteAction = (note: Note) => dispatch(editNote(note));
+
+  const setRefreshListAction = (refresh: () => void) =>
+    dispatch(setRefreshList(refresh));
+
   return {
     notes,
     closeModalNotesAction,
     isOpenModalNotes,
-    id,
-    key,
+    entityId,
+    entityType,
     openModalNotesAction,
     onClose,
     refresh,
     selectNotesAction,
+    editNoteAction,
+    noteEdit,
+    setRefreshListAction,
   };
 }
 

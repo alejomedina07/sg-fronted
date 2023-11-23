@@ -21,7 +21,7 @@ export const Login = () => {
       const data = await login({ phoneNumber, password }).unwrap();
       addLoginAction({ ...data.user, token: data.token });
       openSnackbarAction({
-        message: data.msg || 'Iniciando sessión',
+        message: data.msg || 'Iniciando sesión',
         type: 'success',
       });
     } catch (e: any) {

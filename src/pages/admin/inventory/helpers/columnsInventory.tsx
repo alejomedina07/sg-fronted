@@ -10,6 +10,7 @@ export const ColumnsInventory = () => {
   const { t } = useTranslation();
 
   const columns: ColumnsProps[] = [
+    { field: 'id', headerName: `${t('ID')}`, flex: 30 },
     { field: 'name', headerName: `${t('name')}`, flex: 100 },
     { field: 'description', headerName: `${t('description')}`, flex: 70 },
     { field: 'quantity', headerName: `${t('quantity')}`, flex: 40 },

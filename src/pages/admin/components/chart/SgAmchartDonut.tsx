@@ -5,15 +5,17 @@ import { ColumnSeries, LineSeries } from '@amcharts/amcharts4/charts';
 
 interface SgAmchartDonutProps {
   data: any[];
+  idDiv: string;
   valueName: string;
   categoryName: string;
 }
 
 export const SgAmchartDonut = (props: SgAmchartDonutProps) => {
-  const { data, valueName, categoryName } = props;
+  const { data, idDiv, valueName, categoryName } = props;
+  console.log('data::::', data);
   useEffect(() => {
     // Create chart instance
-    const chart = am4core.create('chartdivdount', am4charts.PieChart);
+    const chart = am4core.create(idDiv, am4charts.PieChart);
 
     // Add data
     chart.data = data;
@@ -37,7 +39,5 @@ export const SgAmchartDonut = (props: SgAmchartDonutProps) => {
       chart.dispose();
     };
   }, [data]);
-  return (
-    <div id="chartdivdount" style={{ width: '100%', height: '500px' }}></div>
-  );
+  return <div id={idDiv} style={{ width: '100%', height: '300px' }}></div>;
 };

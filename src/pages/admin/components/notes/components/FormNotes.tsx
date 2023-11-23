@@ -1,32 +1,39 @@
-import useNotes from './redux/hooks/useNotes';
-import React, { useState } from 'react';
-import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { notesSchema } from './notesSchema';
 import { t } from 'i18next';
-import { useAddNotesMutation, useUpdateNotesMutation } from './notesApi';
-import { SgInput } from '../../../../components/form/SgInput';
-import { SgButton } from '../../../../components/form/button/SgButton';
-import { SgCheckbox } from '../../../../components/form/SgCheckbox';
-import { Divider, Paper } from '@mui/material';
+import useNotes from '../redux/hooks/useNotes';
+import { Paper } from '@mui/material';
+import {
+  useAddNotesMutation,
+  useUpdateNotesMutation,
+} from '../redux/api/notesApi';
+import { notesSchema } from '../validation/notesSchema';
+import useSnackbar from '../../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { SgInput } from '../../../../../components/form/SgInput';
+import { SgButton } from '../../../../../components/form/button/SgButton';
+import { SgCheckbox } from '../../../../../components/form/SgCheckbox';
+import useAuth from '../../../../public/auth/redux/hooks/useAuth';
 
 export const FormNotes = () => {
-  const { closeModalNotesAction, refresh, key, id } = useNotes();
-  const [defaultValuesActive, setDefaultValuesActive] = useState<Notes>();
+  const { refresh, entityType, entityId, noteEdit } = useNotes();
+  const [defaultValuesActive, setDefaultValuesActive] = useState<Note | any>();
   const { openSnackbarAction } = useSnackbar();
   const [addNotes, { isLoading }] = useAddNotesMutation();
   const [updateNotes] = useUpdateNotesMutation();
+  const { userConnected } = useAuth();
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm<Notes>({
-    resolver: yupResolver(notesSchema),
-  });
+  useEffect(() => {
+    if (noteEdit && noteEdit.createdBy.id == userConnected.id) {
+      setDefaultValuesActive(noteEdit);
+      console.log(222, noteEdit);
+      setIsChecked(true);
+      reset(noteEdit);
+    } else {
+      setDefaultValuesActive({ entityType, entityId });
+      reset({ entityType, entityId });
+    }
+  }, [noteEdit]);
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -36,28 +43,31 @@ export const FormNotes = () => {
 
   const submitForm = async (data: any) => {
     try {
-      console.log(113);
-      console.log(data);
-      const newData = {
-        title: data.title,
-        description: data.description,
-        entityType: key,
-        entityId: id,
-      };
       let res;
-      if (data.id) res = await updateNotes(newData).unwrap();
-      else res = await addNotes(newData).unwrap();
+      delete data.addNote;
+      if (data.id) res = await updateNotes(data).unwrap();
+      else res = await addNotes(data).unwrap();
       openSnackbarAction({
         message: res.msg || `${t('created')}`,
         type: 'success',
       });
-      closeModalNotesAction();
       if (refresh) refresh();
+      reset({ entityType, entityId });
     } catch (e) {
       console.log(7899, e);
       openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
     }
   };
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = useForm<any>({
+    defaultValues: noteEdit ? noteEdit : defaultValuesActive,
+    resolver: yupResolver(notesSchema),
+  });
 
   return (
     <>
@@ -65,7 +75,7 @@ export const FormNotes = () => {
         {/* title */}
         <div className="flex flex-row items-center p-0">
           <SgCheckbox
-            label={'Crear una nueva nota'}
+            label={t('create_note')}
             name="addNote"
             control={control}
             checked={isChecked}

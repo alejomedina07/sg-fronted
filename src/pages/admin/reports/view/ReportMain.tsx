@@ -1,6 +1,4 @@
-import { useGetServiceReportQuery } from '../../appointment/redux/api/appointmentApi';
 import { useState, useEffect, SyntheticEvent } from 'react';
-import { SgAmchartCombined } from '../../components/chart/SgAmchartCombined';
 import { Box, Tab, Tabs } from '@mui/material';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import { t } from 'i18next';
@@ -8,74 +6,22 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { SgTabPanel } from '../../../../components/utils/tabs/SgTabPanel';
 import { SgButton } from '../../../../components/form/button/SgButton';
-import { CombinedData, InputData } from '../../components/chart/SgAmchart';
 import { SgAmchartDonut } from '../../components/chart/SgAmchartDonut';
-import { axisReportMain, seriesReportMain } from '../helpers/reportMainConst';
-import { FilterDates } from '../../components/share/filters/FilterDates';
-
-const dataDonut = [
-  {
-    name: 'Urgencia',
-    amount: '$250,000.00',
-  },
-  {
-    name: 'Cirugía',
-    amount: '$160,000.00',
-  },
-  {
-    name: 'Consulta',
-    amount: '$460,000.00',
-  },
-];
+import { ReportMainComponent } from '../components/ReportMainComponent';
+import { ReportDashboardComponent } from '../components/ReportDashboardComponent';
 
 export const ReportMain = () => {
   const [value, setValue] = useState(0);
-  const [filters, setFilters] = useState('?type=current_month');
-  const { data: report, refetch } = useGetServiceReportQuery(filters);
-  const [dataReportMain, setDataReportMain] = useState<any[]>([]);
+  const [graphs, setGraphs] = useState([0]);
 
-  useEffect(() => {
-    if (report?.data) {
-      const dataResult = combineData(report.data);
-      setDataReportMain(dataResult);
-    }
-  }, [report]);
-
-  function combineData(inputData: InputData): CombinedData[] {
-    const nameSet = new Set<string>();
-    inputData.dataService.forEach((service) => nameSet.add(service.name));
-    inputData.dataExpense.forEach((expense) => nameSet.add(expense.name));
-
-    const combinedData: CombinedData[] = [];
-
-    nameSet.forEach((date) => {
-      const service = inputData.dataService.find((s) => s.name === date);
-      const expense = inputData.dataExpense.find((e) => e.name === date);
-      const combinedItem: CombinedData = {
-        date,
-        serviceCount: service ? service.count : '0',
-        serviceTotalAmount: service ? service.totalAmount : 0,
-        expenseCount: expense ? expense.count : '0',
-        expenseTotalAmount: expense ? expense.totalAmount : 0,
-      };
-
-      combinedData.push(combinedItem);
-    });
-
-    return combinedData;
-  }
+  console.log(graphs);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const refresh = (dataFilters: any) => {
-    console.log(7777777, dataFilters);
-    setFilters(dataFilters);
-  };
-
   // const printChart = () => {
-  //   const chartContainer = document.getElementById('chartdiv');
+  //   const chartContainer = document.getElementById('report-main');
   //
   //   if (chartContainer) {
   //     const printWindow = window.open('', '_blank');
@@ -116,36 +62,42 @@ export const ReportMain = () => {
           <Tab
             icon={<MonetizationOnIcon />}
             iconPosition="start"
-            label={t('report_service')}
-          />
-          <Tab
-            icon={<CalendarMonthIcon />}
-            iconPosition="start"
-            label={t('report_expense')}
+            label={t('report_resume')}
           />
         </Tabs>
       </Box>
       <SgTabPanel value={value} index={0}>
-        <FilterDates onChange={refresh} />
-        {/* <div className="flex flex-row items-center"> */}
-        {/*   <SgButton label={t('refresh')} onClickAction={refresh} /> */}
-        {/* </div> */}
+        {/* <FilterDates onChange={refresh} /> */}
+        {/* /!* <div className="flex flex-row items-center"> *!/ */}
+        {/* /!*   <SgButton label={t('refresh')} onClickAction={refresh} /> *!/ */}
+        {/* /!* </div> *!/ */}
         {/* <SgButton label={t('print')} onClickAction={printChart} /> */}
-        <SgAmchartCombined
-          data={dataReportMain}
-          axis={axisReportMain}
-          series={seriesReportMain}
+        {/* <SgAmchartCombined */}
+        {/*   data={dataReportMain} */}
+        {/*   axis={axisReportMain} */}
+        {/*   series={seriesReportMain} */}
+        {/* /> */}
+        <SgButton
+          label={t('compare')}
+          onClickAction={() => setGraphs([...graphs, graphs.length + 1])}
         />
+        <span id={'report-main'}>
+          {graphs.length > 0 &&
+            graphs.map((item, index) => (
+              <ReportMainComponent
+                key={index}
+                idDiv={`graph-combined-number-${index}`}
+              />
+            ))}
+        </span>
       </SgTabPanel>
       <SgTabPanel value={value} index={1}>
-        <SgAmchartDonut
-          data={dataDonut}
-          valueName="amount"
-          categoryName="name"
-        />
-      </SgTabPanel>
-      <SgTabPanel value={value} index={2}>
-        Item Three
+        <ReportDashboardComponent />
+        {/* <SgAmchartDonut */}
+        {/*   data={dataDonut} */}
+        {/*   valueName="amount" */}
+        {/*   categoryName="name" */}
+        {/* /> */}
       </SgTabPanel>
     </>
   );

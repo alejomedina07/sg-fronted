@@ -3,25 +3,19 @@ import { SgLink } from '../../../../components/form/button/SgLink';
 import { SgTable } from '../../../../components/table/SgTable';
 import { ColumnsCustomer } from '../helpers';
 import { useGetCustomersQuery } from '../redux/api/customerApi';
-import { t } from 'i18next';
 import { useNavigate } from 'react-router-dom';
-import useForms from '../../../../store/hooks/form/useForms';
-import {
-  GridColDef,
-  GridRenderCellParams,
-  GridRowParams,
-} from '@mui/x-data-grid';
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IconButton, Tooltip } from '@mui/material';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import useService from '../../service/redux/hooks/useService';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { NotesButton } from '../../components/notes/components/NotesButton';
+import { CONFIG_CONST } from '../../config/configOption/const/configConst';
 
 export const ListCustomer = () => {
-  const { data, isLoading, refetch } = useGetCustomersQuery('');
+  const { data, isLoading } = useGetCustomersQuery('');
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState<GridColDef[]>([]);
@@ -32,7 +26,7 @@ export const ListCustomer = () => {
     selectCustomerAction(params.row);
   };
 
-  const onClickAppointment = (params: GridRenderCellParams) => {};
+  // const onClickAppointment = (params: GridRenderCellParams) => {};
 
   const columnsCustomer = ColumnsCustomer();
 
@@ -43,6 +37,7 @@ export const ListCustomer = () => {
         field: 'actions',
         headerName: `${t('actions')}`,
         flex: 100,
+        minWidth: 150,
         renderCell: (params) => {
           return (
             <div className="flex flex-row items-center">
@@ -64,15 +59,18 @@ export const ListCustomer = () => {
                   <MonetizationOnIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip title={t('appointment')} placement="bottom" arrow>
-                <IconButton
-                  onClick={() => onClickAppointment(params)}
-                  aria-label="view"
-                >
-                  <CalendarMonthIcon />
-                </IconButton>
-              </Tooltip>
-              <NotesButton keyProp="customerId" id={params.row.id} />
+              {/* <Tooltip title={t('appointment')} placement="bottom" arrow> */}
+              {/*   <IconButton */}
+              {/*     onClick={() => onClickAppointment(params)} */}
+              {/*     aria-label="view" */}
+              {/*   > */}
+              {/*     <CalendarMonthIcon /> */}
+              {/*   </IconButton> */}
+              {/* </Tooltip> */}
+              <NotesButton
+                entityType={CONFIG_CONST.NOTE.ENTITY_CUSTOMER}
+                entityId={params.row.id}
+              />
             </div>
           );
         },
@@ -85,7 +83,13 @@ export const ListCustomer = () => {
       <ViewTitle title={t('list_customer')}>
         <SgLink label={t('create_customer')} to="/admin/customer/create" />
       </ViewTitle>
-      <div style={{ height: '70vh', width: '100%' }}>
+      <div
+        style={{
+          height: '70vh',
+          width: '100%',
+          minWidth: '700px',
+        }}
+      >
         <SgTable
           columns={columns}
           data={data?.data || []}

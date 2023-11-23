@@ -6,6 +6,7 @@ import {
   formatISO,
   parseISO,
   setHours,
+  startOfDay,
   startOfMonth,
 } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
@@ -46,16 +47,20 @@ class DateFnsManager {
     return formatISO(endOfDay(date));
   }
 
+  getStartDayToString(date: Date): string {
+    return formatISO(startOfDay(date));
+  }
+
   getFormatStandard(date: Date | number): string {
-    return format(date, 'dd-MM-yyyy');
+    return format(date, 'yyyy-MM-dd');
   }
 
   getFormatMonthText(date: Date | number): string {
-    return format(date, 'dd MMMM yyyy', { locale: es });
+    return format(date, 'yyyy MMMM dd', { locale: es });
   }
 
   getFormatStandardMonth(date: Date | number): string {
-    return format(date, 'MM-yyyy');
+    return format(date, 'yyyy-MM');
   }
 }
 

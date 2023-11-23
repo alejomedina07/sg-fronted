@@ -19,11 +19,11 @@ export const ListOptions = () => {
   const columnsOptions = ColumnsOptions();
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState<GridColDef[]>([]);
-  const { data, isLoading } = useGetListByKeyQuery(`${keyValue}`);
+  const { data, isLoading } = useGetListByKeyQuery(`${keyValue}&getAll=true`);
 
   const onClickView = (params: GridRenderCellParams) => {
     setConfigFormEditAction(params.row);
-    navigate(`/admin/config-edit/${keyValue}/${params.row.id}`);
+    navigate(`/admin/config/config-edit/${keyValue}/${params.row.id}`);
   };
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const ListOptions = () => {
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
-              <NotesButton keyProp="serviceId" id={params.row.id} />
+              <NotesButton entityType="serviceId" entityId={params.row.id} />
             </div>
           );
         },
@@ -58,10 +58,10 @@ export const ListOptions = () => {
         {/* <SgLink label={t('create_appointment_type')} to="/admin/appointment-type/create"/> */}
         <SgLink
           label={t('back')}
-          to={`/admin/config-options`}
+          to={`/admin/config/config-options`}
           classes="!mr-4"
         />
-        <SgLink label={t('add')} to={`/admin/config-form/${keyValue}`} />
+        <SgLink label={t('add')} to={`/admin/config/config-form/${keyValue}`} />
       </ViewTitle>
       <div style={{ height: '70vh', width: '100%' }}>
         <SgTable

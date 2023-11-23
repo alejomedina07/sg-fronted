@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Skeleton, Tooltip } from '@mui/material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useGetUsersQuery } from '../redux/api/userApi';
@@ -12,8 +12,9 @@ import useForms from '../../../../store/hooks/form/useForms';
 import { useTranslation } from 'react-i18next';
 import { NotesButton } from '../../components/notes/components/NotesButton';
 // @ts-ignore
-import { useSpeechSynthesis } from 'react-speech-kit';
-import { useGetNotesQuery } from '../../components/notes/notesApi';
+// import { useSpeechSynthesis } from 'react-speech-kit';
+import { useGetNotesQuery } from '../../components/notes/redux/api/notesApi';
+import { CONFIG_CONST } from '../../config/configOption/const/configConst';
 
 export const ListUser = () => {
   const { data, isLoading } = useGetUsersQuery('');
@@ -27,10 +28,10 @@ export const ListUser = () => {
     setUserEditAction(params.row);
     navigate(`/admin/users/edit/${params.row.id}`);
   };
-  const { speak } = useSpeechSynthesis();
+  // const { speak } = useSpeechSynthesis();
 
   const handleSpeak = () => {
-    speak({ text });
+    // speak({ text });
   };
 
   const navigate = useNavigate();
@@ -55,7 +56,10 @@ export const ListUser = () => {
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
-              <NotesButton keyProp="user" id={params.row.id} />
+              <NotesButton
+                entityType={CONFIG_CONST.NOTE.ENTITY_USER}
+                entityId={params.row.id}
+              />
             </div>
           );
         },
@@ -65,11 +69,11 @@ export const ListUser = () => {
 
   return (
     <>
-      <button onClick={handleSpeak}>Narrar</button>
+      {/* <button onClick={handleSpeak}>Narrar</button> */}
       <ViewTitle title={t('list_user')}>
         <SgLink label={t('create_user')} to="/admin/users/create" />
       </ViewTitle>
-      <div style={{ height: '70vh', width: '100%' }}>
+      <div style={{ height: '70vh', width: '100%', minWidth: '800px' }}>
         <SgTable
           columns={columns}
           data={data?.data || []}
