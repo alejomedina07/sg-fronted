@@ -23,10 +23,20 @@ import { ViewInventory } from '../inventory/views/ViewInventory';
 import { AdminView } from '../components/AdminView';
 import useAuth from '../../public/auth/redux/hooks/useAuth';
 import { AdminTurnView } from '../turn/view/AdminTurnView';
+import { ApplicationConst } from './cosnts/ApplicationConst';
+
+const Application = new ApplicationConst();
 
 export const AdminRoutes = () => {
   const { userConnected } = useAuth();
-  // console.log(33333, userConnected);
+
+  const validatePermission = (permission: string) => {
+    return Application.validatePermission(
+      permission,
+      userConnected.privileges,
+      userConnected.rol
+    );
+  };
 
   return (
     <Routes>
@@ -39,55 +49,99 @@ export const AdminRoutes = () => {
         }
       >
         <Route path="" element={<AdminView />}></Route>
-        {userConnected.rol == 'Admin' && (
-          <>
-            <Route path="appointment-type">
-              <Route path="" element={<ListAppointmentType />} />
-              <Route path="create" element={<FormAppointmentType />} />
-              <Route
-                path="edit/:appointmentTypeId"
-                element={<FormAppointmentType />}
-              />
-            </Route>
-            <Route path="users">
-              <Route path="" element={<ListUser />} />
-              <Route path="create" element={<FormUser />} />
-              <Route path="edit/:userId" element={<FormUser />} />
-            </Route>
-            <Route path="config">
-              <Route path="config-options" element={<ConfigOptions />} />
-              <Route path="config-list/:keyValue" element={<ListOptions />} />
-              <Route path="config-form/:keyValue" element={<FormOptions />} />
-              <Route
-                path="config-edit/:keyValue/:idConfig"
-                element={<FormOptions />}
-              />
-            </Route>
-          </>
-        )}
+        <Route path="appointment-type">
+          {validatePermission(Application.ALL_APPLICATIONS.configList) && (
+            <Route path="" element={<ListAppointmentType />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.configCreate) && (
+            <Route path="create" element={<FormAppointmentType />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.configEdit) && (
+            <Route
+              path="edit/:appointmentTypeId"
+              element={<FormAppointmentType />}
+            />
+          )}
+        </Route>
+        <Route path="users">
+          {validatePermission(Application.ALL_APPLICATIONS.userList) && (
+            <Route path="" element={<ListUser />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.userCreate) && (
+            <Route path="create" element={<FormUser />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.userEdit) && (
+            <Route path="edit/:userId" element={<FormUser />} />
+          )}
+        </Route>
+        <Route path="config">
+          {validatePermission(Application.ALL_APPLICATIONS.configList) && (
+            <Route path="config-options" element={<ConfigOptions />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.configCreate) && (
+            <Route path="config-list/:keyValue" element={<ListOptions />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.configList) && (
+            <Route path="config-form/:keyValue" element={<FormOptions />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.configEdit) && (
+            <Route
+              path="config-edit/:keyValue/:idConfig"
+              element={<FormOptions />}
+            />
+          )}
+        </Route>
         <Route path="customer">
-          <Route path="" element={<ListCustomer />} />
-          <Route path="create" element={<FormCustomer />} />
-          <Route path="edit/:customerId" element={<ViewCustomer />} />
+          {validatePermission(Application.ALL_APPLICATIONS.customerList) && (
+            <Route path="" element={<ListCustomer />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.customerCreate) && (
+            <Route path="create" element={<FormCustomer />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.customerEdit) && (
+            <Route path="edit/:customerId" element={<ViewCustomer />} />
+          )}
         </Route>
         <Route path="expense">
-          <Route path="" element={<ListExpense />} />
-          <Route path="create" element={<FormExpense />} />
-          <Route path="edit/:expenseId" element={<FormExpense />} />
+          {validatePermission(Application.ALL_APPLICATIONS.expenseList) && (
+            <Route path="" element={<ListExpense />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.expenseCreate) && (
+            <Route path="create" element={<FormExpense />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.expenseEdit) && (
+            <Route path="edit/:expenseId" element={<FormExpense />} />
+          )}
         </Route>
         <Route path="inventory">
-          <Route path="" element={<ListInventory />} />
-          <Route path="create" element={<FormInventory />} />
-          <Route path="edit/:inventoryId" element={<ViewInventory />} />
+          {validatePermission(Application.ALL_APPLICATIONS.inventoryList) && (
+            <Route path="" element={<ListInventory />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.inventoryCreate) && (
+            <Route path="create" element={<FormInventory />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.inventoryEdit) && (
+            <Route path="edit/:inventoryId" element={<ViewInventory />} />
+          )}
         </Route>
         <Route path="service">
-          <Route path="" element={<ListService />} />
-          <Route path="create" element={<FormService />} />
+          {validatePermission(Application.ALL_APPLICATIONS.serviceList) && (
+            <Route path="" element={<ListService />} />
+          )}
+          {validatePermission(Application.ALL_APPLICATIONS.serviceCreate) && (
+            <Route path="create" element={<FormService />} />
+          )}
         </Route>
 
-        <Route path="appointment" element={<AppointmentView />} />
-        <Route path="turn" element={<AdminTurnView />} />
-        <Route path="report" element={<ReportMain />} />
+        {validatePermission(Application.ALL_APPLICATIONS.appointmentList) && (
+          <Route path="appointment" element={<AppointmentView />} />
+        )}
+        {validatePermission(Application.ALL_APPLICATIONS.turnList) && (
+          <Route path="turn" element={<AdminTurnView />} />
+        )}
+        {validatePermission(Application.ALL_APPLICATIONS.reportList) && (
+          <Route path="report" element={<ReportMain />} />
+        )}
       </Route>
       <Route path="*" element={<Navigate to="admin" />} />
     </Routes>
