@@ -57,6 +57,15 @@ export const ConfigOptions = () => {
           />
         </div>
       </Paper>
+      <Paper elevation={3} className="flex-1 h-40 p-2 m-4" key={199}>
+        <div className="h-full flex flex-col items-center">
+          <b>{t('rol')}</b>
+          <span className="flex-1" />
+          <SettingsIcon sx={{ fontSize: 50 }} />
+          <span className="flex-1" />
+          <SgLink label={t('see')} to={`/admin/config/rol`} classes="w-full" />
+        </div>
+      </Paper>
     </div>
   );
 };

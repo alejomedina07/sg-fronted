@@ -10,6 +10,7 @@ import { inventoryApi } from '../pages/admin/inventory/redux/api/inventoryApi';
 import { serviceApi } from '../pages/admin/service/redux/api/serviceApi';
 import { notesApi } from '../pages/admin/components/notes/redux/api/notesApi';
 import { reportApi } from '../pages/admin/reports/redux/api/reportApi';
+import { rolApi } from '../pages/admin/config/rol/redux/api/rolApi';
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     [appointmentApi.reducerPath]: appointmentApi.reducer,
     [reportApi.reducerPath]: reportApi.reducer,
     [notesApi.reducerPath]: notesApi.reducer,
+    [rolApi.reducerPath]: rolApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -37,7 +39,8 @@ export const store = configureStore({
       .concat(serviceApi.middleware)
       .concat(appointmentApi.middleware)
       .concat(reportApi.middleware)
-      .concat(notesApi.middleware),
+      .concat(notesApi.middleware)
+      .concat(rolApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

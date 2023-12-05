@@ -24,6 +24,7 @@ import { AdminView } from '../components/AdminView';
 import useAuth from '../../public/auth/redux/hooks/useAuth';
 import { AdminTurnView } from '../turn/view/AdminTurnView';
 import { ApplicationConst } from './cosnts/ApplicationConst';
+import { ConfigRol } from '../config/rol/views/ConfigRol';
 
 const Application = new ApplicationConst();
 
@@ -76,7 +77,10 @@ export const AdminRoutes = () => {
         </Route>
         <Route path="config">
           {validatePermission(Application.ALL_APPLICATIONS.configList) && (
-            <Route path="config-options" element={<ConfigOptions />} />
+            <>
+              <Route path="config-options" element={<ConfigOptions />} />
+              <Route path="rol" element={<ConfigRol />} />
+            </>
           )}
           {validatePermission(Application.ALL_APPLICATIONS.configCreate) && (
             <Route path="config-list/:keyValue" element={<ListOptions />} />
@@ -136,9 +140,9 @@ export const AdminRoutes = () => {
         {validatePermission(Application.ALL_APPLICATIONS.appointmentList) && (
           <Route path="appointment" element={<AppointmentView />} />
         )}
-        {validatePermission(Application.ALL_APPLICATIONS.turnList) && (
-          <Route path="turn" element={<AdminTurnView />} />
-        )}
+        {/* {validatePermission(Application.ALL_APPLICATIONS.turnList) && ( */}
+        {/*   <Route path="turn" element={<AdminTurnView />} /> */}
+        {/* )} */}
         {validatePermission(Application.ALL_APPLICATIONS.reportList) && (
           <Route path="report" element={<ReportMain />} />
         )}

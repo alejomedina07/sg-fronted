@@ -7,6 +7,7 @@ import appointment from '../../pages/admin/appointment/redux/slices/appointmentS
 import service from '../../pages/admin/service/redux/slices/serviceSlice';
 import inventory from '../../pages/admin/inventory/redux/slices/inventorySlice';
 import notes from '../../pages/admin/components/notes/redux/slices/notesSlice';
+import rol from '../../pages/admin/config/rol/redux/slices/rolSlice';
 
 const coreReducers = combineReducers({
   appointment,
@@ -17,6 +18,7 @@ const coreReducers = combineReducers({
   service,
   snackbar,
   notes,
+  rol,
 });
 
 export default coreReducers;
