@@ -16,7 +16,6 @@ import { SgDialogTitle } from '../../../../components/utils/dialogs/SgDialogTitl
 import { SgButton } from '../../../../components/form/button/SgButton';
 import { useInOutInventoryMutation } from '../redux/api/inventoryApi';
 import { SgInput } from '../../../../components/form/SgInput';
-import { SgCheckbox } from '../../../../components/form/SgCheckbox';
 import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 import { ChangeEvent, useState } from 'react';
 import { red, blue } from '@mui/material/colors';

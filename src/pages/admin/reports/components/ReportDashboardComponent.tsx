@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import { useState } from 'react';
 import {
   useGetReportDashboardQuery,
@@ -29,8 +30,6 @@ export const ReportDashboardComponent = () => {
     isLoading: isLoadingProducts,
   } = useGetReportProductsQuery(filters);
 
-  console.log('dataProducts::', dataProducts);
-
   return (
     <>
       <FilterDates onChange={refresh} />
@@ -60,7 +59,7 @@ export const ReportDashboardComponent = () => {
       <div className="flex flex-col md:flex-row items-center">
         {!!data?.data?.service && (
           <span className="w-full m-2 border border-blue-300 shadow rounded-md p-4 flex-1 text-center">
-            <span>Servicios</span>
+            <span>{t('service')}</span>
             <SgAmchartDonut
               idDiv="serviceDashboard"
               data={data?.data?.service || []}
@@ -71,7 +70,7 @@ export const ReportDashboardComponent = () => {
         )}
         {!!data?.data?.expense && (
           <span className="w-full m-2 border border-blue-300 shadow rounded-md p-4 flex-1 text-center">
-            <span>Gestos</span>
+            <span>{t('expense')}</span>
             <SgAmchartDonut
               idDiv="expenseDashboard"
               data={data?.data?.expense || []}

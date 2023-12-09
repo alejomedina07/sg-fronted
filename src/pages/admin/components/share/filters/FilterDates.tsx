@@ -7,17 +7,17 @@ import { useState } from 'react';
 import DateFnsManager from '../../../../../services/utils/DateFnsManager';
 const managerDate = new DateFnsManager();
 
-const types = [
-  { key: `${t('current_month')}`, value: 'current_month' },
-  { key: `${t('month')}`, value: 'month' },
-  { key: `${t('range')}`, value: 'range' },
-];
-
 export const FilterDates = (props: any) => {
   const { onChange } = props;
   const [startDate, setStartDate] = useState<Date | null>();
   const [monthDate, setMonthDate] = useState<Date | null>();
   const [endDate, setEndDate] = useState<Date | null>();
+
+  const types = [
+    { key: `${t('current_month')}`, value: 'current_month' },
+    { key: `${t('month')}`, value: 'month' },
+    { key: `${t('range')}`, value: 'range' },
+  ];
 
   const {
     control,

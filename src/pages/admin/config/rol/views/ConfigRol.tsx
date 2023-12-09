@@ -11,6 +11,8 @@ import { FormRolComponent } from '../components/FormRolComponent';
 import { ListRolComponent } from '../components/ListRolComponent';
 import { useEffect, useState } from 'react';
 import UseRol from '../redux/hooks/useRol';
+import { FormPermissionComponent } from '../components/FormPermissionComponent';
+import { ListPermissionComponent } from '../components/ListPermissionComponent';
 
 export const ConfigRol = () => {
   const [accordionRol, setAccordionRol] = useState(true);
@@ -62,12 +64,12 @@ export const ConfigRol = () => {
           <Typography>{t('Permission')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="flex flex-col sm:flex-row items-center">
-            <div className="w-full sm:w-1/4 md:w-1/4 lg:w-1/4 xl:w-1/4">
-              <span>esto es el form del Permission</span>
+          <div className="flex flex-col md:flex-row items-start">
+            <div className="shadow-md mr-2 w-full md:w-3/4 lg:w-3/4 xl:w-3/4">
+              <ListPermissionComponent />
             </div>
-            <div className="w-full sm:w-3/4 md:w-3/4 lg:w-3/4 xl:w-3/4">
-              <span>esto es el list del Permission</span>
+            <div className="shadow-md w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
+              <FormPermissionComponent />
             </div>
           </div>
         </AccordionDetails>

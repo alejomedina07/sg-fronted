@@ -25,8 +25,14 @@ export const AuthLayout = ({ children }: any) => {
         >
           {/* <img src="/login.png" className="logo" alt="Vite logo" /> */}
           <div className="flex flex-col items-center">
+            {/* <img */}
+            {/*   src="images/logo11.png" */}
+            {/*   width={200} */}
+            {/*   className="logo" */}
+            {/*   alt="Vite logo" */}
+            {/* /> */}
             <img
-              src="images/logo11.png"
+              src="images/esvyda_logo.png"
               width={200}
               className="logo"
               alt="Vite logo"

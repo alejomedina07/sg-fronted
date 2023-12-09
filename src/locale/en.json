@@ -164,5 +164,7 @@
     "edit_user": "Edit user",
     "edit_appointment": "Edit appointment",
     "expense_number": "# Expense",
-    "service_number": "# Service"
+    "service_number": "# Service",
+    "portuguese": "Portuguese",
+    "french": "French"
 }

@@ -19,6 +19,7 @@ import { Environment } from '../../../utils/env/Environment';
 import { ReactNode } from 'react';
 import { HeaderProfile } from './componets/HeaderProfile';
 import useAuth from '../../../pages/public/auth/redux/hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -135,19 +136,27 @@ export const LayoutMain = (props: LayoutMainProps) => {
                 >
                   <MenuIcon />
                 </IconButton>
-                <img
-                  src={`${env.basePatch}/images/logo11.png`}
-                  alt=""
-                  width={60}
-                  className="hidden sm:block"
-                />
+                {/* <img */}
+                {/*   src={`${env.basePatch}/images/logo11.png`} */}
+                {/*   alt="" */}
+                {/*   width={60} */}
+                {/*   className="hidden sm:block" */}
+                {/* /> */}
+                <Link to="/admin">
+                  <img
+                    src={`${env.basePatch}/images/esvyda_logo.png`}
+                    alt=""
+                    width={80}
+                    className="hidden sm:block mr-2"
+                  />
+                </Link>
                 <Typography
-                  variant="h6"
+                  variant="h5"
                   noWrap
                   component="div"
                   className="hidden sm:block"
                 >
-                  Odontología CRIS
+                  My doctor
                 </Typography>
               </Grid>
             </Grid>

@@ -5,11 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTranslation } from 'react-i18next';
 import TranslateIcon from '@mui/icons-material/Translate';
 import { useLocation, useNavigate } from 'react-router-dom';
-import i18next from '../../../../../config/i18n/i18n';
 
 const options = [
   { value: 'es', label: 'spanish' },
   { value: 'en', label: 'english' },
+  { value: 'fr', label: 'french' },
+  { value: 'pt', label: 'portuguese' },
 ];
 const ITEM_HEIGHT = 48;
 export const Languages = () => {

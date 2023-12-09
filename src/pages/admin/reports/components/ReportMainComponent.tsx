@@ -13,7 +13,6 @@ interface ReportMainComponentProps {
 export const ReportMainComponent = (props: ReportMainComponentProps) => {
   const { idDiv } = props;
   const refresh = (dataFilters: any) => {
-    console.log(7777777, dataFilters);
     if (dataFilters === filters) refetch();
     setFilters(dataFilters);
   };

@@ -22,7 +22,7 @@ import { FormOptions } from '../config/configOption/views/FormOptions';
 import { ViewInventory } from '../inventory/views/ViewInventory';
 import { AdminView } from '../components/AdminView';
 import useAuth from '../../public/auth/redux/hooks/useAuth';
-import { AdminTurnView } from '../turn/view/AdminTurnView';
+// import { AdminTurnView } from '../turn/view/AdminTurnView';
 import { ApplicationConst } from './cosnts/ApplicationConst';
 import { ConfigRol } from '../config/rol/views/ConfigRol';
 

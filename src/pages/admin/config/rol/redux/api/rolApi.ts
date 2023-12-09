@@ -17,7 +17,7 @@ export const rolApi = createApi({
     }),
     getPermission: build.query({
       query: () => '/config/permission',
-      keepUnusedDataFor: 30,
+      keepUnusedDataFor: 0,
     }),
     addRol: build.mutation<any, any>({
       query: (body: any) => ({
@@ -33,6 +33,20 @@ export const rolApi = createApi({
         body,
       }),
     }),
+    addPermission: build.mutation<any, any>({
+      query: (body: any) => ({
+        url: '/config/permission',
+        method: 'POST',
+        body,
+      }),
+    }),
+    updatePermission: build.mutation<any, any>({
+      query: (body: any) => ({
+        url: `/config/permission/${body.rol.id}`,
+        method: 'PUT',
+        body,
+      }),
+    }),
   }),
 });
 
@@ -42,4 +56,6 @@ export const {
   useGetPrivilegesQuery,
   useAddRolMutation,
   useUpdateRolMutation,
+  useAddPermissionMutation,
+  useUpdatePermissionMutation,
 } = rolApi;

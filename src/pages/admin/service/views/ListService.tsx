@@ -1,4 +1,4 @@
-import { Badge, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useGetServiceQuery } from '../redux/api/serviceApi';
@@ -6,15 +6,20 @@ import useService from '../redux/hooks/useService';
 import { ColumnsService } from '../helpers/columnsService';
 import { ViewTitle } from '../../components/share/title/ViewTitle';
 import { SgButton } from '../../../../components/form/button/SgButton';
-import { SgTable } from '../../../../components/table/SgTable';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { NotesButton } from '../../components/notes/components/NotesButton';
 import { CONFIG_CONST } from '../../config/configOption/const/configConst';
+import { SgTablePaginationServer } from '../../../../components/table/SgTablePaginationServer';
+import { paginationProps } from '../../../../components/table/dto/SgTableProps';
 
 export const ListService = () => {
   const { openModalServiceAction, selectServiceAction } = useService();
-  const { data, isLoading, refetch } = useGetServiceQuery('');
+  const [pagination, setPagination] = useState<paginationProps>({
+    pageSize: 50,
+    page: 1,
+  });
+  const { data, isLoading, refetch } = useGetServiceQuery(pagination);
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState<GridColDef[]>([]);
 
@@ -24,6 +29,15 @@ export const ListService = () => {
   };
 
   const columnsService = ColumnsService();
+
+  console.log(111, data);
+
+  const handlePaginationChange = (params: paginationProps) => {
+    console.log('handlePaginationChange::', params);
+    setPagination({ pageSize: params.pageSize, page: params.page + 1 });
+    try {
+    } catch (e) {}
+  };
 
   useEffect(() => {
     setColumns([
@@ -59,10 +73,18 @@ export const ListService = () => {
         />
       </ViewTitle>
       <div style={{ height: '70vh', width: '100%', minWidth: '900px' }}>
-        <SgTable
+        {/* <SgTable */}
+        {/*   columns={columns} */}
+        {/*   data={data?.data || []} */}
+        {/*   isLoading={isLoading} */}
+        {/* /> */}
+        <SgTablePaginationServer
+          // paginationChange={refetch}
+          paginationChange={handlePaginationChange}
           columns={columns}
           data={data?.data || []}
           isLoading={isLoading}
+          total={data?.total || 0}
         />
       </div>
     </>
