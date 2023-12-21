@@ -1,4 +1,6 @@
-const ALL_APPLICATIONS = {
+import { NavItem } from '../../../../components/layout/admin/componets';
+
+const PRIVILEGES = {
   userList: 'user.list',
   userCreate: 'user.create',
   userEdit: 'user.edit',
@@ -41,8 +43,13 @@ const ALL_APPLICATIONS = {
   configDelete: 'config.delete',
 };
 
+interface validatePrivilegesResponse {
+  link: string;
+  isValid: boolean;
+}
+
 export class ApplicationConst {
-  ALL_APPLICATIONS = ALL_APPLICATIONS;
+  PRIVILEGES = PRIVILEGES;
   MAIN_ROL = 'Admin';
   validatePermission = (
     permission: string,
@@ -51,4 +58,15 @@ export class ApplicationConst {
   ) => {
     return rol === this.MAIN_ROL || privileges.includes(permission);
   };
+
+  validatePrivileges(
+    option: NavItem,
+    privileges: string[]
+  ): validatePrivilegesResponse | undefined {
+    if (privileges.includes(option.privileges.main))
+      return { link: option.link, isValid: true };
+    else if (privileges.includes(option.privileges.second))
+      return { link: option.privileges.secondLink, isValid: true };
+    return;
+  }
 }

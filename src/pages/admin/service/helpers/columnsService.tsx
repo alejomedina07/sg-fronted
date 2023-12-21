@@ -1,4 +1,4 @@
-import { GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
+import { GridValueFormatterParams } from '@mui/x-data-grid';
 import DateFnsManager from '../../../../services/utils/DateFnsManager';
 import { useTranslation } from 'react-i18next';
 import { ColumnsProps } from '../../../../components/dto/ColumnsProps';
@@ -25,11 +25,29 @@ export const ColumnsService = () => {
       field: 'status',
       headerName: `${t('status')}`,
       flex: 70,
+      // filterParams: {
+      //   valueGetter: (params: GridValueGetterParams) => {
+      //     console.log(888888, params.row.status.name);
+      //     return params.row.status.name;
+      //   },
+      // },
       renderCell: (params) => {
-        // TODO cambio en el backend
         return <span> {params.row?.status?.name || ''}</span>;
       },
     },
+    // {
+    //   field: 'status',
+    //   headerName: `${t('status')}`,
+    //   flex: 70,
+    //   filterParams: {
+    //     valueGetter: (params: any) => {
+    //       return params.data.status.name;
+    //     },
+    //   },
+    //   renderCell: (params) => {
+    //     return <span> {params.row?.status?.name || ''}</span>;
+    //   },
+    // },
     {
       field: 'type',
       headerName: `${t('type')}`,

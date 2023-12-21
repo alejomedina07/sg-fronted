@@ -51,13 +51,13 @@ export const AdminRoutes = () => {
       >
         <Route path="" element={<AdminView />}></Route>
         <Route path="appointment-type">
-          {validatePermission(Application.ALL_APPLICATIONS.configList) && (
+          {validatePermission(Application.PRIVILEGES.configList) && (
             <Route path="" element={<ListAppointmentType />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.configCreate) && (
+          {validatePermission(Application.PRIVILEGES.configCreate) && (
             <Route path="create" element={<FormAppointmentType />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.configEdit) && (
+          {validatePermission(Application.PRIVILEGES.configEdit) && (
             <Route
               path="edit/:appointmentTypeId"
               element={<FormAppointmentType />}
@@ -65,30 +65,30 @@ export const AdminRoutes = () => {
           )}
         </Route>
         <Route path="users">
-          {validatePermission(Application.ALL_APPLICATIONS.userList) && (
+          {validatePermission(Application.PRIVILEGES.userList) && (
             <Route path="" element={<ListUser />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.userCreate) && (
+          {validatePermission(Application.PRIVILEGES.userCreate) && (
             <Route path="create" element={<FormUser />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.userEdit) && (
+          {validatePermission(Application.PRIVILEGES.userEdit) && (
             <Route path="edit/:userId" element={<FormUser />} />
           )}
         </Route>
         <Route path="config">
-          {validatePermission(Application.ALL_APPLICATIONS.configList) && (
+          {validatePermission(Application.PRIVILEGES.configList) && (
             <>
               <Route path="config-options" element={<ConfigOptions />} />
               <Route path="rol" element={<ConfigRol />} />
             </>
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.configCreate) && (
+          {validatePermission(Application.PRIVILEGES.configCreate) && (
             <Route path="config-list/:keyValue" element={<ListOptions />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.configList) && (
+          {validatePermission(Application.PRIVILEGES.configList) && (
             <Route path="config-form/:keyValue" element={<FormOptions />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.configEdit) && (
+          {validatePermission(Application.PRIVILEGES.configEdit) && (
             <Route
               path="config-edit/:keyValue/:idConfig"
               element={<FormOptions />}
@@ -96,54 +96,54 @@ export const AdminRoutes = () => {
           )}
         </Route>
         <Route path="customer">
-          {validatePermission(Application.ALL_APPLICATIONS.customerList) && (
+          {validatePermission(Application.PRIVILEGES.customerList) && (
             <Route path="" element={<ListCustomer />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.customerCreate) && (
+          {validatePermission(Application.PRIVILEGES.customerCreate) && (
             <Route path="create" element={<FormCustomer />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.customerEdit) && (
+          {validatePermission(Application.PRIVILEGES.customerEdit) && (
             <Route path="edit/:customerId" element={<ViewCustomer />} />
           )}
         </Route>
         <Route path="expense">
-          {validatePermission(Application.ALL_APPLICATIONS.expenseList) && (
+          {validatePermission(Application.PRIVILEGES.expenseList) && (
             <Route path="" element={<ListExpense />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.expenseCreate) && (
+          {validatePermission(Application.PRIVILEGES.expenseCreate) && (
             <Route path="create" element={<FormExpense />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.expenseEdit) && (
+          {validatePermission(Application.PRIVILEGES.expenseEdit) && (
             <Route path="edit/:expenseId" element={<FormExpense />} />
           )}
         </Route>
         <Route path="inventory">
-          {validatePermission(Application.ALL_APPLICATIONS.inventoryList) && (
+          {validatePermission(Application.PRIVILEGES.inventoryList) && (
             <Route path="" element={<ListInventory />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.inventoryCreate) && (
+          {validatePermission(Application.PRIVILEGES.inventoryCreate) && (
             <Route path="create" element={<FormInventory />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.inventoryEdit) && (
+          {validatePermission(Application.PRIVILEGES.inventoryEdit) && (
             <Route path="edit/:inventoryId" element={<ViewInventory />} />
           )}
         </Route>
         <Route path="service">
-          {validatePermission(Application.ALL_APPLICATIONS.serviceList) && (
+          {validatePermission(Application.PRIVILEGES.serviceList) && (
             <Route path="" element={<ListService />} />
           )}
-          {validatePermission(Application.ALL_APPLICATIONS.serviceCreate) && (
+          {validatePermission(Application.PRIVILEGES.serviceCreate) && (
             <Route path="create" element={<FormService />} />
           )}
         </Route>
 
-        {validatePermission(Application.ALL_APPLICATIONS.appointmentList) && (
+        {validatePermission(Application.PRIVILEGES.appointmentList) && (
           <Route path="appointment" element={<AppointmentView />} />
         )}
-        {/* {validatePermission(Application.ALL_APPLICATIONS.turnList) && ( */}
+        {/* {validatePermission(Application.PRIVILEGES.turnList) && ( */}
         {/*   <Route path="turn" element={<AdminTurnView />} /> */}
         {/* )} */}
-        {validatePermission(Application.ALL_APPLICATIONS.reportList) && (
+        {validatePermission(Application.PRIVILEGES.reportList) && (
           <Route path="report" element={<ReportMain />} />
         )}
       </Route>

@@ -20,8 +20,11 @@ import { ReactNode } from 'react';
 import { HeaderProfile } from './componets/HeaderProfile';
 import useAuth from '../../../pages/public/auth/redux/hooks/useAuth';
 import { Link } from 'react-router-dom';
+import { ApplicationConst } from '../../../pages/admin/router/cosnts/ApplicationConst';
 
 const drawerWidth = 240;
+
+const Application = new ApplicationConst();
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -114,6 +117,17 @@ export const LayoutMain = (props: LayoutMainProps) => {
     setOpen(false);
   };
 
+  const getNavItem = (option: NavItem) => {
+    return (
+      <NavBarItem
+        key={option.id}
+        option={option}
+        open={open}
+        setOpen={setOpen}
+      />
+    );
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -180,15 +194,20 @@ export const LayoutMain = (props: LayoutMainProps) => {
         <Divider />
         <List>
           {navItems.map((option: NavItem) => {
-            if (userConnected.rol === 'Admin' || !option.onlyAdmin) {
-              return (
-                <NavBarItem
-                  key={option.id}
-                  option={option}
-                  open={open}
-                  setOpen={setOpen}
-                />
+            if (
+              userConnected.rol === 'Admin' ||
+              (!option.onlyAdmin && userConnected.rol === 'User')
+            ) {
+              return getNavItem(option);
+            } else {
+              const response = Application.validatePrivileges(
+                option,
+                userConnected.privileges
               );
+              if (response?.isValid) {
+                option.link = response.link;
+                return getNavItem(option);
+              }
             }
           })}
         </List>

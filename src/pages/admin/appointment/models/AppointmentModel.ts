@@ -17,6 +17,7 @@ function AppointmentDtoModel(data: AppointmentDto) {
   return {
     createdById: data.createdById,
     appointmentTypeId: data.appointmentTypeId,
+    assignedToId: data.assignedToId,
     customerId: data.customerId,
     description: data.description,
     name: data.name,

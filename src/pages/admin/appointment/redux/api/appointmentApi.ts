@@ -24,6 +24,10 @@ export const appointmentApi = createApi({
       query: (params) => `/appointment/type${params}`,
       keepUnusedDataFor: 0,
     }),
+    getUserToList: build.query({
+      query: () => '/user/to-list',
+      keepUnusedDataFor: 0,
+    }),
     addAppointment: build.mutation<any, any>({
       query: (body: any) => ({
         url: '/appointment',
@@ -38,11 +42,6 @@ export const appointmentApi = createApi({
         body,
       }),
     }),
-
-    // getServiceReport: build.query({
-    //   query: (filters) => `/report${filters}`,
-    //   keepUnusedDataFor: 0,
-    // }),
     addAppointmentType: build.mutation<any, any>({
       query: (body: any) => ({
         url: '/appointment/type',
@@ -63,9 +62,9 @@ export const appointmentApi = createApi({
 export const {
   useGetAppointmentsQuery,
   useGetAppointmentTypeQuery,
+  useGetUserToListQuery,
   useAddAppointmentMutation,
   useUpdateAppointmentMutation,
-  // useGetServiceReportQuery,
   useAddAppointmentTypeMutation,
   useUpdateAppointmentTypeMutation,
 } = appointmentApi;

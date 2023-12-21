@@ -37,7 +37,6 @@ export const AppointmentView = () => {
   );
 
   const {
-    appointment,
     selectAppointmentAction,
     closeModalAppointmentAction,
     openModalAppointmentAction,
@@ -46,8 +45,6 @@ export const AppointmentView = () => {
   const { refetch, data, isLoading } = useGetAppointmentsQuery(range, {
     skip: !range,
   });
-
-  const [open, setOpen] = useState<boolean>(false);
 
   const [lastView, setLastView] = useState<
     'month' | 'week' | 'work_week' | 'day' | 'agenda'
@@ -87,7 +84,7 @@ export const AppointmentView = () => {
   };
 
   const onRangeChange = (props: onRangeChange) => {
-    const { range: newRange, view } = props;
+    const { range: newRange } = props;
     console.log('onRangeChange:::', newRange);
     if (Array.isArray(newRange) && newRange.length > 1) {
       const end: Date = managerDate.addDays(newRange[newRange.length - 1], 1);

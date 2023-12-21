@@ -21,6 +21,7 @@ import { SgButton } from '../../../../components/form/button/SgButton';
 import {
   useAddAppointmentMutation,
   useGetAppointmentTypeQuery,
+  useGetUserToListQuery,
   useUpdateAppointmentMutation,
 } from '../redux/api/appointmentApi';
 import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
@@ -46,6 +47,7 @@ export const DialogFormAppointment = () => {
     useAddAppointmentMutation();
   const [updateAppointment] = useUpdateAppointmentMutation();
   const { data: appointmentTypes } = useGetAppointmentTypeQuery('');
+  const { data: users } = useGetUserToListQuery('');
   const { data: customers } = useGetCustomersQuery('');
 
   const { openSnackbarAction } = useSnackbar();
@@ -56,6 +58,7 @@ export const DialogFormAppointment = () => {
 
   useEffect(() => {
     if (appointment) {
+      console.log(appointment);
       setShowServiceFields(appointment.service != null);
       setStartDate(new Date(`${appointment.date}`));
       setDefaultValues({ ...appointment });
@@ -186,6 +189,21 @@ export const DialogFormAppointment = () => {
               errors={errors}
               defaultValue={appointment?.appointmentTypeId || ''}
               options={appointmentTypes?.data}
+            />
+          </div>
+          <div className="flex flex-col sm:flex-row items-center mb-4">
+            <SgSelect
+              key="user-select"
+              control={control}
+              name="assignedToId"
+              label={t('assigned_to')}
+              fieldId="id"
+              fieldLabel="name"
+              className="flex-1 !m-3"
+              size="small"
+              errors={errors}
+              defaultValue={appointment?.assignedToId || ''}
+              options={users?.data}
             />
           </div>
 

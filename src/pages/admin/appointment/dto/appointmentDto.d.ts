@@ -7,6 +7,7 @@ interface AppointmentEvent {
 interface AppointmentDto {
   createdById?: number | null;
   appointmentTypeId?: number | null;
+  assignedToId?: number | null;
   customerId?: number | null;
   description?: string | null;
   name: string;

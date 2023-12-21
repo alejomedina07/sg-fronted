@@ -6,7 +6,9 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { NavItem } from '../index';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import SwipeRightIcon from '@mui/icons-material/SwipeRight';
+import { ApplicationConst } from '../../../../../pages/admin/router/cosnts/ApplicationConst';
+
+const Application = new ApplicationConst();
 
 export const navItems: NavItem[] = [
   {
@@ -16,6 +18,11 @@ export const navItems: NavItem[] = [
     icon: <GroupIcon />,
     iconMenu: <GroupIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.userList,
+      second: Application.PRIVILEGES.userCreate,
+      secondLink: '/admin/users/create',
+    },
   },
   {
     id: 4,
@@ -24,6 +31,11 @@ export const navItems: NavItem[] = [
     icon: <CalendarMonthIcon />,
     iconMenu: <CalendarMonthIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: false,
+    privileges: {
+      main: Application.PRIVILEGES.appointmentList,
+      second: Application.PRIVILEGES.appointmentCreate,
+      secondLink: '/admin/appointment',
+    },
   },
   {
     id: 5,
@@ -32,6 +44,11 @@ export const navItems: NavItem[] = [
     icon: <PermContactCalendarIcon />,
     iconMenu: <PermContactCalendarIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: false,
+    privileges: {
+      main: Application.PRIVILEGES.customerList,
+      second: Application.PRIVILEGES.customerCreate,
+      secondLink: '/admin/customer/create',
+    },
   },
   {
     id: 6,
@@ -40,6 +57,11 @@ export const navItems: NavItem[] = [
     icon: <AddBusinessIcon />,
     iconMenu: <AddBusinessIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: false,
+    privileges: {
+      main: Application.PRIVILEGES.expenseList,
+      second: Application.PRIVILEGES.expenseCreate,
+      secondLink: '/admin/expense/create',
+    },
   },
   {
     id: 7,
@@ -48,6 +70,11 @@ export const navItems: NavItem[] = [
     icon: <PlaylistAddCircleIcon />,
     iconMenu: <PlaylistAddCircleIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: false,
+    privileges: {
+      main: Application.PRIVILEGES.inventoryList,
+      second: Application.PRIVILEGES.inventoryCreate,
+      secondLink: '/admin/inventory/create',
+    },
   },
   {
     id: 8,
@@ -56,6 +83,11 @@ export const navItems: NavItem[] = [
     icon: <MonetizationOnIcon />,
     iconMenu: <MonetizationOnIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: false,
+    privileges: {
+      main: Application.PRIVILEGES.serviceList,
+      second: Application.PRIVILEGES.serviceCreate,
+      secondLink: '/admin/service/create',
+    },
   },
   {
     id: 1,
@@ -64,13 +96,23 @@ export const navItems: NavItem[] = [
     icon: <TrendingUpIcon />,
     iconMenu: <TrendingUpIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.reportList,
+      second: Application.PRIVILEGES.reportList,
+      secondLink: '/admin/report',
+    },
   },
-  {
-    id: 10,
-    name: 'turns',
-    link: '/admin/turn',
-    icon: <SwipeRightIcon />,
-    iconMenu: <SwipeRightIcon sx={{ fontSize: 50 }} />,
-    onlyAdmin: true,
-  },
+  // {
+  //   id: 10,
+  //   name: 'turns',
+  //   link: '/admin/turn',
+  //   icon: <SwipeRightIcon />,
+  //   iconMenu: <SwipeRightIcon sx={{ fontSize: 50 }} />,
+  //   onlyAdmin: true,
+  //   privileges: {
+  //     main: Application.PRIVILEGES.turnList,
+  //     second: Application.PRIVILEGES.turnCreate,
+  //     secondLink: '/admin/turn',
+  //   },
+  // },
 ];

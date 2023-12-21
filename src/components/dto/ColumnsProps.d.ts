@@ -8,4 +8,6 @@ export interface ColumnsProps {
   flex: number;
   renderCell?: (params: GridRenderCellParams) => ReactNode;
   valueFormatter?: (params: GridValueFormatterParams<string>) => string;
+  filterParams?: any;
+  filterOperators?: any;
 }

@@ -6,6 +6,11 @@ export interface NavItem {
   id: number;
   name: string;
   link: string;
+  privileges: {
+    main: string;
+    second: string;
+    secondLink: string;
+  };
   icon: ReactElement;
   iconMenu: ReactElement;
   onlyAdmin?: boolean;

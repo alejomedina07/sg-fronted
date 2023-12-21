@@ -31,9 +31,15 @@ export const SgTable = (props: SgTableProps) => {
           loading={isLoading}
           disableRowSelectionOnClick
           onRowDoubleClick={handleRowDoubleClick}
+          filterMode="client"
           // onSelectionModelChange={changeCheckBoxesSelection}
           slots={{
             toolbar: GridToolbar,
+          }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
           }}
           localeText={{
             toolbarColumns: `${t('columns')}`,

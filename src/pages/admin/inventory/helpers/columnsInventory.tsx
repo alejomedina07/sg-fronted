@@ -1,5 +1,4 @@
-import { GridColDef } from '@mui/x-data-grid';
-import { t } from 'i18next';
+import { GridValueGetterParams } from '@mui/x-data-grid';
 import DateFnsManager from '../../../../services/utils/DateFnsManager';
 import { useTranslation } from 'react-i18next';
 import { ColumnsProps } from '../../../../components/dto/ColumnsProps';
@@ -18,6 +17,12 @@ export const ColumnsInventory = () => {
       field: 'statusId',
       headerName: `${t('status')}`,
       flex: 50,
+      filterParams: {
+        valueGetter: (params: GridValueGetterParams) => {
+          console.log(888888, params.row.status.name);
+          return params.row.status.name || '';
+        },
+      },
       renderCell: (params) => {
         return <span> {params.row.status.name} </span>;
       },
