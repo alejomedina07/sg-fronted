@@ -20,7 +20,7 @@ import { ReactNode } from 'react';
 import { HeaderProfile } from './componets/HeaderProfile';
 import useAuth from '../../../pages/public/auth/redux/hooks/useAuth';
 import { Link } from 'react-router-dom';
-import { ApplicationConst } from '../../../pages/admin/router/cosnts/ApplicationConst';
+import { ApplicationConst } from '../../../pages/admin/router/consts/ApplicationConst';
 
 const drawerWidth = 240;
 

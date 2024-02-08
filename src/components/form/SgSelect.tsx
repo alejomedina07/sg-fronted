@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { FormControl, FormHelperText, InputLabel, Select } from '@mui/material';
+import {
+  Checkbox,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  Select,
+} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Controller } from 'react-hook-form';
 import MenuItem from '@mui/material/MenuItem';
@@ -83,9 +89,11 @@ export const SgSelect = (props: any) => {
                 {!defaultValue && (
                   <MenuItem value="">---------------------</MenuItem>
                 )}
-
-                {selectOptions.map((e, i) => (
+                {selectOptions.map((e: any, i) => (
                   <MenuItem key={`opt-${name}-${i}`} value={e[fieldId]}>
+                    {multiple && (
+                      <Checkbox checked={field.value.includes(e[fieldId])} />
+                    )}
                     {e[fieldLabel]}{' '}
                     {fieldDescription ? ` :: ${e[fieldDescription]}` : ''}
                   </MenuItem>

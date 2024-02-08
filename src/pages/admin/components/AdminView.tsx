@@ -3,8 +3,9 @@ import { Paper } from '@mui/material';
 import { t } from 'i18next';
 import { SgLink } from '../../../components/form/button/SgLink';
 import SettingsIcon from '@mui/icons-material/Settings';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 import UseAuth from '../../public/auth/redux/hooks/useAuth';
-import { ApplicationConst } from '../router/cosnts/ApplicationConst';
+import { ApplicationConst } from '../router/consts/ApplicationConst';
 
 const Application = new ApplicationConst();
 
@@ -13,7 +14,11 @@ export const AdminView = () => {
 
   const getPaper = (option: NavItem) => {
     return (
-      <Paper elevation={3} className="flex-1 h-40 p-2 m-4" key={option.id}>
+      <Paper
+        elevation={3}
+        className="flex-1 h-40 p-2 m-4"
+        key={`paper-${option.id}`}
+      >
         <div className="h-full flex flex-col items-center">
           <b>{t(option.name)}</b>
           <span className="flex-1" />
@@ -40,6 +45,19 @@ export const AdminView = () => {
             main: 'Admin',
             second: 'Admin',
             secondLink: '/admin/config/config-options',
+          },
+        },
+        {
+          id: 13,
+          name: 'config_survey',
+          link: '/admin/survey/config',
+          icon: <PostAddIcon />,
+          iconMenu: <PostAddIcon sx={{ fontSize: 50 }} />,
+          onlyAdmin: true,
+          privileges: {
+            main: 'Admin',
+            second: 'Admin',
+            secondLink: '/admin/survey/config',
           },
         },
       ].map((option: NavItem) => {

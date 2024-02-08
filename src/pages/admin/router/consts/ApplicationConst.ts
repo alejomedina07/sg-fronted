@@ -41,6 +41,11 @@ const PRIVILEGES = {
   configCreate: 'config.create',
   configEdit: 'config.edit',
   configDelete: 'config.delete',
+  surveyList: 'survey.list',
+  surveyAdmin: 'survey.admin',
+  surveyCreate: 'survey.create',
+  surveyEdit: 'survey.edit',
+  surveyDelete: 'survey.delete',
 };
 
 interface validatePrivilegesResponse {
@@ -51,12 +56,18 @@ interface validatePrivilegesResponse {
 export class ApplicationConst {
   PRIVILEGES = PRIVILEGES;
   MAIN_ROL = 'Admin';
+  USER_ROL = 'User';
   validatePermission = (
     permission: string,
     privileges: string[],
-    rol: string
+    rol: string,
+    sectionUser: boolean
   ) => {
-    return rol === this.MAIN_ROL || privileges.includes(permission);
+    return (
+      rol === this.MAIN_ROL ||
+      privileges.includes(permission) ||
+      (sectionUser && rol === this.USER_ROL)
+    );
   };
 
   validatePrivileges(

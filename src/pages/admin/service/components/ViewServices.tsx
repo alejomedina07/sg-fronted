@@ -1,15 +1,10 @@
-import {
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { Divider, List, ListItem, ListItemText } from '@mui/material';
 import DateFnsManager from '../../../../services/utils/DateFnsManager';
 import * as React from 'react';
 import TablePagination from '@mui/material/TablePagination';
 import { t } from 'i18next';
+import { CONFIG_CONST } from '../../config/configOption/const/configConst';
+import { NotesButton } from '../../components/notes/components/NotesButton';
 
 interface ViewServicesProps {
   services: any[];
@@ -41,9 +36,10 @@ export const ViewServices = ({ services = [] }: ViewServicesProps) => {
                 <ListItem
                   key={keyId}
                   secondaryAction={
-                    <IconButton edge="end" aria-label="comments">
-                      <EditIcon />
-                    </IconButton>
+                    <NotesButton
+                      entityType={CONFIG_CONST.NOTE.ENTITY_SERVICE}
+                      entityId={item.id}
+                    />
                   }
                   disablePadding
                 >

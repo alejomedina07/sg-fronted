@@ -39,8 +39,6 @@ export const FormInventory = (props: FormInventoryProps) => {
     resolver: yupResolver(inventoryScheme),
   });
 
-  console.log(989, errors);
-
   useEffect(() => {
     if (inventoryId && inventoryEdit && inventoryId === `${inventoryEdit.id}`) {
       setDefaultValuesActive(inventoryEdit);

@@ -19,7 +19,7 @@ export const ListNotes = () => {
   const { editNoteAction, entityId, entityType, setRefreshListAction } =
     useNotes();
 
-  const { data, isLoading, refetch } = useGetNotesQuery(
+  const { data, refetch } = useGetNotesQuery(
     `?entityType=${entityType}&entityId=${entityId}`,
     {
       skip: !entityType && !entityId,
@@ -62,7 +62,7 @@ export const ListNotes = () => {
         className: 'flex flex-row items-center',
       }}
     >
-      {ListNotes.map((option: Note, index) => {
+      {ListNotes.map((option: Note) => {
         return (
           <span key={`span-${option.id}`}>
             <ListItem alignItems="flex-start" key={option.id}>
@@ -100,8 +100,11 @@ export const ListNotes = () => {
                 }
               />
               {userConnected.id == option.createdBy.id && (
-                <IconButton aria-label="view">
-                  <EditIcon onClick={() => onClickEdit(option)} />
+                <IconButton
+                  aria-label="view"
+                  onClick={() => onClickEdit(option)}
+                >
+                  <EditIcon />
                 </IconButton>
               )}
             </ListItem>

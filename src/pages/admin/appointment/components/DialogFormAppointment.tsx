@@ -58,7 +58,6 @@ export const DialogFormAppointment = () => {
 
   useEffect(() => {
     if (appointment) {
-      console.log(appointment);
       setShowServiceFields(appointment.service != null);
       setStartDate(new Date(`${appointment.date}`));
       setDefaultValues({ ...appointment });
@@ -100,7 +99,6 @@ export const DialogFormAppointment = () => {
 
   const submitForm = async (data: AppointmentDto) => {
     try {
-      console.log('data:::: ', data);
       if (data.id) {
         delete data.customer;
         delete data.appointmentType;
@@ -118,9 +116,11 @@ export const DialogFormAppointment = () => {
       refresh();
       reset();
       closeDialog();
-    } catch (e) {
-      console.log(666, e);
-      openSnackbarAction({ message: `${t('error')}`, type: 'error' });
+    } catch (e: any) {
+      openSnackbarAction({
+        message: e?.data?.message || `${t('error')}`,
+        type: 'error',
+      });
     }
   };
 

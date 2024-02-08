@@ -44,13 +44,11 @@ export const InventoryInOut = () => {
   });
 
   const submitForm = async (data: InventoryInOut) => {
-    console.log(888, data);
     try {
       if (selectedValue === '') {
         setErrorMessage(`${t('field_is_required')}`);
         return;
-      } else if (selectedValue === 'increment') data.increment = true;
-      else data.increment = false;
+      } else data.increment = selectedValue === 'increment';
       const res = await addInventoryInOut(data).unwrap();
       openSnackbarAction({
         message: res.msg || `${t('created')}`,
@@ -59,9 +57,7 @@ export const InventoryInOut = () => {
       reset();
       refresh();
       closeDialog();
-    } catch (e) {
-      console.log(666, e);
-      // @ts-ignore
+    } catch (e: any) {
       const message = e?.data?.message || `${t('error_save')}`;
       openSnackbarAction({ message, type: 'error' });
     }

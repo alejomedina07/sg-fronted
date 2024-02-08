@@ -23,19 +23,23 @@ import { ViewInventory } from '../inventory/views/ViewInventory';
 import { AdminView } from '../components/AdminView';
 import useAuth from '../../public/auth/redux/hooks/useAuth';
 // import { AdminTurnView } from '../turn/view/AdminTurnView';
-import { ApplicationConst } from './cosnts/ApplicationConst';
+import { ApplicationConst } from './consts/ApplicationConst';
 import { ConfigRol } from '../config/rol/views/ConfigRol';
+import { ListSurvey } from '../survey/views/ListSurvey';
+import { AnswerSurvey } from '../survey/views/AnswerSurvey';
+import { ConfigSurvey } from '../survey/views/ConfigSurvey';
 
 const Application = new ApplicationConst();
 
 export const AdminRoutes = () => {
   const { userConnected } = useAuth();
 
-  const validatePermission = (permission: string) => {
+  const validatePermission = (permission: string, sectionUser: boolean) => {
     return Application.validatePermission(
       permission,
       userConnected.privileges,
-      userConnected.rol
+      userConnected.rol,
+      sectionUser
     );
   };
 
@@ -51,13 +55,13 @@ export const AdminRoutes = () => {
       >
         <Route path="" element={<AdminView />}></Route>
         <Route path="appointment-type">
-          {validatePermission(Application.PRIVILEGES.configList) && (
+          {validatePermission(Application.PRIVILEGES.configList, false) && (
             <Route path="" element={<ListAppointmentType />} />
           )}
-          {validatePermission(Application.PRIVILEGES.configCreate) && (
+          {validatePermission(Application.PRIVILEGES.configCreate, false) && (
             <Route path="create" element={<FormAppointmentType />} />
           )}
-          {validatePermission(Application.PRIVILEGES.configEdit) && (
+          {validatePermission(Application.PRIVILEGES.configEdit, false) && (
             <Route
               path="edit/:appointmentTypeId"
               element={<FormAppointmentType />}
@@ -65,30 +69,30 @@ export const AdminRoutes = () => {
           )}
         </Route>
         <Route path="users">
-          {validatePermission(Application.PRIVILEGES.userList) && (
+          {validatePermission(Application.PRIVILEGES.userList, false) && (
             <Route path="" element={<ListUser />} />
           )}
-          {validatePermission(Application.PRIVILEGES.userCreate) && (
+          {validatePermission(Application.PRIVILEGES.userCreate, false) && (
             <Route path="create" element={<FormUser />} />
           )}
-          {validatePermission(Application.PRIVILEGES.userEdit) && (
+          {validatePermission(Application.PRIVILEGES.userEdit, false) && (
             <Route path="edit/:userId" element={<FormUser />} />
           )}
         </Route>
         <Route path="config">
-          {validatePermission(Application.PRIVILEGES.configList) && (
+          {validatePermission(Application.PRIVILEGES.configList, false) && (
             <>
               <Route path="config-options" element={<ConfigOptions />} />
               <Route path="rol" element={<ConfigRol />} />
             </>
           )}
-          {validatePermission(Application.PRIVILEGES.configCreate) && (
+          {validatePermission(Application.PRIVILEGES.configCreate, false) && (
             <Route path="config-list/:keyValue" element={<ListOptions />} />
           )}
-          {validatePermission(Application.PRIVILEGES.configList) && (
+          {validatePermission(Application.PRIVILEGES.configList, false) && (
             <Route path="config-form/:keyValue" element={<FormOptions />} />
           )}
-          {validatePermission(Application.PRIVILEGES.configEdit) && (
+          {validatePermission(Application.PRIVILEGES.configEdit, false) && (
             <Route
               path="config-edit/:keyValue/:idConfig"
               element={<FormOptions />}
@@ -96,56 +100,72 @@ export const AdminRoutes = () => {
           )}
         </Route>
         <Route path="customer">
-          {validatePermission(Application.PRIVILEGES.customerList) && (
+          {validatePermission(Application.PRIVILEGES.customerList, true) && (
             <Route path="" element={<ListCustomer />} />
           )}
-          {validatePermission(Application.PRIVILEGES.customerCreate) && (
+          {validatePermission(Application.PRIVILEGES.customerCreate, true) && (
             <Route path="create" element={<FormCustomer />} />
           )}
-          {validatePermission(Application.PRIVILEGES.customerEdit) && (
+          {validatePermission(Application.PRIVILEGES.customerEdit, false) && (
             <Route path="edit/:customerId" element={<ViewCustomer />} />
           )}
         </Route>
         <Route path="expense">
-          {validatePermission(Application.PRIVILEGES.expenseList) && (
+          {validatePermission(Application.PRIVILEGES.expenseList, true) && (
             <Route path="" element={<ListExpense />} />
           )}
-          {validatePermission(Application.PRIVILEGES.expenseCreate) && (
+          {validatePermission(Application.PRIVILEGES.expenseCreate, true) && (
             <Route path="create" element={<FormExpense />} />
           )}
-          {validatePermission(Application.PRIVILEGES.expenseEdit) && (
+          {validatePermission(Application.PRIVILEGES.expenseEdit, false) && (
             <Route path="edit/:expenseId" element={<FormExpense />} />
           )}
         </Route>
         <Route path="inventory">
-          {validatePermission(Application.PRIVILEGES.inventoryList) && (
+          {validatePermission(Application.PRIVILEGES.inventoryList, false) && (
             <Route path="" element={<ListInventory />} />
           )}
-          {validatePermission(Application.PRIVILEGES.inventoryCreate) && (
-            <Route path="create" element={<FormInventory />} />
-          )}
-          {validatePermission(Application.PRIVILEGES.inventoryEdit) && (
+          {validatePermission(
+            Application.PRIVILEGES.inventoryCreate,
+            false
+          ) && <Route path="create" element={<FormInventory />} />}
+          {validatePermission(Application.PRIVILEGES.inventoryEdit, false) && (
             <Route path="edit/:inventoryId" element={<ViewInventory />} />
           )}
         </Route>
         <Route path="service">
-          {validatePermission(Application.PRIVILEGES.serviceList) && (
+          {validatePermission(Application.PRIVILEGES.serviceList, true) && (
             <Route path="" element={<ListService />} />
           )}
-          {validatePermission(Application.PRIVILEGES.serviceCreate) && (
+          {validatePermission(Application.PRIVILEGES.serviceCreate, true) && (
             <Route path="create" element={<FormService />} />
           )}
         </Route>
 
-        {validatePermission(Application.PRIVILEGES.appointmentList) && (
+        {validatePermission(Application.PRIVILEGES.appointmentList, true) && (
           <Route path="appointment" element={<AppointmentView />} />
         )}
         {/* {validatePermission(Application.PRIVILEGES.turnList) && ( */}
         {/*   <Route path="turn" element={<AdminTurnView />} /> */}
         {/* )} */}
-        {validatePermission(Application.PRIVILEGES.reportList) && (
+        {validatePermission(Application.PRIVILEGES.reportList, false) && (
           <Route path="report" element={<ReportMain />} />
         )}
+        {/* {validatePermission(Application.PRIVILEGES.surveyList) && ( */}
+        {/*   <Route path="survey" element={<ListSurvey />} /> */}
+        {/* )} */}
+
+        <Route path="survey">
+          {validatePermission(Application.PRIVILEGES.surveyList, true) && (
+            <Route path="" element={<ListSurvey />} />
+          )}
+          {validatePermission(Application.PRIVILEGES.surveyCreate, true) && (
+            <Route path="create" element={<AnswerSurvey />} />
+          )}
+          {validatePermission(Application.PRIVILEGES.surveyAdmin, false) && (
+            <Route path="config" element={<ConfigSurvey />} />
+          )}
+        </Route>
       </Route>
       <Route path="*" element={<Navigate to="admin" />} />
     </Routes>

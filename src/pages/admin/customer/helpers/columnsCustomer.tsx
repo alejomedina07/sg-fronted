@@ -1,5 +1,4 @@
-import { GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
-import { t } from 'i18next';
+import { GridValueFormatterParams } from '@mui/x-data-grid';
 import DateFnsManager from '../../../../services/utils/DateFnsManager';
 import { useTranslation } from 'react-i18next';
 import { ColumnsProps } from '../../../../components/dto/ColumnsProps';

@@ -25,7 +25,6 @@ export const appointmentSlice = createSlice({
       state.end = action.payload.end;
     },
     selectAppointment: (state, action) => {
-      // console.log(78, action.payload);
       state.appointment = action.payload.appointment;
       state.refresh = action.payload.refresh;
       state.isOpenModalAppointment = true;
@@ -35,7 +34,6 @@ export const appointmentSlice = createSlice({
       state.isOpenModalAppointment = false;
     },
     openModalAppointment: (state, action) => {
-      console.log(action.payload);
       state.appointment = null;
       state.isOpenModalAppointment = true;
       state.refresh = action.payload.refresh;

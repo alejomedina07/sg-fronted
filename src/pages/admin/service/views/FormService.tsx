@@ -57,8 +57,6 @@ export const FormService = () => {
 
   const submitForm = async (data: any) => {
     try {
-      console.log(113);
-      console.log(data);
       let res;
       if (data.id) res = await updateService(data).unwrap();
       else res = await addService(data).unwrap();
@@ -69,12 +67,9 @@ export const FormService = () => {
       closeModalServiceAction();
       if (refresh) refresh();
     } catch (e) {
-      console.log(7899, e);
       openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
     }
   };
-
-  console.log(999, errors);
 
   return (
     <>

@@ -6,13 +6,15 @@ interface TabPanelProps {
   dir?: string;
   index: number;
   value: number;
+  className?: string;
 }
 
 export const SgTabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, className, ...other } = props;
 
   return (
     <div
+      className={className}
       role="tabpanel"
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}

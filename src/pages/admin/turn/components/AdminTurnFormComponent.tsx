@@ -19,14 +19,12 @@ export const AdminTurnFormComponent = (props: AdminTurnFormComponentProps) => {
     handleSubmit,
     control,
     formState: { errors },
-    reset,
   } = useForm<Person>({
     resolver: yupResolver(PersonSchema),
   });
 
   const submitForm = async (data: Person) => {
     try {
-      console.log(7777, data);
       // let res = await addUser(data).unwrap();
       openSnackbarAction({
         message: `${t('created')}`,

@@ -1,17 +1,11 @@
 import { Paper, Skeleton } from '@mui/material';
-import Box from '@mui/material/Box';
 import { t } from 'i18next';
 import { SgLink } from '../../../../../components/form/button/SgLink';
 import { useGetAllOptionsQuery } from '../../../../../store/apis/listApi';
-import { useGetAppointmentTypeQuery } from '../../../appointment/redux/api/appointmentApi';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 export const ConfigOptions = () => {
   const { data: options, isLoading } = useGetAllOptionsQuery('');
-  console.log(11, options);
-
-  // const { data, isLoading } = useGetAppointmentTypeQuery('');
-  // console.log('data:', data);
 
   return (
     <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 xs:gap-1 sm:gap-2 md:gap-3">

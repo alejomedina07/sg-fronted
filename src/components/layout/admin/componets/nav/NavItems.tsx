@@ -6,7 +6,8 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { NavItem } from '../index';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import { ApplicationConst } from '../../../../../pages/admin/router/cosnts/ApplicationConst';
+import { ApplicationConst } from '../../../../../pages/admin/router/consts/ApplicationConst';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 const Application = new ApplicationConst();
 
@@ -87,6 +88,19 @@ export const navItems: NavItem[] = [
       main: Application.PRIVILEGES.serviceList,
       second: Application.PRIVILEGES.serviceCreate,
       secondLink: '/admin/service/create',
+    },
+  },
+  {
+    id: 10,
+    name: 'surveys',
+    link: '/admin/survey',
+    icon: <AssessmentIcon />,
+    iconMenu: <AssessmentIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: false,
+    privileges: {
+      main: Application.PRIVILEGES.surveyList,
+      second: Application.PRIVILEGES.surveyCreate,
+      secondLink: '/admin/survey/create',
     },
   },
   {

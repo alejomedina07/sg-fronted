@@ -10,6 +10,7 @@ interface SgButtonProps {
   onConfirm?(): void;
   onConfirmClose?(): void;
   sending?: boolean;
+  disabled?: boolean;
   sendingText?: string;
   label: string;
   color?:
@@ -40,6 +41,7 @@ export const SgButton = (props: SgButtonProps) => {
     variant,
     classes,
     type,
+    disabled,
   } = props;
   const { openConfirmationDialog } = useDialogs();
 
@@ -64,6 +66,7 @@ export const SgButton = (props: SgButtonProps) => {
         color={color || 'inherit'}
         onClick={_onClickAction}
         type={type}
+        disabled={disabled}
       >
         {label}
       </Button>

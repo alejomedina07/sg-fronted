@@ -10,7 +10,6 @@ import { defaultValues } from '../helpers/appointmentTypeConst';
 import { appointmentTypeScheme } from '../validation/appointmentTypeScheme';
 import {
   useAddAppointmentTypeMutation,
-  useGetAppointmentTypeQuery,
   useUpdateAppointmentTypeMutation,
 } from '../../../appointment/redux/api/appointmentApi';
 import { t } from 'i18next';
@@ -27,8 +26,6 @@ export const FormAppointmentType = () => {
   const navigate = useNavigate();
   const [addAppointmentType, { isLoading }] = useAddAppointmentTypeMutation();
   const [updateAppointmentType] = useUpdateAppointmentTypeMutation();
-  // const { data: appointmentTypeData, isLoading: isLoadingAppointmentType } =
-  //   useGetAppointmentTypeQuery('');
 
   const {
     handleSubmit,
@@ -58,7 +55,6 @@ export const FormAppointmentType = () => {
 
   const submitForm = async (data: any) => {
     try {
-      console.log(432, data);
       let res;
       if (data.id)
         res = await updateAppointmentType({
@@ -76,12 +72,6 @@ export const FormAppointmentType = () => {
     } catch (e) {
       openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
     }
-  };
-
-  const handleSwitchChange = (value: boolean) => {
-    console.log('Switch value:', value);
-
-    // Realiza acciones adicionales según el valor del switch
   };
 
   return (

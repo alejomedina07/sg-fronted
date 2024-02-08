@@ -2,15 +2,19 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Calendar, EventProps, View } from 'react-big-calendar';
 import { getMessagesCalendar, localizer } from '../../../../helpers';
 import { CalendarEvent } from '../components/CalendarEvent';
-import { useState } from 'react';
-import { useGetAppointmentsQuery } from '../redux/api/appointmentApi';
-import { Fab, LinearProgress } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import {
+  useGetAppointmentsQuery,
+  useGetUserToListQuery,
+} from '../redux/api/appointmentApi';
+import { Autocomplete, Fab, LinearProgress, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { t } from 'i18next';
 import useAppointment from '../redux/hooks/useAppointment';
 import DateFnsManager, {
   RangeAppointmentProps,
 } from '../../../../services/utils/DateFnsManager';
+import UseAuth from '../../../public/auth/redux/hooks/useAuth';
 
 const managerDate = new DateFnsManager();
 
@@ -32,9 +36,21 @@ interface onRangeChange {
 }
 
 export const AppointmentView = () => {
-  const [range, setRange] = useState<RangeAppointmentProps>(
-    managerDate.currentMonth
-  );
+  const { userConnected } = UseAuth();
+  const { data: users } = useGetUserToListQuery('');
+  const [range, setRange] = useState<RangeAppointmentProps>({
+    ...managerDate.currentMonth,
+    idUser: userConnected?.id,
+  });
+
+  const [userSelected, setUserSelected] = useState<any>();
+
+  useEffect(() => {
+    setRange({
+      ...range,
+      idUser: userSelected?.id || userConnected.id,
+    });
+  }, [userSelected]);
 
   const {
     selectAppointmentAction,
@@ -75,7 +91,6 @@ export const AppointmentView = () => {
   };
 
   const onSelect = (event: any) => {
-    console.log('event.appointment::;', event.appointment);
     selectAppointmentAction({
       appointment: event.appointment,
       refresh: refetch,
@@ -85,14 +100,13 @@ export const AppointmentView = () => {
 
   const onRangeChange = (props: onRangeChange) => {
     const { range: newRange } = props;
-    console.log('onRangeChange:::', newRange);
     if (Array.isArray(newRange) && newRange.length > 1) {
       const end: Date = managerDate.addDays(newRange[newRange.length - 1], 1);
       setRange({
         start: managerDate.dateToString(newRange[0]),
         end: managerDate.getEndDayToString(end),
+        idUser: userSelected?.id || userConnected.id,
       });
-      console.log('array', range);
     } else if (
       typeof newRange === 'object' &&
       newRange !== null &&
@@ -106,13 +120,50 @@ export const AppointmentView = () => {
         end: managerDate.getEndDayToString(
           new Date(managerDate.addDaysString(end, 1))
         ),
+        idUser: userSelected?.id || userConnected.id,
       });
-      console.log('objec', range);
     }
   };
 
   return (
     <div className="!h-full">
+      <div className="mb-4 flex flex-row items-center">
+        <span className="mr-2">{t('select_schedule_for')}</span>
+        <Autocomplete
+          id="combo-box-demo"
+          className="flex-1"
+          options={users?.data || []}
+          value={userSelected || null}
+          getOptionLabel={(option: any) => option.name}
+          onChange={(event, newValue) => {
+            setUserSelected(newValue);
+          }}
+          renderInput={(params) => <TextField {...params} label={t('user')} />}
+          // isOptionEqualToValue={(option, value) => option.id === value}
+        />
+        {/* <Autocomplete */}
+        {/*   className="flex-1" */}
+        {/*   id="fixed-tags-demo" */}
+        {/*   value={userSelected} */}
+        {/*   onChange={(event, newValue) => { */}
+        {/*     setUserSelected(newValue.id); */}
+        {/*   }} */}
+        {/*   options={users?.data || []} */}
+        {/*   getOptionLabel={(option: any) => option.name} */}
+        {/*   renderTags={(tagValue, getTagProps) => */}
+        {/*     tagValue.map((option: any, index) => ( */}
+        {/*       <Chip label={option.name} {...getTagProps({ index })} /> */}
+        {/*     )) */}
+        {/*   } */}
+        {/*   renderInput={(params) => ( */}
+        {/*     <TextField */}
+        {/*       {...params} */}
+        {/*       label={t('select_survey')} */}
+        {/*       placeholder={t('select_survey') || ''} */}
+        {/*     /> */}
+        {/*   )} */}
+        {/* /> */}
+      </div>
       {!!isLoading && <LinearProgress />}
       <Calendar
         culture="es"

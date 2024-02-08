@@ -38,12 +38,10 @@ export const FormOptions = () => {
   });
 
   const submitForm = async (data: any) => {
-    console.log(12, data);
     try {
       let res;
       if (data.id) res = await updateOption(data).unwrap();
       else res = await addOption(data).unwrap();
-      console.log(777799999999, res);
       openSnackbarAction({
         message: res.msg || `${t('created')}`,
         type: 'success',
@@ -57,12 +55,8 @@ export const FormOptions = () => {
   const title = t(idConfig ? 'edit' : 'add') + ' ' + t(`${keyValue}`);
   const labelLink = t('list') + ' ' + t(`${keyValue}`);
 
-  console.log(789, configFormEdit);
-  // console.log(789, defaultActive);
-
   useEffect(() => {
     if (idConfig && configFormEdit && idConfig == `${configFormEdit.id}`) {
-      console.log(999999);
       setDefaultActive({ ...configFormEdit });
     } else
       setDefaultActive({

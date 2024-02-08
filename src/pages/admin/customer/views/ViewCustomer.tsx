@@ -62,13 +62,13 @@ export const ViewCustomer = () => {
           />
         </Tabs>
       </Box>
-      <SgTabPanel value={value} index={0}>
+      <SgTabPanel value={value} index={0} className="bg-white">
         {!!customer && <FormCustomer customerEdit={customer} />}
       </SgTabPanel>
-      <SgTabPanel value={value} index={1}>
+      <SgTabPanel value={value} index={1} className="bg-white">
         <ViewServices services={services ?? []} />
       </SgTabPanel>
-      <SgTabPanel value={value} index={2}>
+      <SgTabPanel value={value} index={2} className="bg-white">
         <ViewAppointments appointments={appointments ?? []} />
       </SgTabPanel>
     </>

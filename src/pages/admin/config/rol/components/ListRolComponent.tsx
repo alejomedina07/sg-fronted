@@ -37,12 +37,10 @@ export const ListRolComponent = () => {
   const [forceUpdate, setForceUpdate] = useState(0);
 
   const onRefresh = () => {
-    // console.log('refrescando::::');
     setForceUpdate((prev) => prev + 1);
   };
 
   const onClickView = (params: GridRenderCellParams) => {
-    console.log(params);
     selectRolAction({ rol: params.row, refresh: onRefresh });
   };
 

@@ -11,10 +11,9 @@ export const appointmentApi = createApi({
   endpoints: (build) => ({
     getAppointments: build.query({
       query: (range: RangeAppointmentProps) =>
-        `/appointment?start=${range.start}&end=${range.end}`,
+        `/appointment?start=${range.start}&end=${range.end}&idUser=${range.idUser}`,
       keepUnusedDataFor: 0,
       transformResponse: (rawResult: any) => {
-        // console.log(999, rawResult.data);
         return rawResult.data.map((item: AppointmentDto) =>
           AppointmentModel(item)
         );

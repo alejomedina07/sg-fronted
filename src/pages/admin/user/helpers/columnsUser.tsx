@@ -1,5 +1,4 @@
 import { GridValueFormatterParams } from '@mui/x-data-grid';
-import { Avatar } from '@mui/material';
 import DateFnsManager from '../../../../services/utils/DateFnsManager';
 import { useTranslation } from 'react-i18next';
 import * as React from 'react';
@@ -15,17 +14,20 @@ export const ColumnsUser = () => {
       field: 'firstName',
       headerName: t('name'),
       flex: 100,
-      renderCell: (params) => {
-        const chart = params.value?.split(' ')[0][0] || 'A';
-        return (
-          <div className="flex flex-row items-center">
-            <Avatar>{chart}</Avatar>
-            <span className="ml-2">
-              {params.row.firstName} {params.row.lastName}
-            </span>
-          </div>
-        );
+      valueGetter: (params: any) => {
+        return params.row.firstName + ' ' + params.row.lastName;
       },
+      // renderCell: (params) => {
+      //   const chart = params.value?.split(' ')[0][0] || 'A';
+      //   return (
+      //     <div className="flex flex-row items-center">
+      //       <Avatar>{chart}</Avatar>
+      //       <span className="ml-2">
+      //         {params.row.firstName} {params.row.lastName}
+      //       </span>
+      //     </div>
+      //   );
+      // },
     },
     {
       field: 'documentNumber',

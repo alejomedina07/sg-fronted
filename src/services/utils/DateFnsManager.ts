@@ -37,11 +37,10 @@ class DateFnsManager {
     return formatISO(addDays(date, days));
   }
 
-  addHoursAndMinutes(date: Date, hours: number, minutes: number): string {
-    const endDay = endOfDay(date);
-    console.log('addHoursAndMinutes::', endDay);
-    return formatISO(setHours(date, hours));
-  }
+  // addHoursAndMinutes(date: Date, hours: number, minutes: number): string {
+  //   const endDay = endOfDay(date);
+  //   return formatISO(setHours(date, hours));
+  // }
 
   getEndDayToString(date: Date): string {
     return formatISO(endOfDay(date));
@@ -67,6 +66,7 @@ class DateFnsManager {
 export interface RangeAppointmentProps {
   start: Date | string;
   end: Date | string;
+  idUser?: number;
 }
 
 export default DateFnsManager;

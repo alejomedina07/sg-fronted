@@ -22,17 +22,13 @@ export const FilterDates = (props: any) => {
   const {
     control,
     formState: { errors },
-    getValues,
     watch,
   } = useForm();
   const type = watch('type');
 
   const handleChange = () => {
-    console.log('handleChange', getValues());
-
     let filters = `?type=${type}`;
     let pass = false;
-    console.log(123, filters);
     if (type == 'current_month') pass = true;
     else if (type == 'month' && monthDate) {
       filters += `&month=${managerDate.getFormatStandardMonth(monthDate)}`;

@@ -31,12 +31,7 @@ export const ListPermissionComponent = () => {
   ];
   // const { data, isLoading } = useGetRolesQuery('');
 
-  const [forceUpdate, setForceUpdate] = useState(0);
-  //
-  // const onRefresh = () => {
-  //   // console.log('refrescando::::');
-  //   setForceUpdate((prev) => prev + 1);
-  // };
+  const [forceUpdate] = useState(0);
 
   const onClickView = (params: GridRenderCellParams) => {
     console.log(params);

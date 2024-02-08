@@ -7,7 +7,7 @@ import {
   useAddUserMutation,
   useUpdateUserMutation,
 } from '../redux/api/userApi';
-import { defaultValues } from '../helpers/userConst';
+import { defaultValues } from '../helpers';
 import { userSchema } from '../validation/userScheme';
 import { SgButton } from '../../../../components/form/button/SgButton';
 import { ViewTitle } from '../../components/share/title/ViewTitle';
@@ -53,7 +53,6 @@ export const FormUser = () => {
 
   const submitForm = async (data: any) => {
     try {
-      console.log(7777, data);
       let res;
       if (data.id) {
         if (data.password === '') {
@@ -62,14 +61,16 @@ export const FormUser = () => {
         }
         res = await updateUser(data).unwrap();
       } else res = await addUser(data).unwrap();
-      console.log(12, res);
       openSnackbarAction({
         message: res.msg || `${t('created')}`,
         type: 'success',
       });
       navigate('/admin/users');
-    } catch (e) {
-      openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
+    } catch (e: any) {
+      openSnackbarAction({
+        message: e?.data?.message || `${t('error_save')}`,
+        type: 'error',
+      });
     }
   };
 

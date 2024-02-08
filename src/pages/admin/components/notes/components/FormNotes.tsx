@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { t } from 'i18next';
 import useNotes from '../redux/hooks/useNotes';
-import { Paper } from '@mui/material';
+import { FormControlLabel, Paper, Switch } from '@mui/material';
 import {
   useAddNotesMutation,
   useUpdateNotesMutation,
@@ -12,7 +12,6 @@ import { notesSchema } from '../validation/notesSchema';
 import useSnackbar from '../../../../../store/hooks/notifications/snackbar/useSnackbar';
 import { SgInput } from '../../../../../components/form/SgInput';
 import { SgButton } from '../../../../../components/form/button/SgButton';
-import { SgCheckbox } from '../../../../../components/form/SgCheckbox';
 import useAuth from '../../../../public/auth/redux/hooks/useAuth';
 
 export const FormNotes = () => {
@@ -26,7 +25,6 @@ export const FormNotes = () => {
   useEffect(() => {
     if (noteEdit && noteEdit.createdBy.id == userConnected.id) {
       setDefaultValuesActive(noteEdit);
-      console.log(222, noteEdit);
       setIsChecked(true);
       reset(noteEdit);
     } else {
@@ -37,14 +35,16 @@ export const FormNotes = () => {
 
   const [isChecked, setIsChecked] = useState(false);
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+    setIsChecked(!checked);
   };
 
   const submitForm = async (data: any) => {
     try {
       let res;
-      delete data.addNote;
       if (data.id) res = await updateNotes(data).unwrap();
       else res = await addNotes(data).unwrap();
       openSnackbarAction({
@@ -54,7 +54,6 @@ export const FormNotes = () => {
       if (refresh) refresh();
       reset({ entityType, entityId });
     } catch (e) {
-      console.log(7899, e);
       openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
     }
   };
@@ -73,13 +72,16 @@ export const FormNotes = () => {
     <>
       <form onSubmit={handleSubmit(submitForm)}>
         {/* title */}
-        <div className="flex flex-row items-center p-0">
-          <SgCheckbox
+        <div className="flex flex-row items-center p-2">
+          <FormControlLabel
+            control={
+              <Switch
+                checked={checked}
+                onChange={handleChange}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            }
             label={t('create_note')}
-            name="addNote"
-            control={control}
-            checked={isChecked}
-            onChange={handleCheckboxChange}
           />
         </div>
 

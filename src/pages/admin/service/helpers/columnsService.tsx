@@ -27,7 +27,6 @@ export const ColumnsService = () => {
       flex: 70,
       // filterParams: {
       //   valueGetter: (params: GridValueGetterParams) => {
-      //     console.log(888888, params.row.status.name);
       //     return params.row.status.name;
       //   },
       // },

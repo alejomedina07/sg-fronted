@@ -1,20 +1,16 @@
-import { useState, useEffect, SyntheticEvent } from 'react';
+import { useState, SyntheticEvent } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import { t } from 'i18next';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { SgTabPanel } from '../../../../components/utils/tabs/SgTabPanel';
 import { SgButton } from '../../../../components/form/button/SgButton';
-import { SgAmchartDonut } from '../../components/chart/SgAmchartDonut';
 import { ReportMainComponent } from '../components/ReportMainComponent';
 import { ReportDashboardComponent } from '../components/ReportDashboardComponent';
 
 export const ReportMain = () => {
   const [value, setValue] = useState(0);
   const [graphs, setGraphs] = useState([0]);
-
-  console.log(graphs);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);

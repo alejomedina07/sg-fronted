@@ -26,7 +26,6 @@ export const SgTablePaginationServer = (
     (async () => {
       paginationChange(paginationModel);
       // const newRows = await paginationChange(paginationModel.page);
-      // console.log(123, newRows);
       // if (!active) {
       //   return;
       // }

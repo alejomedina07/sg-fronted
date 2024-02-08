@@ -17,7 +17,6 @@ interface SgAmchartCombinedProps {
 
 export const SgAmchartCombined = (props: SgAmchartCombinedProps) => {
   const { data, axis, series, idDiv, category } = props;
-  console.log(999, data);
   useEffect(() => {
     // Create chart instance
     const chart = am4core.create(idDiv, am4charts.XYChart);
@@ -50,7 +49,7 @@ export const SgAmchartCombined = (props: SgAmchartCombinedProps) => {
       valueAxis2.renderer.grid.template.disabled = true;
     }
 
-    series.forEach((item, index) => {
+    series.forEach((item) => {
       let serie: ColumnSeries | LineSeries =
         item.type === 'Column'
           ? chart.series.push(new am4charts.ColumnSeries())

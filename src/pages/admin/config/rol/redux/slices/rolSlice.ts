@@ -12,12 +12,10 @@ export const rolSlice = createSlice({
   initialState,
   reducers: {
     selectRol: (state, action) => {
-      // console.log(78, action.payload);
       state.rol = action.payload.rol;
       state.refresh = action.payload.refresh;
     },
     clearRol: (state) => {
-      // console.log(78, action.payload);
       state.rol = null;
     },
   },

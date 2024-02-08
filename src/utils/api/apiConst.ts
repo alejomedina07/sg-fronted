@@ -9,7 +9,7 @@ import { Environment } from '../env/Environment';
 const env = new Environment();
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrlApi,
   prepareHeaders: (headers, { getState }: any) => {
     const token = getState().core?.auth?.token || null;
     if (token) headers.set('authorization', `Bearer ${token}`);

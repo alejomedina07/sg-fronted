@@ -1,15 +1,10 @@
 import DateFnsManager from '../../../../services/utils/DateFnsManager';
-import {
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { Divider, List, ListItem, ListItemText } from '@mui/material';
 import * as React from 'react';
 import TablePagination from '@mui/material/TablePagination';
 import { t } from 'i18next';
+import { CONFIG_CONST } from '../../config/configOption/const/configConst';
+import { NotesButton } from '../../components/notes/components/NotesButton';
 
 interface ViewAppointmentsProps {
   appointments: any[];
@@ -33,7 +28,10 @@ export const ViewAppointments = ({
 
   return !!appointments.length ? (
     <>
-      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+      <List
+        key="list-appointment"
+        sx={{ width: '100%', bgcolor: 'background.paper' }}
+      >
         {appointments
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((item) => {
@@ -43,9 +41,13 @@ export const ViewAppointments = ({
                 <ListItem
                   key={keyId}
                   secondaryAction={
-                    <IconButton edge="end" aria-label="comments">
-                      <EditIcon />
-                    </IconButton>
+                    <NotesButton
+                      entityType={CONFIG_CONST.NOTE.ENTITY_APPOINTMENT}
+                      entityId={item.id}
+                    />
+                    // <IconButton edge="end" aria-label="comments">
+                    //   <EditIcon />
+                    // </IconButton>
                   }
                   disablePadding
                 >

@@ -5,7 +5,7 @@ import { Skeleton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 export const SgTable = (props: SgTableProps) => {
-  const { data, columns, isLoading, onRowDoubleClick } = props;
+  const { data, columns, isLoading, onRowDoubleClick, onCellClick } = props;
   const { t } = useTranslation();
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -16,6 +16,10 @@ export const SgTable = (props: SgTableProps) => {
     if (onRowDoubleClick) {
       onRowDoubleClick(params);
     }
+  };
+
+  const handleOnCellClick = (params: any) => {
+    if (onCellClick) onCellClick(params);
   };
 
   return (
@@ -32,10 +36,9 @@ export const SgTable = (props: SgTableProps) => {
           disableRowSelectionOnClick
           onRowDoubleClick={handleRowDoubleClick}
           filterMode="client"
-          // onSelectionModelChange={changeCheckBoxesSelection}
-          slots={{
-            toolbar: GridToolbar,
-          }}
+          onCellClick={handleOnCellClick}
+          sx={{ cursor: onCellClick ? 'pointer' : '' }}
+          slots={{ toolbar: GridToolbar }}
           slotProps={{
             toolbar: {
               showQuickFilter: true,

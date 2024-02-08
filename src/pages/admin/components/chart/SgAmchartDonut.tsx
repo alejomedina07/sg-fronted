@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
-import { ColumnSeries, LineSeries } from '@amcharts/amcharts4/charts';
 
 interface SgAmchartDonutProps {
   data: any[];
@@ -12,7 +11,6 @@ interface SgAmchartDonutProps {
 
 export const SgAmchartDonut = (props: SgAmchartDonutProps) => {
   const { data, idDiv, valueName, categoryName } = props;
-  console.log('data::::', data);
   useEffect(() => {
     // Create chart instance
     const chart = am4core.create(idDiv, am4charts.PieChart);

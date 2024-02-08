@@ -6,5 +6,6 @@ export const CONFIG_CONST = {
     ENTITY_EXPENSE: 'expense',
     ENTITY_SERVICE: 'service',
     ENTITY_APPOINTMENT_TYPE: 'appointment_type',
+    ENTITY_APPOINTMENT: 'appointment',
   },
 };

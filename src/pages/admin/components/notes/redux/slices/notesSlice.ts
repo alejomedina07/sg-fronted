@@ -41,7 +41,6 @@ export const notesSlice = createSlice({
       state.noteEdit = null;
     },
     setRefreshList: (state, action) => {
-      console.log(100, action.payload);
       state.refresh = action.payload;
     },
   },

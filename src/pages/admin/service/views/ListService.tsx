@@ -30,10 +30,7 @@ export const ListService = () => {
 
   const columnsService = ColumnsService();
 
-  console.log(111, data);
-
   const handlePaginationChange = (params: paginationProps) => {
-    console.log('handlePaginationChange::', params);
     setPagination({ pageSize: params.pageSize, page: params.page + 1 });
     try {
     } catch (e) {}

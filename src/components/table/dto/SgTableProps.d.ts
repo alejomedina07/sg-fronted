@@ -5,6 +5,7 @@ interface SgTableProps {
   data: any[];
   isLoading: boolean;
   onRowDoubleClick?: (params: GridRowParams) => void;
+  onCellClick?: (params: GridRowParams) => void;
   checkboxSelection?: boolean;
 }
 

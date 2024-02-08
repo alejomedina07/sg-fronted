@@ -17,7 +17,6 @@ import {
 import { customerSchema } from '../validation/customerSchema';
 import { defaultValues } from '../helpers';
 import DatePicker from 'react-datepicker';
-import { Skeleton } from '@mui/material';
 
 interface FormCustomerProps {
   customerEdit?: Customer;
@@ -52,7 +51,7 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
     if (customerId && customerEdit && customerId === `${customerEdit.id}`) {
       if (customerEdit.birthDate)
         setStartDate(new Date(customerEdit.birthDate));
-      setDefaultValuesActive(customerEdit);
+      setDefaultValuesActive( { ...customerEdit, description: customerEdit.description || '' });
     } else {
       setDefaultValuesActive(defaultValues);
     }
@@ -75,8 +74,11 @@ export const FormCustomer = ({ customerEdit }: FormCustomerProps) => {
         type: 'success',
       });
       navigate('/admin/customer');
-    } catch (e) {
-      openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
+    } catch (e: any) {
+      openSnackbarAction({
+        message: e?.data?.message || `${t('error_save')}`,
+        type: 'error',
+      });
     }
   };
 
