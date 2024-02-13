@@ -46,6 +46,10 @@ const PRIVILEGES = {
   surveyCreate: 'survey.create',
   surveyEdit: 'survey.edit',
   surveyDelete: 'survey.delete',
+  procedureList: 'procedure.list',
+  procedureCreate: 'procedure.create',
+  procedureEdit: 'procedure.edit',
+  procedureDelete: 'procedure.delete',
 };
 
 interface validatePrivilegesResponse {

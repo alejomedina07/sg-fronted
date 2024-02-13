@@ -28,6 +28,7 @@ import { ConfigRol } from '../config/rol/views/ConfigRol';
 import { ListSurvey } from '../survey/views/ListSurvey';
 import { AnswerSurvey } from '../survey/views/AnswerSurvey';
 import { ConfigSurvey } from '../survey/views/ConfigSurvey';
+import { ProcedureList } from '../procedure/views/ProcedureList';
 
 const Application = new ApplicationConst();
 
@@ -164,6 +165,15 @@ export const AdminRoutes = () => {
           )}
           {validatePermission(Application.PRIVILEGES.surveyAdmin, false) && (
             <Route path="config" element={<ConfigSurvey />} />
+          )}
+        </Route>
+
+        <Route path="procedures">
+          {validatePermission(Application.PRIVILEGES.procedureList, true) && (
+            <Route path="" element={<ProcedureList />} />
+          )}
+          {validatePermission(Application.PRIVILEGES.procedureCreate, true) && (
+            <Route path="create" element={<ProcedureList />} />
           )}
         </Route>
       </Route>

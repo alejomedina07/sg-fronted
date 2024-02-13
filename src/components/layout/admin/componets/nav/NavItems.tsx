@@ -8,6 +8,7 @@ import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { ApplicationConst } from '../../../../../pages/admin/router/consts/ApplicationConst';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import TaskIcon from '@mui/icons-material/Task';
 
 const Application = new ApplicationConst();
 
@@ -114,6 +115,19 @@ export const navItems: NavItem[] = [
       main: Application.PRIVILEGES.reportList,
       second: Application.PRIVILEGES.reportList,
       secondLink: '/admin/report',
+    },
+  },
+  {
+    id: 11,
+    name: 'procedures',
+    link: '/admin/procedures',
+    icon: <TaskIcon />,
+    iconMenu: <TaskIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.procedureList,
+      second: Application.PRIVILEGES.procedureCreate,
+      secondLink: '/admin/procedures/create',
     },
   },
   // {
