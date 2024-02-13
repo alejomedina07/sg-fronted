@@ -198,7 +198,13 @@
   "select_category": "Sélectionner une catégorie",
   "select_survey": "Sélectionner un sondage",
   "category": "Categoria",
-  "error_survey_anonymous" : "Cette enquête n'est pas anonyme"
+  "error_survey_anonymous" : "Cette enquête n'est pas anonyme",
+  "procedure": "Procédure",
+  "procedures": "Procédures",
+  "main": "Principal",
+  "secondary": "Secondaire",
+  "create_procedure": "Créer une procédure",
+  "list_procedures": "Lister les procédures"
 
 }
 

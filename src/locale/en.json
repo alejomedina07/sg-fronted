@@ -198,5 +198,11 @@
     "select_category" : "Select category",
     "select_survey"  : "Select survey",
     "category": "Category",
-    "error_survey_anonymous" : "This survey isn't anonymous"
+    "error_survey_anonymous" : "This survey isn't anonymous",
+    "procedure": "Procedure",
+    "procedures": "Procedures",
+    "main": "Main",
+    "secondary": "Secondary",
+    "create_procedure": "Create Procedure",
+    "list_procedures": "List Procedures"
 }

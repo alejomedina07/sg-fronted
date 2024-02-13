@@ -198,6 +198,12 @@
   "select_category": "Selecionar categoria",
   "select_survey": "Selecionar pesquisa",
   "category": "Category",
-  "error_survey_anonymous" : "Esta pesquisa não é anônima"
+  "error_survey_anonymous" : "Esta pesquisa não é anônima",
+  "procedure": "Procedimento",
+  "procedures": "Procedimentos",
+  "main": "Principal",
+  "secondary": "Secundário",
+  "create_procedure": "Criar Procedimento",
+  "list_procedures": "Listar Procedimentos"
 
 }

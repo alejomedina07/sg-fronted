@@ -82,7 +82,7 @@ export const ProcedureList = () => {
 
   return (
     <>
-      <ViewTitle title={t('list_procedure')}>
+      <ViewTitle title={t('list_procedures')}>
         <SgButton
           variant="contained"
           color="primary"
