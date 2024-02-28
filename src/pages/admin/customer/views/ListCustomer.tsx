@@ -1,6 +1,6 @@
 import { ViewTitle } from '../../components/share/title/ViewTitle';
 import { SgLink } from '../../../../components/form/button/SgLink';
-import { SgTable } from '../../../../components/table/SgTable';
+import { SgTable } from '../../../../components/sgTable/SgTable';
 import { ColumnsCustomer } from '../helpers';
 import { useGetCustomersQuery } from '../redux/api/customerApi';
 import { useNavigate } from 'react-router-dom';

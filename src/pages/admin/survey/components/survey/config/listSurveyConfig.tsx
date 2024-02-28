@@ -16,7 +16,7 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useTranslation } from 'react-i18next';
-import { SgTable } from '../../../../../../components/table/SgTable';
+import { SgTable } from '../../../../../../components/sgTable/SgTable';
 import { useGetSurveyQuery } from '../../../redux/api/surveyApi';
 import { FormAssignSurvey } from '../../assign/FormAssignSurvey';
 import { ViewAnswer } from '../../mySurvey/answer/viewAnswer';

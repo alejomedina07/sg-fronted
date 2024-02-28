@@ -11,4 +11,7 @@ export interface ColumnsProps {
   valueGetter?: (params: any) => string;
   filterParams?: any;
   filterOperators?: any;
+  editable?: boolean;
+  type?: string;
+  headerClassName?: string;
 }

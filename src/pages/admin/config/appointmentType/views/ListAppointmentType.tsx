@@ -1,6 +1,6 @@
 import { ViewTitle } from '../../../components/share/title/ViewTitle';
 import { SgLink } from '../../../../../components/form/button/SgLink';
-import { SgTable } from '../../../../../components/table/SgTable';
+import { SgTable } from '../../../../../components/sgTable/SgTable';
 import { useGetAppointmentTypeQuery } from '../../../appointment/redux/api/appointmentApi';
 import { ColumnsAppointmentType } from '../helpers/columnsAppointmentType';
 import { useNavigate } from 'react-router-dom';

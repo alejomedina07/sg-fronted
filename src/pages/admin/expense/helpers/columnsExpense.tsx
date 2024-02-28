@@ -1,5 +1,4 @@
-import { GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
-import { t } from 'i18next';
+import { GridValueFormatterParams } from '@mui/x-data-grid';
 import DateFnsManager from '../../../../services/utils/DateFnsManager';
 import { ColumnsProps } from '../../../../components/dto/ColumnsProps';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +32,7 @@ export const ColumnsExpense = () => {
         return (
           <span>
             {' '}
-            {params.row.createdBy.firstName} {params.row.createdBy.lastName}
+            {params.row.createdBy?.firstName} {params.row.createdBy?.lastName}
           </span>
         );
       },

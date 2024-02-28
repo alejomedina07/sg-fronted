@@ -11,7 +11,7 @@ import {
 } from '@mui/x-data-grid';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
-import { SgTable } from '../../../../../components/table/SgTable';
+import { SgTable } from '../../../../../components/sgTable/SgTable';
 
 interface ListQuestionComponentProps {
   setOpenQuestion: (open: boolean) => void;

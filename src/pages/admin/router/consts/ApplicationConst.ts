@@ -50,6 +50,14 @@ const PRIVILEGES = {
   procedureCreate: 'procedure.create',
   procedureEdit: 'procedure.edit',
   procedureDelete: 'procedure.delete',
+  providerList: 'provider.list',
+  providerCreate: 'provider.create',
+  providerEdit: 'provider.edit',
+  providerDelete: 'provider.delete',
+  accountPayableList: 'accountPayable.list',
+  accountPayableCreate: 'accountPayable.create',
+  accountPayableEdit: 'accountPayable.edit',
+  accountPayableDelete: 'accountPayable.delete',
 };
 
 interface validatePrivilegesResponse {
@@ -69,7 +77,7 @@ export class ApplicationConst {
   ) => {
     return (
       rol === this.MAIN_ROL ||
-      privileges.includes(permission) ||
+      privileges?.includes(permission) ||
       (sectionUser && rol === this.USER_ROL)
     );
   };
@@ -78,9 +86,9 @@ export class ApplicationConst {
     option: NavItem,
     privileges: string[]
   ): validatePrivilegesResponse | undefined {
-    if (privileges.includes(option.privileges.main))
+    if (privileges?.includes(option.privileges.main))
       return { link: option.link, isValid: true };
-    else if (privileges.includes(option.privileges.second))
+    else if (privileges?.includes(option.privileges.second))
       return { link: option.privileges.secondLink, isValid: true };
     return;
   }

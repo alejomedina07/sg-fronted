@@ -5,7 +5,7 @@ import { ColumnsMySurveys } from '../../helpers/columnsMySurveys';
 import { useTranslation } from 'react-i18next';
 import { Dialog, IconButton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { SgTable } from '../../../../../components/table/SgTable';
+import { SgTable } from '../../../../../components/sgTable/SgTable';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { ViewAnswer } from './answer/viewAnswer';
 

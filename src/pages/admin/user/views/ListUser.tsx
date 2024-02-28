@@ -1,24 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IconButton, Skeleton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useGetUsersQuery } from '../redux/api/userApi';
 import { ColumnsUser } from '../helpers';
-import { SgTable } from '../../../../components/table/SgTable';
+import { SgTable } from '../../../../components/sgTable/SgTable';
 import { ViewTitle } from '../../components/share/title/ViewTitle';
 import { SgLink } from '../../../../components/form/button/SgLink';
 import useForms from '../../../../store/hooks/form/useForms';
 import { useTranslation } from 'react-i18next';
 import { NotesButton } from '../../components/notes/components/NotesButton';
-// @ts-ignore
-// import { useSpeechSynthesis } from 'react-speech-kit';
-import { useGetNotesQuery } from '../../components/notes/redux/api/notesApi';
+
 import { CONFIG_CONST } from '../../config/configOption/const/configConst';
 
 export const ListUser = () => {
   const { data, isLoading } = useGetUsersQuery('');
   const text = 'Hola, este es un ejemplo de narración de voz en React.';
+  const navigate = useNavigate();
 
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState<GridColDef[]>([]);
@@ -33,8 +32,6 @@ export const ListUser = () => {
   const handleSpeak = () => {
     // speak({ text });
   };
-
-  const navigate = useNavigate();
 
   const columnsUser = ColumnsUser();
 

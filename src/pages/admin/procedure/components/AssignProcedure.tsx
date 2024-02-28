@@ -17,7 +17,7 @@ import {
   useGetProcedureByIdQuery,
 } from '../redux/api/procedureApi';
 import React, { useEffect, useState } from 'react';
-import { SgTable } from '../../../../components/table/SgTable';
+import { SgTable } from '../../../../components/sgTable/SgTable';
 
 interface FormProcedureProps {
   procedure: any;

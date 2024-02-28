@@ -1,7 +1,7 @@
 import GroupIcon from '@mui/icons-material/Group.js';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import AddCardIcon from '@mui/icons-material/AddCard';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { NavItem } from '../index';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
@@ -9,6 +9,8 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { ApplicationConst } from '../../../../../pages/admin/router/consts/ApplicationConst';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import TaskIcon from '@mui/icons-material/Task';
+import StoreIcon from '@mui/icons-material/Store';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 const Application = new ApplicationConst();
 
@@ -56,8 +58,8 @@ export const navItems: NavItem[] = [
     id: 6,
     name: 'expense',
     link: '/admin/expense',
-    icon: <AddBusinessIcon />,
-    iconMenu: <AddBusinessIcon sx={{ fontSize: 50 }} />,
+    icon: <CurrencyExchangeIcon />,
+    iconMenu: <CurrencyExchangeIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: false,
     privileges: {
       main: Application.PRIVILEGES.expenseList,
@@ -128,6 +130,32 @@ export const navItems: NavItem[] = [
       main: Application.PRIVILEGES.procedureList,
       second: Application.PRIVILEGES.procedureCreate,
       secondLink: '/admin/procedures/create',
+    },
+  },
+  {
+    id: 12,
+    name: 'providers',
+    link: '/admin/providers',
+    icon: <StoreIcon />,
+    iconMenu: <StoreIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.procedureList,
+      second: Application.PRIVILEGES.procedureCreate,
+      secondLink: '/admin/providers/create',
+    },
+  },
+  {
+    id: 14,
+    name: 'account_payable',
+    link: '/admin/providers/account-payable',
+    icon: <AddCardIcon />,
+    iconMenu: <AddCardIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.accountPayableList,
+      second: Application.PRIVILEGES.accountPayableList,
+      secondLink: '/admin/providers/account-payable',
     },
   },
   // {

@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQueryWithReauth from '../../../../../utils/api/apiConst';
-import { paginationProps } from '../../../../../components/table/dto/SgTableProps';
+import { paginationProps } from '../../../../../components/sgTable/dto/SgTableProps';
 
 export const serviceApi = createApi({
   reducerPath: 'serviceApi',

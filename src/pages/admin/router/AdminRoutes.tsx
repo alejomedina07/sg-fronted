@@ -29,6 +29,10 @@ import { ListSurvey } from '../survey/views/ListSurvey';
 import { AnswerSurvey } from '../survey/views/AnswerSurvey';
 import { ConfigSurvey } from '../survey/views/ConfigSurvey';
 import { ProcedureList } from '../procedure/views/ProcedureList';
+import { ProviderList } from '../provider/views/ProviderList';
+import { FormProvider } from '../provider/views/FormProvider';
+import { EditProvider } from '../provider/views/EditProvider';
+import { ListAccountPayable } from '../provider/views/ListAccountPayable';
 
 const Application = new ApplicationConst();
 
@@ -174,6 +178,23 @@ export const AdminRoutes = () => {
           )}
           {validatePermission(Application.PRIVILEGES.procedureCreate, true) && (
             <Route path="create" element={<ProcedureList />} />
+          )}
+        </Route>
+        <Route path="providers">
+          {validatePermission(Application.PRIVILEGES.providerList, false) && (
+            <Route path="" element={<ProviderList />} />
+          )}
+          {validatePermission(Application.PRIVILEGES.providerCreate, false) && (
+            <Route path="create" element={<FormProvider />} />
+          )}
+          {validatePermission(Application.PRIVILEGES.providerEdit, false) && (
+            <Route path="edit/:providerId" element={<EditProvider />} />
+          )}
+          {validatePermission(
+            Application.PRIVILEGES.accountPayableList,
+            false
+          ) && (
+            <Route path="account-payable" element={<ListAccountPayable />} />
           )}
         </Route>
       </Route>

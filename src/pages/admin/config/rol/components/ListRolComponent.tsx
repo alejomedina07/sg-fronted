@@ -1,6 +1,6 @@
 import { ColumnsProps } from '../../../../../components/dto/ColumnsProps';
 import { t } from 'i18next';
-import { SgTable } from '../../../../../components/table/SgTable';
+import { SgTable } from '../../../../../components/sgTable/SgTable';
 import { GridRenderCellParams } from '@mui/x-data-grid';
 import { IconButton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';

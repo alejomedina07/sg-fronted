@@ -1,6 +1,6 @@
 import { ViewTitle } from '../../../components/share/title/ViewTitle';
 import { SgLink } from '../../../../../components/form/button/SgLink';
-import { SgTable } from '../../../../../components/table/SgTable';
+import { SgTable } from '../../../../../components/sgTable/SgTable';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetListByKeyQuery } from '../../../../../store/apis/listApi';
 import { ColumnsOptions } from '../helpers/columsOptions';

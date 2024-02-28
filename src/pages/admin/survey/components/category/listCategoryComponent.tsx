@@ -7,7 +7,7 @@ import { ColumnsGeneral } from '../../helpers/columnsGeneral';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
-import { SgTable } from '../../../../../components/table/SgTable';
+import { SgTable } from '../../../../../components/sgTable/SgTable';
 
 interface ListCategoryComponentProps {
   setOpenCategory: (open: boolean) => void;

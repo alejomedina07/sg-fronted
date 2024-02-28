@@ -1,16 +1,31 @@
-import useGlobalStore                                        from '../useGlobalStore';
-import { closeConfirmDialogAction, openConfirmDialogAction } from '../../slices/dialogsSlice';
+import useGlobalStore from '../useGlobalStore';
+import {
+  closeConfirmDialogAction,
+  openConfirmDialogAction,
+} from '../../slices/dialogsSlice';
+
+interface ConfirmationDialogProps {
+  message: string;
+  callback: (params: any) => void;
+  onClose: any;
+  title: string;
+}
 
 function useDialogs() {
   const { dispatch, useTypedSelector } = useGlobalStore();
 
-  const { message, onConfirm, dialogStatus, onClose, openedDialogs, title } = useTypedSelector(({ core }: any) => core.dialogs);
+  const { message, onConfirm, dialogStatus, onClose, openedDialogs, title } =
+    useTypedSelector(({ core }: any) => core.dialogs);
 
-  const openConfirmationDialog = (message: string, callback: Function, onClose: any, title: string) => dispatch( openConfirmDialogAction({ message, callback, onClose, title }) )
+  const openConfirmationDialog = ({
+    message,
+    callback,
+    onClose,
+    title,
+  }: ConfirmationDialogProps) =>
+    dispatch(openConfirmDialogAction({ message, callback, onClose, title }));
 
-  const closeConfirmationDialog = () => dispatch( closeConfirmDialogAction() )
-
-
+  const closeConfirmationDialog = () => dispatch(closeConfirmDialogAction());
 
   return {
     dialogStatus,

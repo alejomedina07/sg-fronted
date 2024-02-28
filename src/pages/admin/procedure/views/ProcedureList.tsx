@@ -8,7 +8,7 @@ import { NotesButton } from '../../components/notes/components/NotesButton';
 import { CONFIG_CONST } from '../../config/configOption/const/configConst';
 import { GridColDef } from '@mui/x-data-grid';
 import { ViewTitle } from '../../components/share/title/ViewTitle';
-import { SgTable } from '../../../../components/table/SgTable';
+import { SgTable } from '../../../../components/sgTable/SgTable';
 import { useGetProceduresQuery } from '../redux/api/procedureApi';
 import { FormProcedure } from '../components/FormProcedure';
 import { SgButton } from '../../../../components/form/button/SgButton';

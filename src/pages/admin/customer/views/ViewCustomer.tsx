@@ -58,7 +58,7 @@ export const ViewCustomer = () => {
           <Tab
             icon={<CalendarMonthIcon />}
             iconPosition="start"
-            label={t('apointment')}
+            label={t('appointment')}
           />
         </Tabs>
       </Box>

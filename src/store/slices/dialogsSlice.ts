@@ -1,16 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
-
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const SLICE_NAME = 'dialogs';
 
+interface DialogsSliceProps {
+  dialogStatus: boolean;
+  message: string;
+  title: string;
+  onConfirm: Function | undefined;
+  onClose: Function | undefined;
+  openedDialogs: any;
+}
+
 // Slice
-const initialState = {
+const initialState: DialogsSliceProps = {
   dialogStatus: false,
   message: '',
   title: '',
   onConfirm: undefined,
   onClose: undefined,
-  openedDialogs: []
+  openedDialogs: [],
 };
 
 const dialogsSlice = createSlice({
@@ -18,7 +26,15 @@ const dialogsSlice = createSlice({
   initialState,
   reducers: {
     resetListsState: () => initialState,
-    openConfirmDialogAction: (state, action) => {
+    openConfirmDialogAction: (
+      state,
+      action: PayloadAction<{
+        message: string;
+        callback: (params: any) => void;
+        onClose: any;
+        title: string;
+      }>
+    ) => {
       state.onConfirm = action.payload.callback;
       state.onClose = action.payload.onClose;
       state.message = action.payload.message;
@@ -31,6 +47,7 @@ const dialogsSlice = createSlice({
   },
 });
 
-export const { closeConfirmDialogAction, openConfirmDialogAction } = dialogsSlice.actions;
+export const { closeConfirmDialogAction, openConfirmDialogAction } =
+  dialogsSlice.actions;
 
 export default dialogsSlice.reducer;

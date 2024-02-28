@@ -10,8 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { NotesButton } from '../../components/notes/components/NotesButton';
 import { CONFIG_CONST } from '../../config/configOption/const/configConst';
-import { SgTablePaginationServer } from '../../../../components/table/SgTablePaginationServer';
-import { paginationProps } from '../../../../components/table/dto/SgTableProps';
+import { SgTablePaginationServer } from '../../../../components/sgTable/SgTablePaginationServer';
+import { paginationProps } from '../../../../components/sgTable/dto/SgTableProps';
 
 export const ListService = () => {
   const { openModalServiceAction, selectServiceAction } = useService();
@@ -31,8 +31,8 @@ export const ListService = () => {
   const columnsService = ColumnsService();
 
   const handlePaginationChange = (params: paginationProps) => {
-    setPagination({ pageSize: params.pageSize, page: params.page + 1 });
     try {
+      setPagination({ pageSize: params.pageSize, page: params.page + 1 });
     } catch (e) {}
   };
 
