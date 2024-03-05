@@ -17,8 +17,20 @@ export const providerApi = createApi({
       keepUnusedDataFor: 0,
     }),
     getAccountsPayable: build.query({
-      query: (params: paginationProps | undefined) =>
-        `/account-payable?page=${params?.page}&limit=${params?.pageSize}${
+      query: (params: paginationProps) =>
+        `/account-payable?page=${params?.page + 1}&limit=${params?.pageSize}${
+          params?.order || ''
+        }${params?.filters || ''}`,
+      keepUnusedDataFor: 0,
+    }),
+    getAccountsPayableById: build.query({
+      query: (id: number) => `/account-payable/${id}`,
+      keepUnusedDataFor: 0,
+    }),
+
+    getPayments: build.query({
+      query: (params: paginationProps) =>
+        `/payment?page=${params?.page + 1}&limit=${params?.pageSize}${
           params?.order || ''
         }${params?.filters || ''}`,
       keepUnusedDataFor: 0,
@@ -57,8 +69,10 @@ export const providerApi = createApi({
 
 export const {
   useGetProvidersQuery,
+  useGetPaymentsQuery,
   useGetProviderByIdQuery,
   useGetAccountsPayableQuery,
+  useGetAccountsPayableByIdQuery,
   useAddProviderMutation,
   useAddAccountPayableMutation,
   useAddPaymentMutation,

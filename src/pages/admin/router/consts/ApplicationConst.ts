@@ -58,6 +58,10 @@ const PRIVILEGES = {
   accountPayableCreate: 'accountPayable.create',
   accountPayableEdit: 'accountPayable.edit',
   accountPayableDelete: 'accountPayable.delete',
+  paymentList: 'payment.list',
+  paymentCreate: 'payment.create',
+  paymentEdit: 'payment.edit',
+  paymentDelete: 'payment.delete',
 };
 
 interface validatePrivilegesResponse {

@@ -61,6 +61,51 @@ class DateFnsManager {
   getFormatStandardMonth(date: Date | number): string {
     return format(date, 'yyyy-MM');
   }
+
+  getDateDifference(
+    startDate: Date,
+    endDate: Date,
+    unit: 'days' | 'months' | 'years' = 'days'
+  ): number {
+    let difference = endDate.getTime() - startDate.getTime();
+    let sign = 1;
+    if (endDate < startDate) {
+      sign = -1;
+      difference *= -1;
+    }
+    switch (unit) {
+      case 'days':
+        return Math.ceil(difference / (1000 * 60 * 60 * 24)) * sign;
+      case 'months':
+        const startMonth = startDate.getMonth();
+        const startYear = startDate.getFullYear();
+        const endMonth = endDate.getMonth();
+        const endYear = endDate.getFullYear();
+        let monthsDifference =
+          endMonth - startMonth + 12 * (endYear - startYear);
+        return monthsDifference * sign;
+      case 'years':
+        let yearsDifference = endDate.getFullYear() - startDate.getFullYear();
+        return yearsDifference * sign;
+      default:
+        throw new Error('Invalid unit specified');
+    }
+    // const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+    // switch (unit) {
+    //   case 'days':
+    //     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    //   case 'months':
+    //     const startMonth = startDate.getMonth();
+    //     const startYear = startDate.getFullYear();
+    //     const endMonth = endDate.getMonth();
+    //     const endYear = endDate.getFullYear();
+    //     return endMonth - startMonth + 12 * (endYear - startYear);
+    //   case 'years':
+    //     return endDate.getFullYear() - startDate.getFullYear();
+    //   default:
+    //     throw new Error('Invalid unit specified');
+    // }
+  }
 }
 
 export interface RangeAppointmentProps {

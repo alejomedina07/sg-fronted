@@ -1,6 +1,5 @@
 {
   "created_at":"Créé à",
-  "provider":"Fournisseur",
   "spanish":"Espagnol",
   "english":"Anglais",
   "education_material":"Matériel éducatif",
@@ -204,7 +203,50 @@
   "main": "Principal",
   "secondary": "Secondaire",
   "create_procedure": "Créer une procédure",
-  "list_procedures": "Lister les procédures"
+  "list_procedures": "Lister les procédures",
+
+  "info": "Informations",
+  "payment_date": "Date de paiement",
+  "list_account_payable": "Liste des comptes à payer",
+  "view_account_payable": "Voir le compte à payer",
+  "not_account_payable_message": "Aucun compte à payer à afficher.",
+  "select_provider": "Sélectionnez le fournisseur",
+  "list_payments": "Liste des paiements",
+  "not_found_message": "Aucun enregistrement trouvé",
+  "search": "Rechercher",
+  "column": "Colonne",
+  "false": "Faux",
+  "true": "Vrai",
+  "any": "Tout",
+  "title_confirm_delete": "Confirmer la suppression",
+  "message_confirm_delete": "Voulez-vous vraiment supprimer cet enregistrement ?",
+  "providers_different": "Les fournisseurs sont différents.",
+  "error_general": "Une erreur s'est produite. Veuillez réessayer.",
+  "amount_incorrect": "Montant incorrect",
+  "list_providers": "Liste des fournisseurs",
+  "provider": "Fournisseur",
+  "providers": "Fournisseurs",
+  "amount_debt": "Montant de la dette",
+  "account_payable": "Compte à payer",
+  "payment": "Paiement",
+  "create_payment": "Créer un paiement",
+  "max_date_of_day": "Date maximale",
+  "edit_provider": "Modifier le fournisseur",
+  "accounts_payable": "Comptes à payer",
+  "payments": "Paiements",
+  "amount_paid": "Montant payé",
+  "paid": "Payé",
+  "pending": "En attente",
+  "create_account_payable": "Créer un compte à payer",
+  "accounts_payable_selected": "Comptes à payer sélectionnés",
+  "not_payments_related": "Aucun paiement associé",
+  "reference": "Référence",
+  "method": "Méthode",
+  "max_paid": "Maximum à payer",
+  "pay": "Payer",
+  "assign_procedure": "Attribuer une procédure"
+
+
 
 }
 

@@ -1,17 +1,17 @@
 import { NavItem, navItems } from '../../../components/layout/admin/componets';
 import { Paper } from '@mui/material';
-import { t } from 'i18next';
 import { SgLink } from '../../../components/form/button/SgLink';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import UseAuth from '../../public/auth/redux/hooks/useAuth';
 import { ApplicationConst } from '../router/consts/ApplicationConst';
+import { useTranslation } from 'react-i18next';
 
 const Application = new ApplicationConst();
 
 export const AdminView = () => {
   const { userConnected } = UseAuth();
-
+  const { t } = useTranslation();
   const getPaper = (option: NavItem) => {
     return (
       <Paper

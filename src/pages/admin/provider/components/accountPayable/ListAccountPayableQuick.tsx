@@ -74,7 +74,7 @@ export const ListAccountPayableQuick = (
       },
     },
     {
-      field: 'maxPaid',
+      field: 'max_paid',
       headerName: `${t('maxPaid')}`,
       flex: 50,
     },

@@ -2,14 +2,28 @@ import { GridValueFormatterParams } from '@mui/x-data-grid';
 import DateFnsManager from '../../../../services/utils/DateFnsManager';
 import { useTranslation } from 'react-i18next';
 import { ColumnsProps } from '../../../../components/dto/ColumnsProps';
-import { useTheme } from '@mui/material';
-import { sgUseStyles } from '../../../../config/theme/StylesTheme';
+import { IconButton } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { NotesButton } from '../../components/notes/components/NotesButton';
+import { CONFIG_CONST } from '../../config/configOption/const/configConst';
+import React from 'react';
+// import { createStyles, makeStyles, useTheme } from '@mui/material';
+// import { Theme } from '@mui/material/styles';
+//
+// export const sgUseStyles = makeStyles((theme: Theme) =>
+//   createStyles({
+//     bgSecondaryMain: {
+//       backgroundColor: theme.palette.secondary.main,
+//       // Otras propiedades de estilo que desees añadir
+//     },
+//   })
+// );
 
 const dateManage = new DateFnsManager();
 
 export const ColumnsAccountsPayable = () => {
   const { t } = useTranslation();
-  const theme = useTheme();
+  // const theme = useTheme();
   // const classes = sgUseStyles;
   // console.log(76, classes);
 
@@ -18,7 +32,7 @@ export const ColumnsAccountsPayable = () => {
       field: 'id',
       headerName: `${t('ID')}`,
       flex: 30,
-      headerClassName: 'bg-header-secondary',
+      // headerClassName: 'bg-header-secondary',
     },
     { field: 'reference', headerName: `${t('reference')}`, flex: 60 },
     { field: 'amount', headerName: `${t('amount')}`, flex: 70 },
@@ -66,6 +80,19 @@ export const ColumnsAccountsPayable = () => {
           return '';
         }
         return dateManage.getFormatStandard(new Date(params.value));
+      },
+    },
+    {
+      field: 'note',
+      headerName: `${t('note')}`,
+      flex: 40,
+      renderCell: (params) => {
+        return (
+          <NotesButton
+            entityType={CONFIG_CONST.NOTE.ENTITY_SERVICE}
+            entityId={params.row.id}
+          />
+        );
       },
     },
   ];

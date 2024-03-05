@@ -1,24 +1,30 @@
-import { SgTransition } from '../../../../components/utils/dialogs/SgTransition';
-import { SgDialogTitle } from '../../../../components/utils/dialogs/SgDialogTitle';
-import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
-import { SgButton } from '../../../../components/form/button/SgButton';
+import { SgTransition } from '../../../../../components/utils/dialogs/SgTransition';
+import { SgDialogTitle } from '../../../../../components/utils/dialogs/SgDialogTitle';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Skeleton,
+} from '@mui/material';
+import { SgButton } from '../../../../../components/form/button/SgButton';
 import { useTranslation } from 'react-i18next';
-import { SgInput } from '../../../../components/form/SgInput';
+import { SgInput } from '../../../../../components/form/SgInput';
 import React, { useEffect, useState } from 'react';
-import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import useSnackbar from '../../../../../store/hooks/notifications/snackbar/useSnackbar';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { paymentScheme } from '../validation/paymentScheme';
+import { paymentScheme } from '../../validation/paymentScheme';
 import {
   useAddPaymentMutation,
   useGetAccountsPayableQuery,
-} from '../redux/api/providerApi';
-import { AmountFormatCustom } from '../../../../helpers';
-import { ListAccountPayableQuick } from './accountPayable/ListAccountPayableQuick';
+} from '../../redux/api/providerApi';
+import { AmountFormatCustom } from '../../../../../helpers';
+import { ListAccountPayableQuick } from '../accountPayable/ListAccountPayableQuick';
 import DatePicker from 'react-datepicker';
 
 interface FormPaymentProps {
-  provider: any;
+  provider?: any;
   open: boolean;
   handleClose: () => void;
   accountPayableSelected?: any;
@@ -38,7 +44,7 @@ export const FormPaymentDialog = (props: FormPaymentProps) => {
   const { data, isLoading } = useGetAccountsPayableQuery(
     {
       pageSize: 2000,
-      page: 1,
+      page: 0,
       filters: `&filters[providerId]=${provider?.id}&filters[paid]=false&filters[type]=AND`,
     },
     {
@@ -147,6 +153,15 @@ export const FormPaymentDialog = (props: FormPaymentProps) => {
         {t('create_payment')}
       </SgDialogTitle>
       <form onSubmit={handleSubmit(submitForm)}>
+        {accountPayableToPay && accountPayableToPay.length > 0 ? null : (
+          <div className="flex flex-row items-center justify-center">
+            {isLoading ? null : (
+              <span className="text-red-600 text-2xl">
+                {t('not_account_payable_message')}
+              </span>
+            )}
+          </div>
+        )}
         <DialogContent dividers>
           {!!providerSelected && (
             <div className="flex flex-row items-center sm:flex-row">
@@ -190,7 +205,7 @@ export const FormPaymentDialog = (props: FormPaymentProps) => {
               InputProps={AmountFormatCustom}
             />
             <div className="flex-1 !m-3 flex flex-row items-center">
-              <span>fecha de pago</span>
+              <span>{t('payment_date')}</span>
               <span className="flex-1 !m-3 border rounded border-gray-300 pr-3">
                 <DatePicker
                   selected={paymentDate}
@@ -223,6 +238,7 @@ export const FormPaymentDialog = (props: FormPaymentProps) => {
               setEditMode={setIsEditMode}
             />
           )}
+          {!!isLoading && <Skeleton variant="rectangular" height={218} />}
         </DialogContent>
         <DialogActions>
           <Button

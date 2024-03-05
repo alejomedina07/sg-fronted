@@ -1,19 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { paginationProps } from '../../../../components/sgTable/dto/SgTableProps';
-import { useGetAccountsPayableQuery } from '../redux/api/providerApi';
-import { SgTablePaginationServer } from '../../../../components/sgTable/SgTablePaginationServer';
+import { paginationProps } from '../../../../../components/sgTable/dto/SgTableProps';
+import { useGetAccountsPayableQuery } from '../../redux/api/providerApi';
+import { SgTablePaginationServer } from '../../../../../components/sgTable/SgTablePaginationServer';
 import {
   GridColDef,
   GridRowParams,
   GridRowSelectionModel,
 } from '@mui/x-data-grid';
-import { NotesButton } from '../../components/notes/components/NotesButton';
-import { CONFIG_CONST } from '../../config/configOption/const/configConst';
-import { ColumnsAccountsPayable } from '../helpers';
+import { ColumnsAccountsPayable } from '../../helpers';
 import { useTranslation } from 'react-i18next';
+import DateFnsManager from '../../../../../services/utils/DateFnsManager';
+import { useNavigate } from 'react-router-dom';
+import { IconButton } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+
+const dateManage = new DateFnsManager();
 
 interface ListAccountPayableComponentProps {
-  providerId?: number;
   modal: boolean;
   payment: boolean;
   setRowSelected: (newRowSelectionModel: GridRowSelectionModel) => void;
@@ -21,28 +24,40 @@ interface ListAccountPayableComponentProps {
 export const ListAccountPayableComponent = (
   props: ListAccountPayableComponentProps
 ) => {
-  const { providerId, modal, setRowSelected, payment } = props;
+  const { modal, setRowSelected, payment } = props;
   const [pagination, setPagination] = useState<paginationProps>({
-    pageSize: 50,
-    page: 1,
+    pageSize: 25,
+    page: 0,
+    filters: '',
+    order: '',
   });
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState<GridColDef[]>([]);
 
+  const navigate = useNavigate();
+
   const { data, isLoading, refetch } = useGetAccountsPayableQuery(pagination);
   const columnsAccountsPayable = ColumnsAccountsPayable();
   const handlePaginationChange = useCallback((params: paginationProps) => {
-    setPagination({
-      pageSize: params.pageSize,
-      page: params.page + 1,
-      order: params.order,
-      filters: params.filters,
-    });
+    if (
+      params.page !== pagination.page ||
+      params.pageSize !== pagination.pageSize ||
+      params.order !== pagination.order ||
+      params.filters !== pagination.filters
+    ) {
+      console.log(45, true);
+      setPagination({
+        pageSize: params.pageSize,
+        page: params.page,
+        order: params.order,
+        filters: params.filters,
+      });
+    }
   }, []);
 
   useEffect(() => {
     refetch();
-  }, [modal, payment]);
+  }, [modal, payment, refetch]);
 
   useEffect(() => {
     setColumns([
@@ -54,13 +69,14 @@ export const ListAccountPayableComponent = (
         renderCell: (params) => {
           return (
             <div className="flex flex-row items-center">
-              {/* <IconButton onClick={() => onClickEdit(params)} aria-label="view"> */}
-              {/*   <VisibilityIcon /> */}
-              {/* </IconButton> */}
-              <NotesButton
-                entityType={CONFIG_CONST.NOTE.ENTITY_SERVICE}
-                entityId={params.row.id}
-              />
+              <IconButton
+                onClick={() =>
+                  navigate(`/admin/providers/account-payable/${params.row.id}`)
+                }
+                aria-label="view"
+              >
+                <VisibilityIcon />
+              </IconButton>
             </div>
           );
         },
@@ -84,7 +100,15 @@ export const ListAccountPayableComponent = (
   };
 
   const getRowClassName = (params: GridRowParams) => {
-    return params.row.paid ? 'bg-green-200' : 'bg-red-100';
+    const diff = dateManage.getDateDifference(
+      new Date(),
+      new Date(params.row.maxDateOfPay)
+    );
+    return params.row.paid
+      ? 'bg-green-100'
+      : diff < 0
+      ? 'bg-red-100'
+      : 'bg-amber-100';
   };
 
   return (

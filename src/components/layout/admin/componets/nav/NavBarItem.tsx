@@ -5,11 +5,10 @@ import {
   ListItemIcon,
   ListItemText,
   Tooltip,
-  useMediaQuery,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { NavItem } from '../index';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 interface NavBarItemProps {
   option: NavItem;
@@ -19,7 +18,7 @@ interface NavBarItemProps {
 
 export const NavBarItem = (props: NavBarItemProps) => {
   const { option, open, setOpen } = props;
-
+  const { t } = useTranslation();
   return (
     <Tooltip
       key={`Tooltip-${option.id}`}

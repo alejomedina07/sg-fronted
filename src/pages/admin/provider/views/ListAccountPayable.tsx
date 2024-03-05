@@ -2,10 +2,10 @@ import { ViewTitle } from '../../components/share/title/ViewTitle';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Divider } from '@mui/material';
-import { ListAccountPayableComponent } from '../components/ListAccountPayableComponent';
-import { FormAccountPayableDialog } from '../components/FormAccountPayableDialog';
+import { ListAccountPayableComponent } from '../components/accountPayable/ListAccountPayableComponent';
+import { FormAccountPayableDialog } from '../components/accountPayable/FormAccountPayableDialog';
 import { SgButton } from '../../../../components/form/button/SgButton';
-import { FormPaymentDialog } from '../components/FormPaymentDialog';
+import { FormPaymentDialog } from '../components/payment/FormPaymentDialog';
 import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 
 export const ListAccountPayable = () => {
@@ -52,9 +52,7 @@ export const ListAccountPayable = () => {
         />
       </ViewTitle>
       <Divider />
-      <br />
-      {/* {!!rowSelected?.length && ( */}
-      {/* )} */}
+      <br />{' '}
       <div className="flex flex-row items-center mb-4">
         <span className="mr-4">
           {' '}

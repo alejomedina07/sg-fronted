@@ -29,7 +29,6 @@ export const ProcedureList = () => {
   };
 
   const handleEdit = (params: any) => {
-    console.log(params);
     setProcedure(params.row);
     setOpenForm(true);
   };
@@ -82,7 +81,7 @@ export const ProcedureList = () => {
 
   return (
     <>
-      <ViewTitle title={t('list_procedures')}>
+      <ViewTitle title={t('list_procedure')}>
         <SgButton
           variant="contained"
           color="primary"

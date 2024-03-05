@@ -1,21 +1,21 @@
-import { SgTransition } from '../../../../components/utils/dialogs/SgTransition';
-import { SgDialogTitle } from '../../../../components/utils/dialogs/SgDialogTitle';
+import { SgTransition } from '../../../../../components/utils/dialogs/SgTransition';
+import { SgDialogTitle } from '../../../../../components/utils/dialogs/SgDialogTitle';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
-import { SgButton } from '../../../../components/form/button/SgButton';
+import { SgButton } from '../../../../../components/form/button/SgButton';
 import { useTranslation } from 'react-i18next';
-import { SgInput } from '../../../../components/form/SgInput';
+import { SgInput } from '../../../../../components/form/SgInput';
 import React, { useState } from 'react';
-import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import useSnackbar from '../../../../../store/hooks/notifications/snackbar/useSnackbar';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { accountPayableScheme } from '../validation/accountPayableScheme';
+import { accountPayableScheme } from '../../validation/accountPayableScheme';
 import {
   useAddAccountPayableMutation,
   useGetProvidersQuery,
-} from '../redux/api/providerApi';
-import { AmountFormatCustom } from '../../../../helpers';
+} from '../../redux/api/providerApi';
+import { AmountFormatCustom } from '../../../../../helpers';
 import DatePicker from 'react-datepicker';
-import { SgAutocomplete } from '../../../../components/form/SgAutocomplete';
+import { SgAutocomplete } from '../../../../../components/form/SgAutocomplete';
 
 interface FormAccountPayableProps {
   provider?: any;

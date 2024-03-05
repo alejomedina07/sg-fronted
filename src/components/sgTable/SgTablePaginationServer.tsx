@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   DataGrid,
   GridFilterModel,
@@ -95,10 +95,17 @@ export const SgTablePaginationServer = (
     return true;
   };
 
-  const getRowClassName = (params: GridRowParams) => {
-    if (getRowClassNameAction) return getRowClassNameAction(params);
-    return '';
-  };
+  // const getRowClassName = (params: GridRowParams) => {
+  //   if (getRowClassNameAction) return getRowClassNameAction(params);
+  //   return '';
+  // };
+
+  const getRowClassName = useMemo(() => {
+    return (params: GridRowParams) => {
+      if (getRowClassNameAction) return getRowClassNameAction(params);
+      return '';
+    };
+  }, [getRowClassNameAction]);
 
   return (
     <>

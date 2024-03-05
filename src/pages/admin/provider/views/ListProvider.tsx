@@ -13,10 +13,10 @@ import { SgLink } from '../../../../components/form/button/SgLink';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import { NotesButton } from '../../components/notes/components/NotesButton';
-import { FormPaymentDialog } from '../components/FormPaymentDialog';
-import { FormAccountPayableDialog } from '../components/FormAccountPayableDialog';
+import { FormPaymentDialog } from '../components/payment/FormPaymentDialog';
+import { FormAccountPayableDialog } from '../components/accountPayable/FormAccountPayableDialog';
 
-export const ProviderList = () => {
+export const ListProvider = () => {
   const { t, i18n } = useTranslation();
   const columnsProviders = ColumnsProvider();
   const navigate = useNavigate();

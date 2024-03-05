@@ -30,8 +30,6 @@ export const FormProvider = (props: FormProviderProps) => {
   const [addProvider] = useAddProviderMutation();
   const [updateProvider] = useUpdateProviderMutation();
 
-  console.log(789, provider);
-
   useEffect(() => {
     if (provider?.id)
       reset({ ...provider, documentTypeId: parseInt(provider.documentTypeId) });
@@ -46,8 +44,6 @@ export const FormProvider = (props: FormProviderProps) => {
     defaultValues: defaultValuesActive,
     resolver: yupResolver(providerScheme),
   });
-
-  console.log(66, errors);
 
   useEffect(() => {
     if (provider) {

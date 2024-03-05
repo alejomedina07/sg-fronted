@@ -11,6 +11,8 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import TaskIcon from '@mui/icons-material/Task';
 import StoreIcon from '@mui/icons-material/Store';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import PriceCheckIcon from '@mui/icons-material/PriceCheck';
+import React from 'react';
 
 const Application = new ApplicationConst();
 
@@ -147,7 +149,7 @@ export const navItems: NavItem[] = [
   },
   {
     id: 14,
-    name: 'account_payable',
+    name: 'accounts_payable',
     link: '/admin/providers/account-payable',
     icon: <AddCardIcon />,
     iconMenu: <AddCardIcon sx={{ fontSize: 50 }} />,
@@ -156,6 +158,19 @@ export const navItems: NavItem[] = [
       main: Application.PRIVILEGES.accountPayableList,
       second: Application.PRIVILEGES.accountPayableList,
       secondLink: '/admin/providers/account-payable',
+    },
+  },
+  {
+    id: 15,
+    name: 'payments',
+    link: '/admin/providers/payment',
+    icon: <PriceCheckIcon />,
+    iconMenu: <PriceCheckIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.paymentList,
+      second: Application.PRIVILEGES.paymentList,
+      secondLink: '/admin/providers/payment',
     },
   },
   // {

@@ -27,6 +27,7 @@ export const ColumnsProcedure = () => {
       field: 'parent',
       headerName: `${t('main')}`,
       flex: 50,
+      type: 'boolean',
       valueFormatter: (params: GridValueFormatterParams) => {
         if (params.value == null) {
           return '';
