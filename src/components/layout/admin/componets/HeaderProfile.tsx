@@ -7,7 +7,7 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Logout, Settings } from '@mui/icons-material';
 import useAuth from '../../../../pages/public/auth/redux/hooks/useAuth';
@@ -87,7 +87,7 @@ export const HeaderProfile = () => {
             </Link>
             {/* <MenuItem><Avatar /> Mi cuenta</MenuItem> */}
             <Divider />
-            {userConnected.rol == 'Admin' && (
+            {userConnected.rol === 'Admin' && (
               <Link to="/admin/config/config-options" className="link-nav-bar">
                 <MenuItem>
                   <ListItemIcon>

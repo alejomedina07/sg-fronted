@@ -52,9 +52,7 @@ export const SgSelect = (props: any) => {
   }, [options]);
 
   useEffect(() => {
-    //Si no se ha cargado la lista o si no se esta enviando una lista personalizada de items
     if (!optionsFromList || options) return;
-
     setSelectOptions(optionsFromList);
     setReady(true);
   }, [optionsFromList]);

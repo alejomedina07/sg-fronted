@@ -5,12 +5,12 @@ interface SgSpinnerProps {
   text: string;
 }
 
-export const SgSpinner = ( props: SgSpinnerProps) => {
-  const { text, className = ''} = props
+export const SgSpinner = (props: SgSpinnerProps) => {
+  const { text, className = '' } = props;
   return (
     <div className={`flex flex-row items-center ${className}`}>
-      <CircularProgress  className="mr-2" size={'25pt'}/>
-      { text }
+      <CircularProgress className="mr-2" size={'25pt'} />
+      {text}
     </div>
   );
 };

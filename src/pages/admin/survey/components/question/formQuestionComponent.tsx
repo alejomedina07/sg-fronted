@@ -108,7 +108,9 @@ export const FormQuestionComponent = (props: FormQuestionComponentProps) => {
               size="small"
               errors={errors}
               defaultValue={question?.type || ''}
-              options={QUESTIONS_TYPE}
+              options={QUESTIONS_TYPE.map((item: any) => {
+                return { id: item.id, name: t(item.name) };
+              })}
               disabled={typeof question?.id === 'number' || false}
             />
           </div>

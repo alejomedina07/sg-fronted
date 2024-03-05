@@ -171,7 +171,7 @@ export const FormSurveyConfig = (props: FormSurveyComponentProps) => {
                   }
                   onClick={handleNext}
                 >
-                  {t(activeStep === 2 ? 'finish' : 'next')}
+                  {'next'}
                 </Button>
               </div>
             )}
@@ -185,16 +185,15 @@ export const FormSurveyConfig = (props: FormSurveyComponentProps) => {
             >
               {t('close')}
             </Button>
-            {activeStep === 2 ||
-              (survey?.id && (
-                <SgButton
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  label={t('save')}
-                  // sending={isLoading}
-                />
-              ))}
+            {(activeStep === 2 || survey?.id) && (
+              <SgButton
+                variant="contained"
+                color="primary"
+                type="submit"
+                label={t('save')}
+                // sending={isLoading}
+              />
+            )}
           </DialogActions>
         </form>
       </Dialog>

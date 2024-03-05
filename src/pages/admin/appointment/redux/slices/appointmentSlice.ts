@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AppointmentDto } from '../../dto/appointmentDto';
 
 export interface appointmentSliceProps {
   start?: string;

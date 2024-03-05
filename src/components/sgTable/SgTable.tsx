@@ -5,7 +5,6 @@ import {
   GridRowParams,
   GridToolbar,
   GridValidRowModel,
-  MuiEvent,
 } from '@mui/x-data-grid';
 import { SgTableProps } from './dto/SgTableProps';
 import { Skeleton } from '@mui/material';
@@ -57,15 +56,14 @@ export const SgTable = (props: SgTableProps) => {
     oldRow: GridValidRowModel
   ) => {
     if (processRowUpdateAction) processRowUpdateAction(newRow, oldRow);
-    // setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    return { ...newRow, isNew: false };;
+    return { ...newRow, isNew: false };
   };
 
-  const onCellEditStart = (params: any, event: MuiEvent) => {
+  const onCellEditStart = (params: any) => {
     if (onCellEditStartAction) onCellEditStartAction(params);
   };
 
-  const onCellEditStop = (params: any, event: MuiEvent) => {
+  const onCellEditStop = (params: any) => {
     if (onCellEditStopAction) onCellEditStopAction(params);
   };
 

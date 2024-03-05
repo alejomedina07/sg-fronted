@@ -1,5 +1,6 @@
 import { addMinutes, parseISO } from 'date-fns';
 import DateFnsManager from '../../../../services/utils/DateFnsManager';
+import { AppointmentDto, AppointmentEvent } from '../dto/appointmentDto';
 
 const managerDate = new DateFnsManager();
 

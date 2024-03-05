@@ -1,3 +1,5 @@
+import { AppointmentDto } from './dto/appointmentDto';
+
 export const defaultValuesFormAppointment: AppointmentDto = {
   name: '',
   addService: false,

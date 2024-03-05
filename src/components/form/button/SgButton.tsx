@@ -47,12 +47,12 @@ export const SgButton = (props: SgButtonProps) => {
 
   const _onClickAction = () => {
     if (onConfirm) {
-      openConfirmationDialog(
-        confirmationMessage || 'Confirm',
-        onConfirm,
-        onConfirmClose,
-        confirmationTitle || 'Confirm'
-      );
+      openConfirmationDialog({
+        message: confirmationMessage || 'Confirm',
+        callback: onConfirm,
+        onClose: onConfirmClose,
+        title: confirmationTitle || 'Confirm',
+      });
     } else if (onClickAction) {
       onClickAction();
     }

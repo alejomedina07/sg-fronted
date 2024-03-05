@@ -15,6 +15,7 @@ import DateFnsManager, {
   RangeAppointmentProps,
 } from '../../../../services/utils/DateFnsManager';
 import UseAuth from '../../../public/auth/redux/hooks/useAuth';
+import { AppointmentEvent } from '../dto/appointmentDto';
 
 const managerDate = new DateFnsManager();
 

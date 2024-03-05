@@ -1,10 +1,12 @@
+import React from 'react';
+
 interface AppointmentEvent {
   appointment: AppointmentDto;
   start: Date | undefined;
   end: Date | undefined;
 }
 
-interface AppointmentDto {
+export interface AppointmentDto {
   createdById?: number | null;
   appointmentTypeId?: number | null;
   assignedToId?: number | null;

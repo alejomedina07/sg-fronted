@@ -244,7 +244,12 @@
   "method": "Método",
   "max_paid": "Máximo a pagar",
   "pay": "Pagar",
-  "assign_procedure": "Atribuir Procedimento"
+  "assign_procedure": "Atribuir Procedimento",
+  "assigned_to": "Atribuído a",
+  "select_schedule_for": "Selecionar agenda para:",
+  "user": "Usuário",
+  "create_question": "Criar Pergunta",
+  "options": "Opções"
 
 
 }

@@ -1,4 +1,4 @@
-import { forwardRef }                        from 'react';
+import { forwardRef } from 'react';
 import { NumericFormat, NumericFormatProps } from 'react-number-format';
 
 interface CustomProps {
@@ -27,5 +27,5 @@ export const AmountFormatCustom = forwardRef<NumericFormatProps, CustomProps>(
         prefix="$ "
       />
     );
-  },
+  }
 );

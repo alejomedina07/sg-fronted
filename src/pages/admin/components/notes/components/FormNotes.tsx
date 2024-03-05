@@ -23,7 +23,7 @@ export const FormNotes = () => {
   const { userConnected } = useAuth();
 
   useEffect(() => {
-    if (noteEdit && noteEdit.createdBy.id == userConnected.id) {
+    if (noteEdit && noteEdit.createdBy.id === userConnected.id) {
       setDefaultValuesActive(noteEdit);
       setIsChecked(true);
       reset(noteEdit);

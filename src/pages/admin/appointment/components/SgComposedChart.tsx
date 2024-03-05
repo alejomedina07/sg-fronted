@@ -9,7 +9,6 @@ export interface SgComposedChartProps {
   types: TypesComposedChart[];
 }
 
-
 export interface TypesComposedChart {
   type: 'Area' | 'Bar' | 'Line';
   dataKey: string;
@@ -17,8 +16,6 @@ export interface TypesComposedChart {
   fill: string;
   stroke: string;
 }
-
-
 
 export const SgComposedChart = (props: SgComposedChartProps) => {
   const { data, title, dataKeyXAxis, types, YAxisLeft, YAxisRight } = props;
@@ -32,7 +29,6 @@ export const SgComposedChart = (props: SgComposedChartProps) => {
   // if (!xAxisDataKeyExists) {
   //   return <div>X axis data key not found</div>;
   // }
-
 
   return (
     <>
@@ -64,8 +60,6 @@ export const SgComposedChart = (props: SgComposedChartProps) => {
       {/*     } */}
       {/*   </ComposedChart> */}
       {/* </ResponsiveContainer> */}
-
     </>
-
   );
 };

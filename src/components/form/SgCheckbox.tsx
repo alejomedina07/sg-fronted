@@ -50,12 +50,12 @@ interface SgCheckboxProps extends Omit<CheckboxProps, 'label'> {
 export const SgCheckbox = (props: SgCheckboxProps) => {
   const { label, name, control, onChange, defaultChecked } = props;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = e.target;
-    if (onChange) {
-      onChange(checked);
-    }
-  };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { checked } = e.target;
+  //   if (onChange) {
+  //     onChange(checked);
+  //   }
+  // };
 
   const { field } = useController({
     name,

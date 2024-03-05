@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQueryWithReauth from '../../../../../utils/api/apiConst';
 import AppointmentModel from '../../models/AppointmentModel';
 import { RangeAppointmentProps } from '../../../../../services/utils/DateFnsManager';
+import { AppointmentDto } from '../../dto/appointmentDto';
 
 export const appointmentApi = createApi({
   reducerPath: 'appointmentApi',

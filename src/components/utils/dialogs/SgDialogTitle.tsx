@@ -1,5 +1,6 @@
 import { DialogTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import React from 'react';
 
 export interface DialogTitleProps {
   id: string;

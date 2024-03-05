@@ -1,4 +1,4 @@
-// import { AppointmentEvent }       from '../../dto/appointment';
+import { AppointmentEvent } from '../dto/appointmentDto';
 
 export const CalendarEvent = (props: AppointmentEvent) => {
   const { appointment } = props;

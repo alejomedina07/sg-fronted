@@ -31,6 +31,7 @@ import useAppointment from '../redux/hooks/useAppointment';
 import { t } from 'i18next';
 import { AmountFormatCustom } from '../../../../helpers';
 import { SgCheckbox } from '../../../../components/form/SgCheckbox';
+import { AppointmentDto } from '../dto/appointmentDto';
 
 registerLocale('es', es);
 

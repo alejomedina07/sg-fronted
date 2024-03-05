@@ -244,5 +244,11 @@
     "method": "Method",
     "max_paid": "Maximum to pay",
     "pay": "Pay",
-    "assign_procedure": "Assign Procedure"
+    "assign_procedure": "Assign Procedure",
+    "assigned_to": "Assigned To",
+    "select_schedule_for": "Select schedule for:",
+    "user": "User",
+    "create_question": "Create Question",
+    "options": "Options"
+
 }

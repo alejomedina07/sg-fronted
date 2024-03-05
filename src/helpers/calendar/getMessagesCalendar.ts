@@ -1,5 +1,5 @@
 export const getMessagesCalendar = () => {
-  return{
+  return {
     allDay: 'Todo el día',
     previous: '<',
     next: '>',
@@ -12,6 +12,6 @@ export const getMessagesCalendar = () => {
     time: 'Hora',
     event: 'Evento',
     noEventsInRange: 'No hay eventos en este rango',
-    showMore: (total:any) => `+ Ver más (${total})`
+    showMore: (total: any) => `+ Ver más (${total})`,
   };
-}
+};
