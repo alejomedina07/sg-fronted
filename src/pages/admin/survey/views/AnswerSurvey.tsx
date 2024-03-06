@@ -32,7 +32,7 @@ export const AnswerSurvey = (props: AnswerSurveyProps) => {
   }, [userConnected]);
 
   useEffect(() => {
-    setSurveySelected({ id: idSurvey });
+    if (idSurvey) setSurveySelected({ id: idSurvey });
   }, [idSurvey]);
 
   const { data } = useGetMySurveysQuery(
@@ -64,6 +64,8 @@ export const AnswerSurvey = (props: AnswerSurveyProps) => {
       setShowForm(true);
     }
   }, [surveyComplete]);
+
+  console.log(789, surveySelected);
 
   return (
     <>

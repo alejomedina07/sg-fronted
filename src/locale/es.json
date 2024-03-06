@@ -245,5 +245,6 @@
     "select_schedule_for":  "Seleccionar agenda para:",
     "user":  "Usuario",
     "create_question":  "Crear Pregunta",
-    "options":  "Opciones"
+    "options":  "Opciones",
+    "view_survey": "Ver Encuesta."
 }

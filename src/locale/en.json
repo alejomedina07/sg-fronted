@@ -249,6 +249,7 @@
     "select_schedule_for": "Select schedule for:",
     "user": "User",
     "create_question": "Create Question",
-    "options": "Options"
+    "options": "Options",
+    "view_survey": "View survey"
 
 }

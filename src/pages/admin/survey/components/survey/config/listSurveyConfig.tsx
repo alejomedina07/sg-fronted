@@ -69,14 +69,39 @@ export const ListSurveyConfig = (props: ListSurveyComponentProps) => {
     setOpenAssign(true);
   };
 
+  const [validateAfterDelay, setValidateAfterDelay] = useState<boolean>(false);
+  const [rowClicked, setRowClicked] = useState<any>(null);
+
   const onCellClick = (params: any) => {
-    if (params.row.anonymous) window.open(`/survey/${params.id}`, '_blank');
-    else
-      openSnackbarAction({
-        message: `${t('error_survey_anonymous')}`,
-        type: 'error',
-      });
+    setTimeout(() => {
+      setValidateAfterDelay(true);
+    }, 500);
+    setRowClicked(params.row);
+    // if (!openView && !openSurvey && !openAssign) {
+    //   if (params.row.anonymous) window.open(`/survey/${params.id}`, '_blank');
+    //   else
+    //     openSnackbarAction({
+    //       message: `${t('error_survey_anonymous')}`,
+    //       type: 'error',
+    //     });
+    // }
   };
+
+  useEffect(() => {
+    if (validateAfterDelay) {
+      if (!openView && !openSurvey && !openAssign) {
+        if (rowClicked.anonymous)
+          window.open(`/survey/${rowClicked.id}`, '_blank');
+        else
+          openSnackbarAction({
+            message: `${t('error_survey_anonymous')}`,
+            type: 'error',
+          });
+      }
+      setRowClicked(null);
+      setValidateAfterDelay(false);
+    }
+  }, [validateAfterDelay]);
 
   useEffect(() => {
     setColumns([
