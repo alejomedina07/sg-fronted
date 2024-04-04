@@ -1,47 +1,38 @@
-import { ColumnsProcedure } from '../helpers';
+import { ColumnsTypeTurn } from '../helpers';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { NotesButton } from '../../components/notes/components/NotesButton';
 import { CONFIG_CONST } from '../../config/configOption/const/configConst';
 import { GridColDef } from '@mui/x-data-grid';
 import { ViewTitle } from '../../components/share/title/ViewTitle';
 import { SgTable } from '../../../../components/sgTable/SgTable';
-import { useGetProceduresQuery } from '../redux/api/procedureApi';
-import { FormProcedure } from '../components/FormProcedure';
+import { useGetTurnTypesQuery } from '../../turn/redux/api/turnApi';
+import { FormTypeTurn } from '../components/FormTypeTurn';
 import { SgButton } from '../../../../components/form/button/SgButton';
-import { AssignProcedure } from '../components/AssignProcedure';
 
-export const ProcedureList = () => {
+export const TypeTurnList = () => {
   const { t, i18n } = useTranslation();
-  const columnsProcedure = ColumnsProcedure();
+  const columnsTypeTurn = ColumnsTypeTurn();
   const [columns, setColumns] = useState<GridColDef[]>([]);
   const [openForm, setOpenForm] = useState(false);
-  const [openAssign, setOpenAssign] = useState(false);
-  const [procedure, setProcedure] = useState<any>();
-  const { data, isLoading } = useGetProceduresQuery(openForm);
-
-  const handleAssign = (params: any) => {
-    setProcedure(params.row);
-    setOpenAssign(true);
-  };
+  const [typeTurn, setTypeTurn] = useState<any>();
+  const { data, isLoading } = useGetTurnTypesQuery(openForm);
 
   const handleEdit = (params: any) => {
-    setProcedure(params.row);
+    setTypeTurn(params.row);
     setOpenForm(true);
   };
 
   const handleClose = () => {
     setOpenForm(false);
-    setOpenAssign(false);
-    setProcedure(null);
+    setTypeTurn(null);
   };
 
   useEffect(() => {
     setColumns([
-      ...columnsProcedure,
+      ...columnsTypeTurn,
       {
         field: 'actions',
         headerName: `${t('actions')}`,
@@ -59,19 +50,9 @@ export const ProcedureList = () => {
                 </IconButton>
               </Tooltip>
               <NotesButton
-                entityType={CONFIG_CONST.NOTE.ENTITY_PROCEDURE}
+                entityType={CONFIG_CONST.NOTE.ENTITY_TYPE_TURN}
                 entityId={params.row.id}
               />
-              {!!params.row.parent && (
-                <Tooltip title={t('assign')} placement="bottom" arrow>
-                  <IconButton
-                    onClick={() => handleAssign(params)}
-                    aria-label="view"
-                  >
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </Tooltip>
-              )}
             </div>
           );
         },
@@ -81,12 +62,12 @@ export const ProcedureList = () => {
 
   return (
     <>
-      <ViewTitle title={t('list_procedure')}>
+      <ViewTitle title={t('list_type_turn')}>
         <SgButton
           variant="contained"
           color="primary"
           onClickAction={() => setOpenForm(true)}
-          label={t('create_procedure')}
+          label={t('create_type_turn')}
         />
       </ViewTitle>
       <div
@@ -102,17 +83,10 @@ export const ProcedureList = () => {
           // onRowDoubleClick={handleRowDoubleClick}
           isLoading={isLoading}
         />
-        <FormProcedure
-          procedure={procedure}
+        <FormTypeTurn
+          typeTurn={typeTurn}
           open={openForm}
           handleClose={handleClose}
-        />
-        <AssignProcedure
-          procedure={procedure}
-          allProcedures={data?.data}
-          open={openAssign}
-          handleClose={handleClose}
-          columnsProcedure={columnsProcedure}
         />
       </div>
     </>

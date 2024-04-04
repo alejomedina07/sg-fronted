@@ -22,13 +22,13 @@ import { FormOptions } from '../config/configOption/views/FormOptions';
 import { ViewInventory } from '../inventory/views/ViewInventory';
 import { AdminView } from '../components/AdminView';
 import useAuth from '../../public/auth/redux/hooks/useAuth';
-// import { AdminTurnView } from '../turn/view/AdminTurnView';
+import { AdminTurnView } from '../turn/view/AdminTurnView';
 import { ApplicationConst } from './consts/ApplicationConst';
 import { ConfigRol } from '../config/rol/views/ConfigRol';
 import { ListSurvey } from '../survey/views/ListSurvey';
 import { AnswerSurvey } from '../survey/views/AnswerSurvey';
 import { ConfigSurvey } from '../survey/views/ConfigSurvey';
-import { ProcedureList } from '../procedure/views/ProcedureList';
+import { TypeTurnList } from '../type-turn/views/TypeTurnList';
 import { ListProvider } from '../provider/views/ListProvider';
 import { FormProvider } from '../provider/views/FormProvider';
 import { EditProvider } from '../provider/views/EditProvider';
@@ -152,9 +152,9 @@ export const AdminRoutes = () => {
         {validatePermission(Application.PRIVILEGES.appointmentList, true) && (
           <Route path="appointment" element={<AppointmentView />} />
         )}
-        {/* {validatePermission(Application.PRIVILEGES.turnList) && ( */}
-        {/*   <Route path="turn" element={<AdminTurnView />} /> */}
-        {/* )} */}
+        {validatePermission(Application.PRIVILEGES.turnList, true) && (
+          <Route path="turn" element={<AdminTurnView />} />
+        )}
         {validatePermission(Application.PRIVILEGES.reportList, false) && (
           <Route path="report" element={<ReportMain />} />
         )}
@@ -174,13 +174,13 @@ export const AdminRoutes = () => {
           )}
         </Route>
 
-        <Route path="procedures">
-          {validatePermission(Application.PRIVILEGES.procedureList, true) && (
-            <Route path="" element={<ProcedureList />} />
+        <Route path="type-turn">
+          {validatePermission(Application.PRIVILEGES.typeTurnList, true) && (
+            <Route path="" element={<TypeTurnList />} />
           )}
-          {validatePermission(Application.PRIVILEGES.procedureCreate, true) && (
-            <Route path="create" element={<ProcedureList />} />
-          )}
+          {/* {validatePermission(Application.PRIVILEGES.procedureCreate, true) && ( */}
+          {/*   <Route path="create" element={<TypeTurnList />} /> */}
+          {/* )} */}
         </Route>
         <Route path="providers">
           {validatePermission(Application.PRIVILEGES.providerList, false) && (

@@ -11,6 +11,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import TaskIcon from '@mui/icons-material/Task';
 import StoreIcon from '@mui/icons-material/Store';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import SwipeRightIcon from '@mui/icons-material/SwipeRight';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import React from 'react';
 
@@ -123,15 +124,15 @@ export const navItems: NavItem[] = [
   },
   {
     id: 11,
-    name: 'procedures',
-    link: '/admin/procedures',
+    name: 'type_turn',
+    link: '/admin/type-turn',
     icon: <TaskIcon />,
     iconMenu: <TaskIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: true,
     privileges: {
-      main: Application.PRIVILEGES.procedureList,
-      second: Application.PRIVILEGES.procedureCreate,
-      secondLink: '/admin/procedures/create',
+      main: Application.PRIVILEGES.typeTurnList,
+      second: Application.PRIVILEGES.typeTurnCreate,
+      secondLink: '/admin/type-turn/create',
     },
   },
   {
@@ -142,8 +143,8 @@ export const navItems: NavItem[] = [
     iconMenu: <StoreIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: true,
     privileges: {
-      main: Application.PRIVILEGES.procedureList,
-      second: Application.PRIVILEGES.procedureCreate,
+      main: Application.PRIVILEGES.providerList,
+      second: Application.PRIVILEGES.providerCreate,
       secondLink: '/admin/providers/create',
     },
   },
@@ -173,17 +174,17 @@ export const navItems: NavItem[] = [
       secondLink: '/admin/providers/payment',
     },
   },
-  // {
-  //   id: 10,
-  //   name: 'turns',
-  //   link: '/admin/turn',
-  //   icon: <SwipeRightIcon />,
-  //   iconMenu: <SwipeRightIcon sx={{ fontSize: 50 }} />,
-  //   onlyAdmin: true,
-  //   privileges: {
-  //     main: Application.PRIVILEGES.turnList,
-  //     second: Application.PRIVILEGES.turnCreate,
-  //     secondLink: '/admin/turn',
-  //   },
-  // },
+  {
+    id: 16,
+    name: 'turns',
+    link: '/admin/turn',
+    icon: <SwipeRightIcon />,
+    iconMenu: <SwipeRightIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.turnList,
+      second: Application.PRIVILEGES.turnCreate,
+      secondLink: '/admin/turn',
+    },
+  },
 ];

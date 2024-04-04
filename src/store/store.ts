@@ -11,9 +11,9 @@ import { serviceApi } from '../pages/admin/service/redux/api/serviceApi';
 import { notesApi } from '../pages/admin/components/notes/redux/api/notesApi';
 import { reportApi } from '../pages/admin/reports/redux/api/reportApi';
 import { rolApi } from '../pages/admin/config/rol/redux/api/rolApi';
-import { surveyApi } from '../pages/admin/survey/redux/api/surveyApi';
-import { procedureApi } from '../pages/admin/procedure/redux/api/procedureApi';
-import { providerApi } from '../pages/admin/provider/redux/api/providerApi';
+import { surveyApi }    from '../pages/admin/survey/redux/api/surveyApi';
+import { turnApi } from '../pages/admin/turn/redux/api/turnApi';
+import { providerApi }  from '../pages/admin/provider/redux/api/providerApi';
 
 export const store = configureStore({
   reducer: {
@@ -30,7 +30,7 @@ export const store = configureStore({
     [notesApi.reducerPath]: notesApi.reducer,
     [rolApi.reducerPath]: rolApi.reducer,
     [surveyApi.reducerPath]: surveyApi.reducer,
-    [procedureApi.reducerPath]: procedureApi.reducer,
+    [turnApi.reducerPath]: turnApi.reducer,
     [providerApi.reducerPath]: providerApi.reducer,
   },
 
@@ -48,7 +48,7 @@ export const store = configureStore({
       .concat(notesApi.middleware)
       .concat(rolApi.middleware)
       .concat(surveyApi.middleware)
-      .concat(procedureApi.middleware)
+      .concat(turnApi.middleware)
       .concat(providerApi.middleware),
 });
 

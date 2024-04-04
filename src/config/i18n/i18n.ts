@@ -6,7 +6,7 @@ import translationFr from '../../locale/fr.json';
 import translationPt from '../../locale/pt.json';
 import { initReactI18next } from 'react-i18next';
 
-const languageDefault = localStorage.getItem('languageDefault') || 'en';
+const languageDefault = localStorage.getItem('languageDefault') || 'es';
 
 const DEFAULT_LANGUAGE = languageDefault;
 // const DEFAULT_LANGUAGE = 'en';

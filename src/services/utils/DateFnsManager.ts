@@ -50,8 +50,9 @@ class DateFnsManager {
     return formatISO(startOfDay(date));
   }
 
-  getFormatStandard(date: Date | number): string {
-    return format(date, 'yyyy-MM-dd');
+  getFormatStandard(date: Date | number, hours: boolean = false): string {
+    const formatDate = hours ? 'yyyy-MM HH:mm' : 'yyyy-MM';
+    return format(date, formatDate);
   }
 
   getFormatMonthText(date: Date | number): string {

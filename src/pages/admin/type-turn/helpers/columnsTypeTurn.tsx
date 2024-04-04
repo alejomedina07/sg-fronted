@@ -5,7 +5,7 @@ import { ColumnsProps } from '../../../../components/dto/ColumnsProps';
 
 const dateManage = new DateFnsManager();
 
-export const ColumnsProcedure = () => {
+export const ColumnsTypeTurn = () => {
   const { t } = useTranslation();
 
   const columns: ColumnsProps[] = [
@@ -21,18 +21,6 @@ export const ColumnsProcedure = () => {
           return '';
         }
         return params.value ? `${t('active')}` : `${t('inactive')}`;
-      },
-    },
-    {
-      field: 'parent',
-      headerName: `${t('main')}`,
-      flex: 50,
-      type: 'boolean',
-      valueFormatter: (params: GridValueFormatterParams) => {
-        if (params.value == null) {
-          return '';
-        }
-        return params.value ? `${t('main')}` : `${t('secondary')}`;
       },
     },
     {

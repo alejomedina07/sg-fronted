@@ -8,26 +8,26 @@ import { useEffect, useState } from 'react';
 import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 import { useForm } from 'react-hook-form';
 import {
-  useAddProcedureMutation,
-  useUpdateProcedureMutation,
-} from '../redux/api/procedureApi';
+  useAddTurnTypeMutation,
+  useUpdateTurnTypeMutation,
+} from '../../turn/redux/api/turnApi';
 import { SgCheckbox } from '../../../../components/form/SgCheckbox';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { procedureScheme } from '../validation/ProcedureScheme';
+import { typeTurnScheme } from '../validation/TypeTurnScheme';
 
 interface FormProcedureProps {
-  procedure: any;
+  typeTurn: any;
   open: boolean;
   handleClose: () => void;
 }
 
-export const FormProcedure = (props: FormProcedureProps) => {
-  const { procedure, open, handleClose } = props;
+export const FormTypeTurn = (props: FormProcedureProps) => {
+  const { typeTurn, open, handleClose } = props;
   const { t } = useTranslation();
   const [defaultValuesActive, setDefaultValuesActive] = useState<any>();
   const { openSnackbarAction } = useSnackbar();
-  const [addProcedure] = useAddProcedureMutation();
-  const [updateProcedure] = useUpdateProcedureMutation();
+  const [addProcedure] = useAddTurnTypeMutation();
+  const [updateProcedure] = useUpdateTurnTypeMutation();
 
   const {
     handleSubmit,
@@ -36,16 +36,16 @@ export const FormProcedure = (props: FormProcedureProps) => {
     reset,
   } = useForm({
     defaultValues: defaultValuesActive,
-    resolver: yupResolver(procedureScheme),
+    resolver: yupResolver(typeTurnScheme),
   });
 
   useEffect(() => {
-    if (procedure) {
-      setDefaultValuesActive(procedure);
+    if (typeTurn) {
+      setDefaultValuesActive(typeTurn);
     } else {
       setDefaultValuesActive({ status: true, parent: true });
     }
-  }, [procedure]);
+  }, [typeTurn]);
 
   useEffect(() => {
     reset(defaultValuesActive);
@@ -65,6 +65,7 @@ export const FormProcedure = (props: FormProcedureProps) => {
         type: 'success',
       });
       handleClose();
+      reset();
     } catch (e) {
       console.log(123456);
       openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
@@ -79,8 +80,8 @@ export const FormProcedure = (props: FormProcedureProps) => {
       maxWidth={'md'}
       TransitionComponent={SgTransition}
     >
-      <SgDialogTitle id={'procedure-dialog'} onClose={handleClose}>
-        {t('create_procedure')}
+      <SgDialogTitle id={'typeTurn-dialog'} onClose={handleClose}>
+        {t('create_type_turn')}
       </SgDialogTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         <DialogContent dividers>
@@ -98,14 +99,7 @@ export const FormProcedure = (props: FormProcedureProps) => {
               label={t('status')}
               name="status"
               control={control}
-              defaultChecked={procedure?.status || true}
-            />
-            <SgCheckbox
-              label={t('main')}
-              name="parent"
-              control={control}
-              defaultChecked={procedure?.parent || true}
-              disabled={procedure}
+              defaultChecked={typeTurn?.status || true}
             />
           </div>
           <div className="flex flex-col sm:flex-row items-center">
@@ -133,7 +127,7 @@ export const FormProcedure = (props: FormProcedureProps) => {
           <SgButton
             variant="contained"
             color="primary"
-            label={t('assign')}
+            label={t('save')}
             // sending={isLoading}
             type="submit"
           />

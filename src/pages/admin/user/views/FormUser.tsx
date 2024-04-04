@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useParams } from 'react-router-dom';
-import { t } from 'i18next';
 import {
   useAddUserMutation,
   useUpdateUserMutation,
@@ -17,12 +16,13 @@ import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnack
 import { SgSelect } from '../../../../components/form/SgSelect';
 import { BLOOD_TYPES } from '../../../../utils/consts/shared/bloodTypes';
 import useForms from '../../../../store/hooks/form/useForms';
+import { useTranslation } from 'react-i18next';
 
 export const FormUser = () => {
   const { userId } = useParams();
   const { userEdit } = useForms();
   const [defaultValuesActive, setDefaultValuesActive] = useState<User>();
-
+  const { t } = useTranslation();
   const {
     handleSubmit,
     control,

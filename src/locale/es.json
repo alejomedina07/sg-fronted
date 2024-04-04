@@ -246,5 +246,35 @@
     "user":  "Usuario",
     "create_question":  "Crear Pregunta",
     "options":  "Opciones",
-    "view_survey": "Ver Encuesta."
+    "view_survey": "Ver Encuesta.",
+
+
+
+
+    "turns": "Turnos.",
+    "available_turns": "Turnos Disponibles",
+    "reception": "Recepción.",
+    "finish_turn": "Finalizar turno",
+    "create_type_turn": "Crear tipo de turno",
+    "list_type_turn": "Lista de tipos de turno",
+    "type_turn": "Tipos de turno",
+    "available_pre_turns": "Pre turnos disponibles",
+    "chosen": "Elegidos",
+    "selected": "Seleccionados",
+    "view_turn": "Ver turno.",
+    "confirmation_title_delete_turn" : "Eliminar turno.",
+    "confirmation_message_delete_turn" : "¿ Estas seguro que deseas eliminar el turno ?",
+    "company" :  "Empresa",
+    "turn_deleted": "Turno eliminado correctamente.",
+    "clear": "Limpiar",
+    "attended": "Atendido",
+    "attended_by" : "Atendido por",
+    "started_at" : "Creado a",
+    "finish_at" :  "Finalizado a",
+    "has_appointment": "Tiene cita",
+    "time_appointment" : "Hora de la cita",
+    "full_name": "Nombre completo",
+    "turn_called": "Turno llamado.",
+    "call_again": "Llamar de nuevo"
+
 }

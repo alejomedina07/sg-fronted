@@ -7,6 +7,14 @@ const FORM_ELEMENT_TYPE = {
   PASSWORD: 'password',
   NUMBER: 'number',
 };
+const errorHelperTextStyles = {
+  small: {
+    fontSize: '0.75rem',
+  },
+  large: {
+    fontSize: '1.2rem',
+  },
+};
 
 export const SgInput = (props: any) => {
   const {
@@ -20,6 +28,7 @@ export const SgInput = (props: any) => {
     type = FORM_ELEMENT_TYPE.TEXT,
     rows,
     InputProps,
+    errorLarge,
     ...rest
   } = props;
   const onValueChange = (e: any, field: any) => {
@@ -74,6 +83,9 @@ export const SgInput = (props: any) => {
             classes: {
               root: { margin: 0 },
             },
+            style: errorLarge
+              ? errorHelperTextStyles.large
+              : errorHelperTextStyles.small,
           }}
           InputProps={InputProps ? { inputComponent: InputProps as any } : null}
         />

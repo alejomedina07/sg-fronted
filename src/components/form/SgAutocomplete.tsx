@@ -11,7 +11,7 @@ type AutocompleteProps = {
   optionName: string;
   defaultValue?: any;
   errors?: any;
-  // required?: any;
+  required: boolean;
 };
 
 export const SgAutocomplete = (props: AutocompleteProps) => {
@@ -24,6 +24,7 @@ export const SgAutocomplete = (props: AutocompleteProps) => {
     optionValue,
     optionName,
     errors,
+    required = false,
   } = props;
 
   return (
@@ -46,6 +47,7 @@ export const SgAutocomplete = (props: AutocompleteProps) => {
             <TextField
               {...params}
               label={label}
+              required={required}
               size={size}
               error={Boolean(errors[name])}
               helperText={Boolean(errors[name]) && `${errors[name].message}`}
@@ -53,7 +55,7 @@ export const SgAutocomplete = (props: AutocompleteProps) => {
           )}
           value={options.find((option) => option[optionValue] === value)}
           isOptionEqualToValue={(option, value) =>
-            option[optionValue] === value[optionValue]
+            option && value && option[optionValue] === value[optionValue]
           }
         />
       )}

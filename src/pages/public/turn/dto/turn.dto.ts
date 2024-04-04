@@ -1,11 +1,13 @@
-export interface PersonTurn {
-  name: string;
-  id: number;
-  roomAppointMent?: string;
-  takeBy?: string;
-}
+import { Person } from '../../../admin/turn/dto/Person';
+
+// export interface PersonTurn {
+//   name: string;
+//   id: number;
+//   roomAppointMent?: string;
+//   takeBy?: string;
+// }
 
 export interface TurnsTaken {
-  turnsTaken: PersonTurn[];
-  turnTaken?: PersonTurn;
+  turnsTaken: Person[];
+  turnTaken?: Person;
 }

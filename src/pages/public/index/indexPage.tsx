@@ -13,9 +13,17 @@ export const IndexPage = () => {
         <h1 className="text-5xl font-bold mb-4 text-center">
           ¡Bienvenido a Esvyda My Doctor!
         </h1>
-        <Link to="/login" className="text-blue-500 hover:underline">
-          Ir a la página de inicio de sesión
-        </Link>
+        <div className="flex flex-col items-center">
+          <Link to="/login" className="text-blue-500 hover:underline flex-1">
+            Ir a la página de inicio de sesión
+          </Link>
+          <Link to="/turn" className="text-blue-500 hover:underline flex-1">
+            Ir al turnero
+          </Link>
+          <Link to="/pre-turn" className="text-blue-500 hover:underline flex-1">
+            Ir al pre turnos
+          </Link>
+        </div>
       </div>
     </div>
   );

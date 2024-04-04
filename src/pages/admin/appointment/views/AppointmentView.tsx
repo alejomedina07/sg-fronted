@@ -9,13 +9,13 @@ import {
 } from '../redux/api/appointmentApi';
 import { Autocomplete, Fab, LinearProgress, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { t } from 'i18next';
 import useAppointment from '../redux/hooks/useAppointment';
 import DateFnsManager, {
   RangeAppointmentProps,
 } from '../../../../services/utils/DateFnsManager';
 import UseAuth from '../../../public/auth/redux/hooks/useAuth';
 import { AppointmentEvent } from '../dto/appointmentDto';
+import { useTranslation } from 'react-i18next';
 
 const managerDate = new DateFnsManager();
 
@@ -43,7 +43,7 @@ export const AppointmentView = () => {
     ...managerDate.currentMonth,
     idUser: userConnected?.id,
   });
-
+  const { t } = useTranslation();
   const [userSelected, setUserSelected] = useState<any>();
 
   useEffect(() => {

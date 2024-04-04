@@ -28,10 +28,10 @@ import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnack
 import { useGetCustomersQuery } from '../../customer/redux/api/customerApi';
 import { defaultValuesFormAppointment } from '../AppointmentConst';
 import useAppointment from '../redux/hooks/useAppointment';
-import { t } from 'i18next';
 import { AmountFormatCustom } from '../../../../helpers';
 import { SgCheckbox } from '../../../../components/form/SgCheckbox';
 import { AppointmentDto } from '../dto/appointmentDto';
+import { useTranslation } from 'react-i18next';
 
 registerLocale('es', es);
 
@@ -50,7 +50,7 @@ export const DialogFormAppointment = () => {
   const { data: appointmentTypes } = useGetAppointmentTypeQuery('');
   const { data: users } = useGetUserToListQuery('');
   const { data: customers } = useGetCustomersQuery('');
-
+  const { t } = useTranslation();
   const { openSnackbarAction } = useSnackbar();
 
   const [defaultValues, setDefaultValues] = useState<AppointmentDto>(

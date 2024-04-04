@@ -1,26 +1,37 @@
-import {
-  Accordion,
-  Typography,
-  AccordionSummary,
-  AccordionDetails,
-  Grid,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { PersonListComponent } from '../../../../components/shared/turn/PersonListComponent';
-import { AdminTurnFormComponent } from '../components/AdminTurnFormComponent';
+import { AddTurnForm } from '../components/AddTurnForm';
 import { Person } from '../dto/Person';
+import useAuth from '../../../public/auth/redux/hooks/useAuth';
+import { ConfigTurnForm } from '../components/ConfigTurnForm';
+import { MyTurn } from '../components/MyTurn';
+import { ListTurns } from '../components/ListTurns';
+import { Environment } from '../../../../utils/env/Environment';
+import { ListPreTurns } from '../components/ListPreTurns';
+import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useTranslation } from 'react-i18next';
+import { TurnsTaken } from '../../../public/turn/dto/turn.dto';
+import { ListTakenTurns } from '../components/ListTakenTurns';
+import { useAddAttentionMutation } from '../redux/api/turnApi';
+import { LinearProgress, Skeleton } from '@mui/material';
 
-const socket = io('http://localhost:81'); // Reemplaza 'http://localhost:81' con la dirección de tu servidor NestJS
+const env = new Environment();
 
-const room = '2023-10-10';
+const socket = io(env.socket.io);
+const room = env.socket.room;
 
 export const AdminTurnView = () => {
   const [turns, setTurns] = useState<Person[]>([]);
+  const [preTurns, setPreTurns] = useState<Person[]>([]);
+  const [turnSelected, setTurnSelected] = useState<Person | undefined>();
+  const [preTurnSelected, setPreTurnSelected] = useState<Person | undefined>();
   const [turnsTaken, setTurnsTaken] = useState<Person[]>([]);
+  const [config, setConfig] = useState<any>(null);
+  const { openSnackbarAction } = useSnackbar();
+  const { t } = useTranslation();
+  const [addAttention, { isLoading }] = useAddAttentionMutation();
 
-  const [message, setMessage] = useState<string>('');
+  const { userConnected } = useAuth();
 
   useEffect(() => {
     // Manejar eventos cuando la conexión con el servidor WebSocket se establece
@@ -29,16 +40,22 @@ export const AdminTurnView = () => {
     });
 
     // Manejar eventos cuando se actualiza la lista de turnos
-    socket.on('turnList', (turns: Person[]) => {
-      setTurns(turns);
+    socket.on('turnList', (allTurns: Person[]) => {
+      // console.log('turnList::', allTurns);
+      setTurns([...allTurns]);
     });
     // Manejar eventos cuando se actualiza la lista de turnos
-    socket.on('turnTakenList', (args: any) => {
-      console.log(123123, args);
-      setTurns(args.turnsTaken);
+    socket.on('preTurnList', (args: any) => {
+      // console.log('preTurnList::::', args);
+      setPreTurns([...args]);
     });
 
     socket.emit('eventJoin', room);
+
+    socket.on('turnTakenList', (args: TurnsTaken) => {
+      const { turnTaken, turnsTaken } = args;
+      setTurnsTaken(turnsTaken);
+    });
 
     return () => {
       socket.off('turnList');
@@ -46,74 +63,138 @@ export const AdminTurnView = () => {
     };
   }, []);
 
+  // console.log('pre::::', turns);
+
   const handleNewTurn = (data: Person) => {
     // Enviar un nuevo turno al servidor
-    console.log(data);
+    console.log('handleNewTurn:::', data);
     socket.emit('newTurn', {
       room,
       name: data.name,
+      roomAppointMent: config?.roomAppointMent || 'Recepción',
       document: data.document,
-      id: new Date().getTime(),
+      company: data.company,
+      typeTurns: data.typeTurns,
+      id: data.id,
+      timeAppointment: data.timeAppointment,
+      idPre: data.idPre,
     });
-    setMessage('');
   };
 
-  const handleOnTake = (turn: Person) => {
-    console.log('takenTurn:::::');
-    // Enviar un nuevo turno al servidor
-    socket.emit('takenTurn', {
-      room,
-      takeBy: 'Doctor uno',
-      roomAppointMent: 'Consultorio dos',
-      ...turn,
-    });
-    setMessage('');
+  const handleOnTake = async (turn: Person) => {
+    // console.log(777, turn);
+
+    try {
+      const takeBy = {
+        id: userConnected.id,
+        name: `${userConnected.firstName} ${userConnected.lastName}`,
+      };
+      // console.log(9999, formattedDate);
+      const attention = await addAttention({
+        turnId: turn.id,
+        typeTurnId: config.typeTurnId,
+        attentById: userConnected.id,
+      }).unwrap();
+      const updatedTypeTurns = turn.typeTurns?.map((item: any) => {
+        if (config.typeTurnId === item.id && !item.attended) {
+          item = {
+            ...item,
+            inAttention: true,
+            takeBy,
+            startedAt: new Date(),
+            attentionId: attention.data,
+          };
+        }
+        return item;
+      });
+      const newTurn = {
+        ...turn,
+        room,
+        takeBy,
+        roomAppointMent: config.roomAppointMent,
+        inAttention: true,
+        typeTurns: updatedTypeTurns,
+      };
+      console.log('takenTurn', newTurn);
+      setTurnSelected(newTurn);
+      socket.emit('takenTurn', newTurn);
+    } catch (e) {
+      console.log(666, e);
+    }
+  };
+
+  const handleSaveConfig = (data: any) => {
+    setConfig(data);
+  };
+
+  const handleFinishTurn = (person: Person) => {
+    socket.emit('finishTurn', person);
+    setTurnSelected(undefined);
+  };
+
+  const handleDeleteTurn = (person: Person) => {
+    socket.emit('deleteTurn', person);
+    openSnackbarAction({ message: `${t('turn_deleted')}`, type: 'error' });
+  };
+
+  const handleCallAgain = (person: Person) => {
+    socket.emit('callAgain', person);
+    openSnackbarAction({ message: `${t('turn_called')}`, type: 'success' });
+  };
+
+  const handleOnTakePreTurn = (person: Person) => {
+    setPreTurnSelected(person);
   };
 
   return (
     <>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Turnos Disponibles</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <AdminTurnFormComponent onSave={handleNewTurn} />
+      {!!isLoading && (
+        <>
+          <LinearProgress />
+          <Skeleton className="my-4" variant="rounded" height={100} />
+          <Skeleton variant="rounded" height={100} />
+        </>
+      )}
 
-          {/* <TextField */}
-          {/*   id="outlined-basicsss" */}
-          {/*   label="Outlined" */}
-          {/*   variant="outlined" */}
-          {/*   type="text" */}
-          {/*   placeholder="Nuevo turno" */}
-          {/*   value={message} */}
-          {/*   onChange={(e: any) => setMessage(e.target.value)} */}
-          {/* /> */}
+      {!config && <ConfigTurnForm onSave={handleSaveConfig} />}
+      {turnSelected?.id && (
+        <MyTurn
+          turnSelected={turnSelected}
+          onFinishTurn={handleFinishTurn}
+          config={config}
+          callAgain={handleCallAgain}
+        />
+      )}
+      {!!config && !isLoading && (
+        <>
+          {config.reception && (
+            <AddTurnForm
+              onSave={handleNewTurn}
+              person={preTurnSelected}
+              setPerson={setPreTurnSelected}
+            />
+          )}
+          {!turnSelected && (
+            <>
+              {config.reception && (
+                <ListPreTurns
+                  preTurns={preTurns}
+                  handleOnTake={handleOnTakePreTurn}
+                />
+              )}
 
-          {/* <button onClick={handleNewTurn}>Agregar Turno</button> */}
+              <ListTurns
+                turns={turns}
+                handleOnTake={handleOnTake}
+                config={config}
+                deleteTurn={handleDeleteTurn}
+              />
+            </>
+          )}
+        </>
+      )}
 
-          <div className="flex flex-row items-center">
-            <Grid item xs={12} md={8} className="flex-1">
-              <Typography sx={{ mb: 2 }} variant="h4" component="div">
-                Turnos.
-              </Typography>
-              {turns
-                .slice()
-                .reverse()
-                .map((turno, index) => (
-                  <PersonListComponent
-                    key={turno.id}
-                    user={turno.name}
-                    onTake={() => handleOnTake(turno)}
-                  />
-                ))}
-            </Grid>
-          </div>
-        </AccordionDetails>
-      </Accordion>
+      {config?.reception && <ListTakenTurns turns={turnsTaken} />}
     </>
   );
 };
