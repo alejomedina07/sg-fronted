@@ -83,20 +83,21 @@ export const FormPaymentDialog = (props: FormPaymentProps) => {
         totalPay = 0;
       accountPayableSelected.forEach((item: any) => {
         const pay =
-          parseFloat(item.amount.replace('$', '')) -
-          parseFloat(item.amountPaid.replace('$', ''));
+          parseFloat(item.amount.replace(/[\$,]/g, '')) -
+          parseFloat(item.amountPaid.replace(/[\$,]/g, ''));
         totalPay += pay;
         accountsToPay.push({ ...item, pay, maxPaid: pay });
       });
       setValue('amount', totalPay);
       setAccountPayableToPay([...accountsToPay]);
     } else if (data?.data.length) {
+      console.log(4333);
       let accountsToPay: any[] = [],
         totalPay = 0;
       data?.data.forEach((item: any) => {
         const pay =
-          parseFloat(item.amount.replace('$', '')) -
-          parseFloat(item.amountPaid.replace('$', ''));
+          parseFloat(item.amount.replace(/[\$,]/g, '')) -
+          parseFloat(item.amountPaid.replace(/[\$,]/g, ''));
         totalPay += pay;
         accountsToPay.push({ ...item, pay, maxPaid: pay });
       });

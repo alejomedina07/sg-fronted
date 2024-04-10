@@ -54,15 +54,17 @@ export const PreTurn = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <img
-              src={`${env.basePatch}/images/esvyda_logo.png`}
-              alt=""
-              width={80}
-              className="hidden sm:block mr-2"
-            />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Company
-            </Typography>
+            <div className="flex flex-row items-center justify-center w-full">
+              <img
+                src={`${env.basePatch}/images/previ_logo.png`}
+                alt=""
+                width={160}
+                className="hidden sm:block mr-2"
+              />
+            </div>
+            {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> */}
+            {/*   Company */}
+            {/* </Typography> */}
           </Toolbar>
         </AppBar>
       </Box>

@@ -1,6 +1,8 @@
 export interface Person {
   name: string;
   company?: string;
+  note?: string;
+  createdAt?: string;
   id?: number;
   idPre?: number;
   document: number;

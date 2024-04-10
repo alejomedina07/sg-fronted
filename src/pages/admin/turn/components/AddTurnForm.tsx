@@ -22,6 +22,7 @@ import { TransferList } from './TransferList';
 import { TypeTurn } from '../dto/TypeTurn';
 import { useTranslation } from 'react-i18next';
 import { SgTimePicker } from '../../../../components/form/SgTimePicker';
+import { SgCheckboxGroup } from '../../../../components/form/SgCheckboxGroup';
 
 interface AdminTurnFormComponentProps {
   onSave: (data: Person) => void;
@@ -32,7 +33,6 @@ interface AdminTurnFormComponentProps {
 export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
   const { onSave, person, setPerson } = props;
   const { openSnackbarAction } = useSnackbar();
-  const [defaultValues, setDefaultValues] = useState<Person>();
   const [typeTurnsSelected, setTypeTurnsSelected] = useState<TypeTurn[]>([]);
   const { t } = useTranslation();
 
@@ -66,8 +66,6 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
     reset({});
   };
 
-  console.log('person:::', person);
-
   useEffect(() => {
     if (person) {
       // setDefaultValues(person);
@@ -92,8 +90,10 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
       onSave({
         ...data,
         typeTurns: typeTurnsSelected,
-        id: res.data,
+        id: res.data.id,
+        createdAt: res.data.createdAt,
         timeAppointment: timeAppointmentSelect,
+        note: data.note,
         idPre: data.id,
       });
       handleReset();
@@ -113,27 +113,23 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>{t('turns')}</Typography>
+        <Typography>{t('add_turn')}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <form onSubmit={handleSubmit(submitForm)}>
           {/* firstName lastname */}
           <div className="flex flex-row items-center">
-            <TransferList
-              typeTurns={typeTurns?.data || []}
-              setRight={setTypeTurnsSelected}
-              right={typeTurnsSelected}
+            {/* <TransferList */}
+            {/*   typeTurns={typeTurns?.data || []} */}
+            {/*   setRight={setTypeTurnsSelected} */}
+            {/*   right={typeTurnsSelected} */}
+            {/* /> */}
+            <SgCheckboxGroup
+              data={typeTurns?.data || []}
+              setData={setTypeTurnsSelected}
             />
           </div>
-
           <div className="flex flex-row items-center mt-2">
-            <SgInput
-              className="flex-1 !m-3"
-              name="company"
-              control={control}
-              errors={errors}
-              label={t('company')}
-            />
             <SgInput
               className="flex-1 !m-3"
               name="name"
@@ -153,6 +149,23 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
               size="small"
             />
           </div>
+          <div className="flex flex-row items-center">
+            <SgInput
+              className="flex-1 !m-3"
+              name="company"
+              control={control}
+              errors={errors}
+              label={t('company')}
+            />
+            <SgInput
+              className="flex-1 !m-3"
+              name="note"
+              control={control}
+              errors={errors}
+              label={t('note')}
+            />
+          </div>
+
           <div className="flex flex-row items-center">
             <span>
               <Switch

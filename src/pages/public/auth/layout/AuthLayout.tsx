@@ -24,19 +24,28 @@ export const AuthLayout = ({ children }: any) => {
           }}
         >
           {/* <img src="/login.png" className="logo" alt="Vite logo" /> */}
-          <div className="flex flex-col items-center">
+          <div
+            className="flex flex-col items-center rounded mb-4 text-white"
+            style={{ background: '#008054' }}
+          >
             {/* <img */}
             {/*   src="images/logo11.png" */}
             {/*   width={200} */}
             {/*   className="logo" */}
             {/*   alt="Vite logo" */}
             {/* /> */}
-            <img
-              src="images/esvyda_logo.png"
-              width={200}
-              className="logo"
-              alt="Vite logo"
-            />
+            <div
+              className="rounded mb-2 pb-2 px-4 flex w-full justify-center"
+              style={{ background: '#008054' }}
+            >
+              <img
+                src="images/previ_logo.png"
+                width={200}
+                className="logo"
+                alt="Vite logo"
+              />
+            </div>
+
             <Typography variant="h4" gutterBottom>
               Iniciar session
             </Typography>

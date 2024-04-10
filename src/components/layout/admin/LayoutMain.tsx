@@ -158,20 +158,20 @@ export const LayoutMain = (props: LayoutMainProps) => {
                 {/* /> */}
                 <Link to="/admin">
                   <img
-                    src={`${env.basePatch}/images/esvyda_logo.png`}
+                    src={`${env.basePatch}/images/previ_logo.png`}
                     alt=""
-                    width={80}
+                    width={160}
                     className="hidden sm:block mr-2"
                   />
                 </Link>
-                <Typography
-                  variant="h5"
-                  noWrap
-                  component="div"
-                  className="hidden sm:block"
-                >
-                  My doctor
-                </Typography>
+                {/* <Typography */}
+                {/*   variant="h5" */}
+                {/*   noWrap */}
+                {/*   component="div" */}
+                {/*   className="hidden sm:block" */}
+                {/* > */}
+                {/*   My doctor */}
+                {/* </Typography> */}
               </Grid>
             </Grid>
             <div className="flex flex-row items-center">

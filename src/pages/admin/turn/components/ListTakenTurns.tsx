@@ -23,7 +23,7 @@ export const ListTakenTurns = (props: ListTakenTurnsProps) => {
   const { turns } = props;
   const { t } = useTranslation();
 
-  // console.log(7777, turns);
+  console.log('ListTakenTurns:::', turns);
 
   const handleOnTake = (turn: any) => {
     console.log(78974, turn);
@@ -43,20 +43,20 @@ export const ListTakenTurns = (props: ListTakenTurnsProps) => {
           <div className="flex flex-row items-center">
             <Grid item xs={12} md={8} className="flex-1">
               <Typography sx={{ mb: 2 }} variant="h4" component="div">
-                {t('turns')}
+                {t('turns_in_attention')}
               </Typography>
 
-              {/* {turns */}
-              {/*   .slice() */}
-              {/*   .reverse() */}
-              {/*   .map((turn: any, index: number) => ( */}
-              {/*     <PersonListComponent */}
-              {/*       key={`turn-${turn.id}`} */}
-              {/*       user={turn.name} */}
-              {/*       onTake={() => handleOnTake(turn)} */}
-              {/*       turn={turn} */}
-              {/*     /> */}
-              {/*   ))} */}
+              {turns
+                .slice()
+                .reverse()
+                .map((turn: any, index: number) => (
+                  <PersonListComponent
+                    key={`turn-${turn.id}`}
+                    user={turn.name}
+                    onTake={() => handleOnTake(turn)}
+                    turn={turn}
+                  />
+                ))}
 
               {/* <List dense> */}
               {/*   {turns */}

@@ -18,8 +18,23 @@ export const MainTurnView = () => {
   const [callTurn, setCallTurn] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   // const audioRef = useRef<HTMLAudioElement | null>(null);
-
   const isCallingTurnRef = useRef<boolean>(false);
+
+  const [speaking, setSpeaking] = useState(false);
+  const synth = window.speechSynthesis;
+
+  const speakText = () => {
+    if (!synth.speaking) {
+      const utterance = new SpeechSynthesisUtterance(
+        'Esto es una prueba de narración.'
+      );
+      synth.speak(utterance);
+      setSpeaking(true);
+      utterance.onend = () => {
+        setSpeaking(false);
+      };
+    }
+  };
 
   const callTurnAction = (text: string) => {
     if (!isCallingTurnRef.current) {
@@ -27,7 +42,7 @@ export const MainTurnView = () => {
       setText(text);
       setCallTurn(true);
       isCallingTurnRef.current = true;
-
+      // initNarration();
       const timeout = setTimeout(() => {
         setCallTurn(false);
         setText('');
@@ -47,47 +62,7 @@ export const MainTurnView = () => {
         callTurnAction(text);
       }, 4500);
     }
-
-    // if (!isCallingTurn) {
-    //   console.log(4);
-    //   callTurnAction(text);
-    // } else {
-    //   console.log(2);
-    //   setTimeout(() => {
-    //     console.log(3);
-    //     callTurnAction(text);
-    //   }, 4500);
-    // }
   };
-
-  // const callTurnAction = (text: string) => {
-  //   console.log(333);
-  //
-  //   setText(text);
-  //   // if (audioRef.current) {
-  //   //   console.log('audioRef.current');
-  //   //   audioRef.current.play(); // Reproducir el sonido
-  //   // }
-  //   setCallTurn(true);
-  //   const timeout = setTimeout(() => {
-  //     setCallTurn(false);
-  //     setText('');
-  //   }, 5000);
-  // };
-  //
-  // const handleCallTurn = (text: string) => {
-  //   console.log(1, callTurn);
-  //   if (callTurn) {
-  //     setTimeout(() => {
-  //       console.log(2);
-  //       callTurnAction(text);
-  //     }, 4500);
-  //     console.log(3);
-  //   } else {
-  //     console.log(4);
-  //     callTurnAction(text);
-  //   }
-  // };
 
   useEffect(() => {
     // Manejar eventos cuando la conexión con el servidor WebSocket se establece
@@ -102,6 +77,7 @@ export const MainTurnView = () => {
 
     // Manejar eventos cuando se actualiza la lista de turnos
     socket.on('turnTakenList', (args: TurnsTaken) => {
+      console.log('turnTakenList::::', args);
       const { turnTaken, turnsTaken } = args;
       setTurnos(turnsTaken);
       if (turnTaken) {
@@ -151,6 +127,9 @@ export const MainTurnView = () => {
       {/*   src={`${env.basePatch}/sounds/initTurner.mp3`} */}
       {/* ></audio> */}
       {callTurn && text && <CallTurnComponent isOpen={callTurn} text={text} />}
+      <button onClick={speakText} disabled={speaking}>
+        Realizar prueba.
+      </button>
     </div>
   );
 };

@@ -63,7 +63,7 @@ export const AdminTurnView = () => {
     };
   }, []);
 
-  // console.log('pre::::', turns);
+  console.log('turnsTaken::::', turnsTaken);
 
   const handleNewTurn = (data: Person) => {
     // Enviar un nuevo turno al servidor
@@ -76,8 +76,10 @@ export const AdminTurnView = () => {
       company: data.company,
       typeTurns: data.typeTurns,
       id: data.id,
+      createdAt: data.createdAt,
       timeAppointment: data.timeAppointment,
       idPre: data.idPre,
+      note: data.note,
     });
   };
 

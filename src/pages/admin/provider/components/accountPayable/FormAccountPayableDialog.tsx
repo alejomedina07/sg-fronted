@@ -92,7 +92,7 @@ export const FormAccountPayableDialog = (props: FormAccountPayableProps) => {
                   optionName="name"
                   optionValue="id"
                   size="small"
-                  // required
+                  required
                   errors={errors}
                   options={providers?.data || []}
                   control={control}

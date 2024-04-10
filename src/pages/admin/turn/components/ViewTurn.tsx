@@ -73,7 +73,11 @@ export const ViewTurn = (props: ViewTurnProps) => {
             {t('document_number')}: <b> {turn.document} </b>{' '}
           </span>
         </div>
-
+        <div className="flex flex-row items-center">
+          <span className="flex-1 mx-1">
+            {t('note')}: <b> {turn.note} </b>{' '}
+          </span>
+        </div>
         <span className="flex flex-row items-center !my-4">
           <b>{t('type_turn')}:</b>
         </span>

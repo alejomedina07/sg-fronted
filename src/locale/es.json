@@ -275,6 +275,10 @@
     "time_appointment" : "Hora de la cita",
     "full_name": "Nombre completo",
     "turn_called": "Turno llamado.",
-    "call_again": "Llamar de nuevo"
-
+    "call_again": "Llamar de nuevo",
+    "delete": "Eliminar",
+    "turns_taken": "Turnos tomados",
+    "turns_in_attention": "Turnos en atención.",
+    "select_all" : "Seleccionar Todos",
+    "add_turn": "Agregar turno"
 }

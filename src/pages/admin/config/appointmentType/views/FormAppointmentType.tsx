@@ -12,10 +12,10 @@ import {
   useAddAppointmentTypeMutation,
   useUpdateAppointmentTypeMutation,
 } from '../../../appointment/redux/api/appointmentApi';
-import { t } from 'i18next';
 import useForms from '../../../../../store/hooks/form/useForms';
 import { useEffect, useState } from 'react';
 import { SgSwitch } from '../../../../../components/form/button/SgSwitch';
+import { useTranslation } from 'react-i18next';
 
 export const FormAppointmentType = () => {
   const { appointmentTypeId } = useParams();
@@ -26,6 +26,7 @@ export const FormAppointmentType = () => {
   const navigate = useNavigate();
   const [addAppointmentType, { isLoading }] = useAddAppointmentTypeMutation();
   const [updateAppointmentType] = useUpdateAppointmentTypeMutation();
+  const { t } = useTranslation();
 
   const {
     handleSubmit,

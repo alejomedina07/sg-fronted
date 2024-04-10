@@ -79,7 +79,15 @@ export const MyTurn = (props: MyTurnProps) => {
               {t('name')}: <b> {turnSelected.name} </b>{' '}
             </Typography>
             <Typography variant="h5" component="div" className="flex-1">
-              {t('document')}: <b> {turnSelected.document} </b>{' '}
+              {t('document_number')}: <b> {turnSelected.document} </b>{' '}
+            </Typography>
+          </div>
+          <div className="mb-4 flex flex-row items-center">
+            <Typography variant="h5" component="div" className="flex-1">
+              {t('company')}: <b> {turnSelected.company} </b>{' '}
+            </Typography>
+            <Typography variant="h5" component="div" className="flex-1">
+              {t('note')}: <b> {turnSelected.note} </b>{' '}
             </Typography>
           </div>
           <Divider />

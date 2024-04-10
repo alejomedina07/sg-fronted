@@ -17,6 +17,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Person } from '../../../pages/admin/turn/dto/Person';
 import { ViewTurn } from '../../../pages/admin/turn/components/ViewTurn';
 import { useTranslation } from 'react-i18next';
+import DateFnsManager from '../../../services/utils/DateFnsManager';
+
+const dateManage = new DateFnsManager();
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -50,6 +53,8 @@ export const PersonListComponent = (props: PersonListComponentProps) => {
   const { user, onTake, roomAppointMent, turn, deleteTurn, config } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { t } = useTranslation();
+
+  console.log(888, turn);
 
   const getClass = () => {
     return onTake && turn?.timeAppointment
@@ -124,11 +129,21 @@ export const PersonListComponent = (props: PersonListComponentProps) => {
                   <span>
                     {turn?.timeAppointment && (
                       <span className=" bg-green-400 p-2 mr-2 rounded">
-                        {t('time_appointment')} :{' '}
+                        {t('time_appointment')}:{' '}
                         <b> {turn?.timeAppointment} </b>{' '}
                       </span>
                     )}{' '}
-                    {t('document_number')} : <b> {turn?.document} </b>{' '}
+                    {t('document_number')}: <b> {turn?.document} </b> -{' '}
+                    {t('ingreso')}:{' '}
+                    <b>
+                      {' '}
+                      {turn?.createdAt
+                        ? dateManage.getFormatStandard(
+                            new Date(turn.createdAt),
+                            true
+                          )
+                        : ''}{' '}
+                    </b>{' '}
                   </span>
                   <BorderLinearProgress
                     className="mt-3"
