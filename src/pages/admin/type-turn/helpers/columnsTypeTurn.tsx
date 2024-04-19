@@ -11,6 +11,14 @@ export const ColumnsTypeTurn = () => {
   const columns: ColumnsProps[] = [
     { field: 'id', headerName: `${t('ID')}`, flex: 40 },
     { field: 'name', headerName: `${t('name')}`, flex: 100 },
+    {
+      field: 'typeTurn',
+      headerName: `${t('type_turn')}`,
+      flex: 100,
+      valueGetter: (params: any) => {
+        return params.row.typeTurn?.name;
+      },
+    },
     { field: 'description', headerName: `${t('description')}`, flex: 70 },
     {
       field: 'status',

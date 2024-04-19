@@ -258,6 +258,7 @@
     "create_type_turn": "Crear tipo de turno",
     "list_type_turn": "Lista de tipos de turno",
     "type_turn": "Tipos de turno",
+    "typeTurn": "Tipos de turno",
     "available_pre_turns": "Pre turnos disponibles",
     "chosen": "Elegidos",
     "selected": "Seleccionados",
@@ -280,5 +281,9 @@
     "turns_taken": "Turnos tomados",
     "turns_in_attention": "Turnos en atención.",
     "select_all" : "Seleccionar Todos",
-    "add_turn": "Agregar turno"
+    "add_turn": "Agregar turno",
+
+    "create_room" :  "Crear Sala",
+    "list_room" : "Lista de Salas"
+
 }

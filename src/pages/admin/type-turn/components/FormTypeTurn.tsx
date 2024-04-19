@@ -3,17 +3,18 @@ import { SgDialogTitle } from '../../../../components/utils/dialogs/SgDialogTitl
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import { SgButton } from '../../../../components/form/button/SgButton';
 import { useTranslation } from 'react-i18next';
-import { SgInput } from '../../../../components/form/SgInput';
+import { SgInput }             from '../../../../components/form/SgInput';
 import { useEffect, useState } from 'react';
-import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { useForm } from 'react-hook-form';
+import useSnackbar             from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { useForm }             from 'react-hook-form';
 import {
   useAddTurnTypeMutation,
   useUpdateTurnTypeMutation,
-} from '../../turn/redux/api/turnApi';
-import { SgCheckbox } from '../../../../components/form/SgCheckbox';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { typeTurnScheme } from '../validation/TypeTurnScheme';
+}                              from '../../turn/redux/api/turnApi';
+import { SgCheckbox }          from '../../../../components/form/SgCheckbox';
+import { yupResolver }         from '@hookform/resolvers/yup';
+import { typeTurnScheme }      from '../validation/TypeTurnScheme';
+import { SgSelect }            from "../../../../components/form/SgSelect";
 
 interface FormProcedureProps {
   typeTurn: any;
@@ -94,6 +95,20 @@ export const FormTypeTurn = (props: FormProcedureProps) => {
               label={t('name')}
               required
               size="small"
+            />
+            <SgSelect
+              key="filter-field-select"
+              control={control}
+              defaultValue={typeTurn?.typeTurnId || ''}
+              name="typeTurnId"
+              label={t('type_turn')}
+              required
+              fieldId="id"
+              fieldLabel="name"
+              className="flex-1 !m-3"
+              size="small"
+              errors={errors}
+              list="typeTurn"
             />
             <SgCheckbox
               label={t('status')}

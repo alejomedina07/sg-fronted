@@ -62,12 +62,12 @@ export const TypeTurnList = () => {
 
   return (
     <>
-      <ViewTitle title={t('list_type_turn')}>
+      <ViewTitle title={t('list_room')}>
         <SgButton
           variant="contained"
           color="primary"
           onClickAction={() => setOpenForm(true)}
-          label={t('create_type_turn')}
+          label={t('create_room')}
         />
       </ViewTitle>
       <div

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { AddTurnForm } from '../components/AddTurnForm';
 import { Person } from '../dto/Person';
@@ -12,13 +12,27 @@ import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnack
 import { useTranslation } from 'react-i18next';
 import { TurnsTaken } from '../../../public/turn/dto/turn.dto';
 import { ListTakenTurns } from '../components/ListTakenTurns';
-import { useAddAttentionMutation } from '../redux/api/turnApi';
+import {
+  useAddAttentionMutation,
+  useGetTurnTypesListQuery,
+} from '../redux/api/turnApi';
 import { LinearProgress, Skeleton } from '@mui/material';
 
 const env = new Environment();
 
 const socket = io(env.socket.io);
 const room = env.socket.room;
+
+interface AdminTurnViewContextProps {
+  config: any;
+  userConnected: any;
+  rooms: any;
+  handleReassign: (person: Person) => void;
+}
+
+const AdminTurnViewContext = createContext<
+  AdminTurnViewContextProps | undefined
+>(undefined);
 
 export const AdminTurnView = () => {
   const [turns, setTurns] = useState<Person[]>([]);
@@ -30,6 +44,10 @@ export const AdminTurnView = () => {
   const { openSnackbarAction } = useSnackbar();
   const { t } = useTranslation();
   const [addAttention, { isLoading }] = useAddAttentionMutation();
+
+  const { data: rooms } = useGetTurnTypesListQuery(true);
+
+  console.log(7897, rooms);
 
   const { userConnected } = useAuth();
 
@@ -148,8 +166,16 @@ export const AdminTurnView = () => {
     setPreTurnSelected(person);
   };
 
+  const handleReassign = (person: Person) => {
+    console.log('handleReassign:::', person);
+    socket.emit('changeRoom', person);
+    // setTurnSelected(undefined);
+  };
+
   return (
-    <>
+    <AdminTurnViewContext.Provider
+      value={{ userConnected, handleReassign, config, rooms }}
+    >
       {!!isLoading && (
         <>
           <LinearProgress />
@@ -197,6 +223,14 @@ export const AdminTurnView = () => {
       )}
 
       {config?.reception && <ListTakenTurns turns={turnsTaken} />}
-    </>
+    </AdminTurnViewContext.Provider>
   );
+};
+
+export const useAdminTurnViewContext = () => {
+  const context = useContext(AdminTurnViewContext);
+  if (!context) {
+    throw new Error('useUserContext must be used within a UserProvider');
+  }
+  return context;
 };

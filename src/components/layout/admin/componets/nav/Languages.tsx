@@ -31,7 +31,6 @@ export const Languages = () => {
 
   useEffect(() => {
     const lg = localStorage.getItem('languageDefault');
-    console.log(999, lg);
     if (lg) {
       setLanguageSelected(lg);
       localStorage.setItem('languageDefault', lg);

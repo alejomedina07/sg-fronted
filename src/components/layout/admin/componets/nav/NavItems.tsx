@@ -13,6 +13,7 @@ import StoreIcon from '@mui/icons-material/Store';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SwipeRightIcon from '@mui/icons-material/SwipeRight';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import React from 'react';
 
 const Application = new ApplicationConst();
@@ -124,10 +125,10 @@ export const navItems: NavItem[] = [
   },
   {
     id: 11,
-    name: 'type_turn',
+    name: 'room',
     link: '/admin/type-turn',
-    icon: <TaskIcon />,
-    iconMenu: <TaskIcon sx={{ fontSize: 50 }} />,
+    icon: <MeetingRoomIcon />,
+    iconMenu: <MeetingRoomIcon sx={{ fontSize: 50 }} />,
     onlyAdmin: true,
     privileges: {
       main: Application.PRIVILEGES.typeTurnList,
