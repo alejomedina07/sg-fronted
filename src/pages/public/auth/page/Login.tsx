@@ -9,7 +9,7 @@ import { useLoginMutation } from '../redux/api/authApi';
 import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 
 export const Login = () => {
-  const { addLoginAction } = useAuth();
+  const { addLoginAction, addLogoutAction } = useAuth();
   const { openSnackbarAction } = useSnackbar();
   const initialForm: UserLogin = { phoneNumber: '', password: '' };
   const { phoneNumber, password, onInputChange }: any = useForm(initialForm);
@@ -19,6 +19,7 @@ export const Login = () => {
     event.preventDefault();
     try {
       const data = await login({ phoneNumber, password }).unwrap();
+      addLogoutAction();
       addLoginAction({ ...data.user, token: data.token });
       openSnackbarAction({
         message: data.msg || 'Iniciando sesión',

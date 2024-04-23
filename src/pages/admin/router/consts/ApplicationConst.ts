@@ -62,6 +62,10 @@ const PRIVILEGES = {
   paymentCreate: 'payment.create',
   paymentEdit: 'payment.edit',
   paymentDelete: 'payment.delete',
+  attentionList: 'attention.list',
+  attentionCreate: 'attention.create',
+  attentionEdit: 'attention.edit',
+  attentionDelete: 'attention.delete',
 };
 
 interface validatePrivilegesResponse {
@@ -73,18 +77,42 @@ export class ApplicationConst {
   PRIVILEGES = PRIVILEGES;
   MAIN_ROL = 'Admin';
   USER_ROL = 'User';
+
   validatePermission = (
-    permission: string,
+    permission: string | string[],
     privileges: string[],
     rol: string,
     sectionUser: boolean
   ) => {
-    return (
-      rol === this.MAIN_ROL ||
-      privileges?.includes(permission) ||
-      (sectionUser && rol === this.USER_ROL)
-    );
+    if (Array.isArray(permission)) {
+      // Si `permission` es un array de permisos, comprobamos si al menos uno de ellos está presente en `privileges`
+      return (
+        rol === this.MAIN_ROL ||
+        permission.some((p) => privileges.includes(p)) ||
+        (sectionUser && rol === this.USER_ROL)
+      );
+    } else {
+      // Si `permission` es un solo permiso, lo comparamos directamente con `privileges`
+      return (
+        rol === this.MAIN_ROL ||
+        privileges.includes(permission) ||
+        (sectionUser && rol === this.USER_ROL)
+      );
+    }
   };
+
+  // validatePermission = (
+  //   permission: string,
+  //   privileges: string[],
+  //   rol: string,
+  //   sectionUser: boolean
+  // ) => {
+  //   return (
+  //     rol === this.MAIN_ROL ||
+  //     privileges?.includes(permission) ||
+  //     (sectionUser && rol === this.USER_ROL)
+  //   );
+  // };
 
   validatePrivileges(
     option: NavItem,

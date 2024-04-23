@@ -8,30 +8,71 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { t } from 'i18next';
-import { SgInput } from '../../../../components/form/SgInput';
 import { SgButton } from '../../../../components/form/button/SgButton';
-import React, { useState } from 'react';
-import { useGetTurnTypesListQuery } from '../redux/api/turnApi';
+import React, { useEffect, useState } from 'react';
 import { SgAutocomplete } from '../../../../components/form/SgAutocomplete';
+import { useAdminTurnViewContext } from '../view/AdminTurnView';
+import { ApplicationConst } from '../../router/consts/ApplicationConst';
 
 interface ConfigTurnFormProps {
   onSave: (data: any) => void;
 }
+
+const Application = new ApplicationConst();
+
 export const ConfigTurnForm = (props: ConfigTurnFormProps) => {
   const { onSave } = props;
-  const { data: typeTurns } = useGetTurnTypesListQuery(true);
+  const { userConnected, rooms } = useAdminTurnViewContext();
   const [reception, setReception] = useState(true);
+  const [isUserAttention, setIsUserAttention] = useState(false);
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    if (Application.MAIN_ROL === userConnected.rol) return;
+    const isAttention = Application.validatePermission(
+      Application.PRIVILEGES.attentionCreate,
+      userConnected.privileges,
+      userConnected.rol,
+      false
+    );
+    const isReception = Application.validatePermission(
+      Application.PRIVILEGES.turnCreate,
+      userConnected.privileges,
+      userConnected.rol,
+      false
+    );
+    if (!isAttention && isReception)
+      return onSave({ roomAppointMent: '', reception: true });
+    if (isAttention) {
+      setReception(false);
+      setIsUserAttention(true);
+    }
+  }, []);
+
   const onSubmit = (data: any) => {
+    console.log(1234);
+    let roomAppointMent = '';
+    if (data.typeTurnId) {
+      const room = rooms?.data.filter(
+        (item: any) => item.id == data.typeTurnId
+      );
+      if (room?.length) {
+        roomAppointMent = room[0].name;
+      }
+    }
+    console.log(444, {
+      ...data,
+      roomAppointMent,
+      reception,
+    });
     onSave({
       ...data,
+      roomAppointMent,
       reception,
-      procedureId: reception ? null : data.procedureId,
     });
   };
 
@@ -46,41 +87,33 @@ export const ConfigTurnForm = (props: ConfigTurnFormProps) => {
       </AccordionSummary>
       <AccordionDetails>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* firstName lastname */}
           <div className="flex flex-row items-center">
-            <SgInput
-              className="flex-1 !m-3"
-              name="roomAppointMent"
-              control={control}
-              errors={errors}
-              label={t('room')}
-              required
-              size="small"
-            />
-
             {!reception && (
               <span className="flex-1 !m-3">
                 <SgAutocomplete
                   name="typeTurnId"
                   label={t('type_turn')}
                   optionName="name"
+                  optionSubName="typeName"
                   optionValue="id"
                   size="small"
                   required
                   errors={errors}
-                  options={typeTurns?.data || []}
+                  options={rooms?.data || []}
                   control={control}
                 />
               </span>
             )}
-            <span>
-              <Switch
-                checked={reception}
-                onChange={() => setReception(!reception)}
-                name="anonymous"
-              />
-              {t('reception')}
-            </span>
+            {!isUserAttention && (
+              <span>
+                <Switch
+                  checked={reception}
+                  onChange={() => setReception(!reception)}
+                  name="anonymous"
+                />
+                {t('reception')}
+              </span>
+            )}
           </div>
 
           <div className="mt-4 mb-4 flex flex-row items-end justify-end">
@@ -89,7 +122,6 @@ export const ConfigTurnForm = (props: ConfigTurnFormProps) => {
               color="primary"
               type="submit"
               label={t('save')}
-              // sending={isLoading}
             />
           </div>
         </form>

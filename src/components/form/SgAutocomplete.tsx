@@ -9,15 +9,17 @@ type AutocompleteProps = {
   size: 'small' | 'medium' | undefined;
   optionValue: string;
   optionName: string;
+  optionSubName?: string;
   defaultValue?: any;
   errors?: any;
-  required: boolean;
+  required?: boolean;
 };
 
 export const SgAutocomplete = (props: AutocompleteProps) => {
   const {
     name,
     label,
+    optionSubName,
     options,
     control,
     size = 'small',
@@ -40,7 +42,11 @@ export const SgAutocomplete = (props: AutocompleteProps) => {
       render={({ field: { onChange, onBlur, value } }) => (
         <Autocomplete
           options={options}
-          getOptionLabel={(option: any) => option[optionName]}
+          getOptionLabel={(option: any) =>
+            `${option[optionName]} ${
+              optionSubName ? ' - ' + option[optionSubName] : ''
+            }`
+          }
           onChange={(_, data) => onChange(data ? data[optionValue] : null)}
           onBlur={onBlur}
           renderInput={(params) => (

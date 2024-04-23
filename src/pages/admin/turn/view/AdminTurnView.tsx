@@ -17,6 +17,9 @@ import {
   useGetTurnTypesListQuery,
 } from '../redux/api/turnApi';
 import { LinearProgress, Skeleton } from '@mui/material';
+import useTurn from '../redux/hooks/useTurn';
+import { SgButton } from '../../../../components/form/button/SgButton';
+import { deleteConfig } from '../redux/slices/turnSlice';
 
 const env = new Environment();
 
@@ -44,12 +47,25 @@ export const AdminTurnView = () => {
   const { openSnackbarAction } = useSnackbar();
   const { t } = useTranslation();
   const [addAttention, { isLoading }] = useAddAttentionMutation();
-
   const { data: rooms } = useGetTurnTypesListQuery(true);
-
-  console.log(7897, rooms);
-
   const { userConnected } = useAuth();
+
+  const {
+    configuration,
+    takenTurnAction,
+    turnInAttention,
+    finishTurnAction,
+    setConfigAction,
+  } = useTurn();
+
+  useEffect(() => {
+    if (configuration) {
+      setConfig(configuration);
+    }
+    if (turnInAttention) {
+      setTurnSelected(turnInAttention);
+    }
+  }, []);
 
   useEffect(() => {
     // Manejar eventos cuando la conexión con el servidor WebSocket se establece
@@ -80,8 +96,6 @@ export const AdminTurnView = () => {
       socket.off('connect');
     };
   }, []);
-
-  console.log('turnsTaken::::', turnsTaken);
 
   const handleNewTurn = (data: Person) => {
     // Enviar un nuevo turno al servidor
@@ -135,8 +149,9 @@ export const AdminTurnView = () => {
         inAttention: true,
         typeTurns: updatedTypeTurns,
       };
-      console.log('takenTurn', newTurn);
+      // console.log('takenTurn', newTurn);
       setTurnSelected(newTurn);
+      takenTurnAction({ turnInAttention: newTurn });
       socket.emit('takenTurn', newTurn);
     } catch (e) {
       console.log(666, e);
@@ -145,11 +160,13 @@ export const AdminTurnView = () => {
 
   const handleSaveConfig = (data: any) => {
     setConfig(data);
+    setConfigAction(data);
   };
 
   const handleFinishTurn = (person: Person) => {
     socket.emit('finishTurn', person);
     setTurnSelected(undefined);
+    finishTurnAction();
   };
 
   const handleDeleteTurn = (person: Person) => {
@@ -172,10 +189,28 @@ export const AdminTurnView = () => {
     // setTurnSelected(undefined);
   };
 
+  const handleDeleteConfig = () => {
+    setConfig(null);
+    deleteConfig();
+  };
+
   return (
     <AdminTurnViewContext.Provider
       value={{ userConnected, handleReassign, config, rooms }}
     >
+      {!!config && (
+        <div className="flex flex-row items-center justify-between !bg-white p-2">
+          <b> {config.roomAppointMent || t('reception')} </b>
+          <SgButton
+            variant="outlined"
+            color="error"
+            onClickAction={handleDeleteConfig}
+            label={t('delete_config')}
+            disabled={!!turnSelected?.id}
+          />
+        </div>
+      )}
+
       {!!isLoading && (
         <>
           <LinearProgress />
@@ -210,7 +245,6 @@ export const AdminTurnView = () => {
                   handleOnTake={handleOnTakePreTurn}
                 />
               )}
-
               <ListTurns
                 turns={turns}
                 handleOnTake={handleOnTake}
@@ -221,7 +255,6 @@ export const AdminTurnView = () => {
           )}
         </>
       )}
-
       {config?.reception && <ListTakenTurns turns={turnsTaken} />}
     </AdminTurnViewContext.Provider>
   );

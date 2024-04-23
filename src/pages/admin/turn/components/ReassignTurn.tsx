@@ -26,7 +26,7 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
   const { t } = useTranslation();
   const [value, setValue] = useState('');
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newRoom = rooms.filter(
+    const newRoom = rooms?.data.filter(
       (item: any) =>
         item.id === parseInt((event.target as HTMLInputElement).value)
     );
@@ -67,7 +67,7 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
               value={newRoomSelected}
               onChange={handleChange}
             >
-              {rooms?.map((item: any) => {
+              {rooms?.data.map((item: any) => {
                 // Verifica si item.id es diferente de roomSelected.id y si item.typeTurnId existe
                 if (
                   item.id !== roomSelected.id &&

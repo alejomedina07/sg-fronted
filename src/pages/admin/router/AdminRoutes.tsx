@@ -41,7 +41,10 @@ const Application = new ApplicationConst();
 export const AdminRoutes = () => {
   const { userConnected } = useAuth();
 
-  const validatePermission = (permission: string, sectionUser: boolean) => {
+  const validatePermission = (
+    permission: string | string[],
+    sectionUser: boolean
+  ) => {
     return Application.validatePermission(
       permission,
       userConnected.privileges,
@@ -152,9 +155,13 @@ export const AdminRoutes = () => {
         {validatePermission(Application.PRIVILEGES.appointmentList, true) && (
           <Route path="appointment" element={<AppointmentView />} />
         )}
-        {validatePermission(Application.PRIVILEGES.turnList, true) && (
-          <Route path="turn" element={<AdminTurnView />} />
-        )}
+        {validatePermission(
+          [
+            Application.PRIVILEGES.turnList,
+            Application.PRIVILEGES.attentionCreate,
+          ],
+          true
+        ) && <Route path="turn" element={<AdminTurnView />} />}
         {validatePermission(Application.PRIVILEGES.reportList, false) && (
           <Route path="report" element={<ReportMain />} />
         )}

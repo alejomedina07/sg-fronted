@@ -67,7 +67,9 @@ export const MyTurn = (props: MyTurnProps) => {
         isFinish,
         inAttention: false,
       });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

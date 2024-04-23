@@ -8,12 +8,14 @@ import {
   ListItemText,
   IconButton,
   ListItem,
+  TextField,
 } from '@mui/material';
 import CachedIcon from '@mui/icons-material/Cached';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PersonListComponent } from '../../../../components/shared/turn/PersonListComponent';
+import SearchIcon from '@mui/icons-material/Search';
 
 interface ListTakenTurnsProps {
   turns: any;
@@ -21,9 +23,8 @@ interface ListTakenTurnsProps {
 
 export const ListTakenTurns = (props: ListTakenTurnsProps) => {
   const { turns } = props;
+  const [filterValue, setFilterValue] = useState('');
   const { t } = useTranslation();
-
-  console.log('ListTakenTurns:::', turns);
 
   const handleOnTake = (turn: any) => {
     console.log(78974, turn);
@@ -42,13 +43,28 @@ export const ListTakenTurns = (props: ListTakenTurnsProps) => {
         <AccordionDetails>
           <div className="flex flex-row items-center">
             <Grid item xs={12} md={8} className="flex-1">
-              <Typography sx={{ mb: 2 }} variant="h4" component="div">
+              <Typography variant="h4" component="div">
                 {t('turns_in_attention')}
               </Typography>
-
+              <div className="flex flex-row items-center my-2">
+                <IconButton type="button" aria-label="search">
+                  <SearchIcon />
+                </IconButton>
+                <TextField
+                  label={t('filter')}
+                  variant="outlined"
+                  value={filterValue}
+                  onChange={(e) => setFilterValue(e.target.value)}
+                  fullWidth
+                  size="small"
+                />
+              </div>
               {turns
                 .slice()
                 .reverse()
+                .filter((turn: any) =>
+                  turn.name.toLowerCase().includes(filterValue.toLowerCase())
+                )
                 .map((turn: any, index: number) => (
                   <PersonListComponent
                     key={`turn-${turn.id}`}

@@ -54,8 +54,6 @@ export const PersonListComponent = (props: PersonListComponentProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { t } = useTranslation();
 
-  console.log(888, turn);
-
   const getClass = () => {
     return onTake && turn?.timeAppointment
       ? 'border-4 rounded border-blue-400 pr-3 p-2'

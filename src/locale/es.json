@@ -284,6 +284,12 @@
     "add_turn": "Agregar turno",
 
     "create_room" :  "Crear Sala",
-    "list_room" : "Lista de Salas"
+    "list_room" : "Lista de Salas",
+    "rooms": "Salas",
+    "room": "Sala",
+    "update": "Actualizar",
+    "delete_config": "Eliminar configuración.",
+    "reassign": "Reasignar"
+
 
 }

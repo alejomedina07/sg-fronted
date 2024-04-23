@@ -36,7 +36,7 @@ export const IndexPage = () => {
             </Link>
           </Button>
           <Button variant="outlined" className="flex-1">
-            <Link to="/pre-turn" className=" hover:underline flex-1">
+            <Link to="/consultation-turn" className=" hover:underline flex-1">
               pre turnos
             </Link>
           </Button>

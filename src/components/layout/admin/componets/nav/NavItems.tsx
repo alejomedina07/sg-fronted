@@ -20,6 +20,32 @@ const Application = new ApplicationConst();
 
 export const navItems: NavItem[] = [
   {
+    id: 11,
+    name: 'rooms',
+    link: '/admin/type-turn',
+    icon: <MeetingRoomIcon />,
+    iconMenu: <MeetingRoomIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.typeTurnList,
+      second: Application.PRIVILEGES.typeTurnCreate,
+      secondLink: '/admin/type-turn/create',
+    },
+  },
+  {
+    id: 16,
+    name: 'turns',
+    link: '/admin/turn',
+    icon: <SwipeRightIcon />,
+    iconMenu: <SwipeRightIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.turnList,
+      second: Application.PRIVILEGES.attentionCreate,
+      secondLink: '/admin/turn',
+    },
+  },
+  {
     id: 2,
     name: 'users',
     link: '/admin/users',
@@ -124,19 +150,6 @@ export const navItems: NavItem[] = [
     },
   },
   {
-    id: 11,
-    name: 'room',
-    link: '/admin/type-turn',
-    icon: <MeetingRoomIcon />,
-    iconMenu: <MeetingRoomIcon sx={{ fontSize: 50 }} />,
-    onlyAdmin: true,
-    privileges: {
-      main: Application.PRIVILEGES.typeTurnList,
-      second: Application.PRIVILEGES.typeTurnCreate,
-      secondLink: '/admin/type-turn/create',
-    },
-  },
-  {
     id: 12,
     name: 'providers',
     link: '/admin/providers',
@@ -173,19 +186,6 @@ export const navItems: NavItem[] = [
       main: Application.PRIVILEGES.paymentList,
       second: Application.PRIVILEGES.paymentList,
       secondLink: '/admin/providers/payment',
-    },
-  },
-  {
-    id: 16,
-    name: 'turns',
-    link: '/admin/turn',
-    icon: <SwipeRightIcon />,
-    iconMenu: <SwipeRightIcon sx={{ fontSize: 50 }} />,
-    onlyAdmin: true,
-    privileges: {
-      main: Application.PRIVILEGES.turnList,
-      second: Application.PRIVILEGES.turnCreate,
-      secondLink: '/admin/turn',
     },
   },
 ];
