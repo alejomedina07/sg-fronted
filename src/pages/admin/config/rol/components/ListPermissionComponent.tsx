@@ -45,8 +45,9 @@ export const ListPermissionComponent = () => {
   });
 
   return (
-    <div className="p-4" style={{ height: '45vh', width: '100%' }}>
+    <div className="p-4" style={{ width: '100%' }}>
       <SgTable
+        autoHeight
         columns={columns}
         data={data?.data || []}
         isLoading={isLoading}

@@ -18,12 +18,20 @@ const defaultValues = {
   permissionsId: [],
 };
 
-export const FormRolComponent = () => {
+interface FormRolComponentProps {
+  setCallRolApi: (callRolApi: boolean) => void;
+  callRolApi: boolean;
+}
+
+export const FormRolComponent = (props: FormRolComponentProps) => {
+  const { setCallRolApi, callRolApi } = props;
   const [addRol, { isLoading }] = useAddRolMutation();
   const [updateRol] = useUpdateRolMutation();
 
   const { data: privileges } = useGetPrivilegesQuery('');
-  const { data: permissions } = useGetPermissionQuery('');
+  const { data: permissions } = useGetPermissionQuery(callRolApi);
+
+  console.log(777, callRolApi);
 
   const { openSnackbarAction } = useSnackbar();
 
@@ -78,15 +86,17 @@ export const FormRolComponent = () => {
         type: 'success',
       });
       reset(defaultValues);
+      setCallRolApi(true);
+      setCallRolApi(false);
     } catch (e) {
       openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
     }
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 w-full">
       <form onSubmit={handleSubmit(submitForm)}>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="rol.name"
@@ -122,6 +132,8 @@ export const FormRolComponent = () => {
             errors={errors}
             options={permissions?.data}
           />
+        </div>
+        <div className="flex flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="rol.description"

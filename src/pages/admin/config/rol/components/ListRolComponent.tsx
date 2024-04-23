@@ -8,7 +8,12 @@ import { useGetRolesQuery } from '../redux/api/rolApi';
 import UseRol from '../redux/hooks/useRol';
 import { useState } from 'react';
 
-export const ListRolComponent = () => {
+interface ListRolComponentProps {
+  callRolApi: boolean;
+}
+
+export const ListRolComponent = (props: ListRolComponentProps) => {
+  const { callRolApi } = props;
   const { selectRolAction } = UseRol();
 
   const columns: ColumnsProps[] = [
@@ -45,14 +50,17 @@ export const ListRolComponent = () => {
   };
 
   // Usa el valor de forceUpdate como una dependencia en useGetRolesQuery
-  const { data, isLoading } = useGetRolesQuery('', {
-    // skip: isLoading, // Evitar solicitudes adicionales mientras se está actualizando
-    refetchOnMountOrArgChange: forceUpdate,
-  });
+  // const { data, isLoading } = useGetRolesQuery('', {
+  //   // skip: isLoading, // Evitar solicitudes adicionales mientras se está actualizando
+  //   refetchOnMountOrArgChange: forceUpdate,
+  // });
+  // Usa el valor de forceUpdate como una dependencia en useGetRolesQuery
+  const { data, isLoading } = useGetRolesQuery(callRolApi);
 
   return (
-    <div className="p-4" style={{ height: '45vh', width: '100%' }}>
+    <div className="p-4" style={{ width: '100%' }}>
       <SgTable
+        autoHeight
         columns={columns}
         data={data?.data || []}
         isLoading={isLoading}

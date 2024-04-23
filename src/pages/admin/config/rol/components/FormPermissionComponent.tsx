@@ -15,7 +15,14 @@ const defaultValues = {
   privileges: [],
 };
 
-export const FormPermissionComponent = () => {
+interface FormPermissionComponentProps {
+  setCallRolApi: (callRolApi: any) => void;
+}
+
+export const FormPermissionComponent = (
+  props: FormPermissionComponentProps
+) => {
+  const { setCallRolApi } = props;
   const [addRol, { isLoading }] = useAddPermissionMutation();
   const [updateRol] = useUpdatePermissionMutation();
 
@@ -71,15 +78,17 @@ export const FormPermissionComponent = () => {
         type: 'success',
       });
       reset(defaultValues);
+      setCallRolApi((value: any) => !value);
+      // setCallRolApi(false);
     } catch (e) {
       openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
     }
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 w-full">
       <form onSubmit={handleSubmit(submitForm)}>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col sm:flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="permission.name"
@@ -102,6 +111,8 @@ export const FormPermissionComponent = () => {
             errors={errors}
             options={privileges?.data}
           />
+        </div>
+        <div className="flex flex-row items-center">
           <SgInput
             className="flex-1 !m-3"
             name="permission.description"

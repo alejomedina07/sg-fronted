@@ -18,6 +18,8 @@ export const ConfigRol = () => {
   const [accordionRol, setAccordionRol] = useState(true);
   const [accordionPermission, setAccordionPermission] = useState(true);
 
+  const [callRolApi, setCallRolApi] = useState(false);
+
   const { clearRolAction } = UseRol();
 
   useEffect(() => {
@@ -40,13 +42,14 @@ export const ConfigRol = () => {
           <Typography component="h3">{t('Roles')}</Typography>
         </AccordionSummary>
         <AccordionDetails className="!w-full" style={{ width: '100%' }}>
-          <div className="flex flex-col md:flex-row items-start">
-            <div className="shadow-md mr-2 w-full md:w-3/4 lg:w-3/4 xl:w-3/4">
-              <ListRolComponent />
-            </div>
-            <div className="shadow-md w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
-              <FormRolComponent />
-            </div>
+          <div className="flex flex-row items-center">
+            <FormRolComponent
+              setCallRolApi={setCallRolApi}
+              callRolApi={callRolApi}
+            />
+          </div>
+          <div className="flex flex-row items-start">
+            <ListRolComponent callRolApi={callRolApi} />
           </div>
         </AccordionDetails>
       </Accordion>
@@ -64,14 +67,21 @@ export const ConfigRol = () => {
           <Typography>{t('Permission')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="flex flex-col md:flex-row items-start">
-            <div className="shadow-md mr-2 w-full md:w-3/4 lg:w-3/4 xl:w-3/4">
-              <ListPermissionComponent />
-            </div>
-            <div className="shadow-md w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
-              <FormPermissionComponent />
-            </div>
+          <div className="flex flex-row items-center">
+            <FormPermissionComponent setCallRolApi={setCallRolApi} />
           </div>
+          <div className="flex flex-row items-center">
+            <ListPermissionComponent />
+          </div>
+
+          {/* <div className="flex flex-col md:flex-row items-start"> */}
+          {/*   <div className="shadow-md mr-2 w-full md:w-3/4 lg:w-3/4 xl:w-3/4"> */}
+          {/*     <ListPermissionComponent /> */}
+          {/*   </div> */}
+          {/*   <div className="shadow-md w-full md:w-1/4 lg:w-1/4 xl:w-1/4"> */}
+          {/*     <FormPermissionComponent setCallRolApi={setCallRolApi} /> */}
+          {/*   </div> */}
+          {/* </div> */}
         </AccordionDetails>
       </Accordion>
     </>
