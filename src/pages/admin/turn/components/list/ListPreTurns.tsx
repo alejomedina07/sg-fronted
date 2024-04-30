@@ -1,4 +1,4 @@
-import { Person } from '../dto/Person';
+import { Person } from '../../dto/Person';
 import {
   Accordion,
   AccordionDetails,

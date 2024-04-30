@@ -14,7 +14,7 @@ import CachedIcon from '@mui/icons-material/Cached';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PersonListComponent } from '../../../../components/shared/turn/PersonListComponent';
+import { PersonListComponent } from '../../../../../components/shared/turn/PersonListComponent';
 import SearchIcon from '@mui/icons-material/Search';
 
 interface ListTakenTurnsProps {

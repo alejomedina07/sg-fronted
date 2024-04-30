@@ -51,7 +51,7 @@ class DateFnsManager {
   }
 
   getFormatStandard(date: Date | number, hours: boolean = false): string {
-    const formatDate = hours ? 'yyyy-MM hh:mm a' : 'yyyy-MM';
+    const formatDate = hours ? 'yyyy-MM hh:mm a' : 'yyyy-MM-dd';
     return format(date, formatDate);
   }
 

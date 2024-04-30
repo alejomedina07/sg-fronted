@@ -9,6 +9,8 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { ApplicationConst } from '../../../../../pages/admin/router/consts/ApplicationConst';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import TaskIcon from '@mui/icons-material/Task';
+// import ChecklistIcon from '@mui/icons-material/Checklist';
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import StoreIcon from '@mui/icons-material/Store';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SwipeRightIcon from '@mui/icons-material/SwipeRight';
@@ -33,7 +35,7 @@ export const navItems: NavItem[] = [
     },
   },
   {
-    id: 16,
+    id: 17,
     name: 'turns',
     link: '/admin/turn',
     icon: <SwipeRightIcon />,
@@ -43,6 +45,19 @@ export const navItems: NavItem[] = [
       main: Application.PRIVILEGES.turnList,
       second: Application.PRIVILEGES.attentionCreate,
       secondLink: '/admin/turn',
+    },
+  },
+  {
+    id: 16,
+    name: 'list_turns',
+    link: '/admin/turn-list',
+    icon: <FormatListNumberedIcon />,
+    iconMenu: <FormatListNumberedIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.turnList,
+      second: Application.PRIVILEGES.attentionCreate,
+      secondLink: '/admin/turn-list',
     },
   },
   {
@@ -149,43 +164,43 @@ export const navItems: NavItem[] = [
       secondLink: '/admin/report',
     },
   },
-  {
-    id: 12,
-    name: 'providers',
-    link: '/admin/providers',
-    icon: <StoreIcon />,
-    iconMenu: <StoreIcon sx={{ fontSize: 50 }} />,
-    onlyAdmin: true,
-    privileges: {
-      main: Application.PRIVILEGES.providerList,
-      second: Application.PRIVILEGES.providerCreate,
-      secondLink: '/admin/providers/create',
-    },
-  },
-  {
-    id: 14,
-    name: 'accounts_payable',
-    link: '/admin/providers/account-payable',
-    icon: <AddCardIcon />,
-    iconMenu: <AddCardIcon sx={{ fontSize: 50 }} />,
-    onlyAdmin: true,
-    privileges: {
-      main: Application.PRIVILEGES.accountPayableList,
-      second: Application.PRIVILEGES.accountPayableList,
-      secondLink: '/admin/providers/account-payable',
-    },
-  },
-  {
-    id: 15,
-    name: 'payments',
-    link: '/admin/providers/payment',
-    icon: <PriceCheckIcon />,
-    iconMenu: <PriceCheckIcon sx={{ fontSize: 50 }} />,
-    onlyAdmin: true,
-    privileges: {
-      main: Application.PRIVILEGES.paymentList,
-      second: Application.PRIVILEGES.paymentList,
-      secondLink: '/admin/providers/payment',
-    },
-  },
+  // {
+  //   id: 12,
+  //   name: 'providers',
+  //   link: '/admin/providers',
+  //   icon: <StoreIcon />,
+  //   iconMenu: <StoreIcon sx={{ fontSize: 50 }} />,
+  //   onlyAdmin: true,
+  //   privileges: {
+  //     main: Application.PRIVILEGES.providerList,
+  //     second: Application.PRIVILEGES.providerCreate,
+  //     secondLink: '/admin/providers/create',
+  //   },
+  // },
+  // {
+  //   id: 14,
+  //   name: 'accounts_payable',
+  //   link: '/admin/providers/account-payable',
+  //   icon: <AddCardIcon />,
+  //   iconMenu: <AddCardIcon sx={{ fontSize: 50 }} />,
+  //   onlyAdmin: true,
+  //   privileges: {
+  //     main: Application.PRIVILEGES.accountPayableList,
+  //     second: Application.PRIVILEGES.accountPayableList,
+  //     secondLink: '/admin/providers/account-payable',
+  //   },
+  // },
+  // {
+  //   id: 15,
+  //   name: 'payments',
+  //   link: '/admin/providers/payment',
+  //   icon: <PriceCheckIcon />,
+  //   iconMenu: <PriceCheckIcon sx={{ fontSize: 50 }} />,
+  //   onlyAdmin: true,
+  //   privileges: {
+  //     main: Application.PRIVILEGES.paymentList,
+  //     second: Application.PRIVILEGES.paymentList,
+  //     secondLink: '/admin/providers/payment',
+  //   },
+  // },
 ];

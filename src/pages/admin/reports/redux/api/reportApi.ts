@@ -19,6 +19,10 @@ export const reportApi = createApi({
       query: (filters) => `/report/products${filters}`,
       keepUnusedDataFor: 0,
     }),
+    getReportTurns: build.query({
+      query: (filters) => `/report/turns${filters}`,
+      keepUnusedDataFor: 0,
+    }),
   }),
 });
 
@@ -26,4 +30,5 @@ export const {
   useGetReportMainQuery,
   useGetReportDashboardQuery,
   useGetReportProductsQuery,
+  useGetReportTurnsQuery,
 } = reportApi;

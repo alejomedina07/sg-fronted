@@ -34,6 +34,7 @@ export const FilterDates = (props: any) => {
       filters += `&month=${managerDate.getFormatStandardMonth(monthDate)}`;
       pass = true;
     } else if (type == 'range' && startDate && endDate) {
+      console.log(9999, startDate);
       filters += `&start_date=${managerDate.getFormatStandard(startDate)}`;
       filters += `&end_date=${managerDate.getFormatStandard(endDate)}`;
       pass = true;

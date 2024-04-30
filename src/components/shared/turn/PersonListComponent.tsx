@@ -15,7 +15,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SwipeRightIcon from '@mui/icons-material/SwipeRight';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Person } from '../../../pages/admin/turn/dto/Person';
-import { ViewTurn } from '../../../pages/admin/turn/components/ViewTurn';
+import { ViewTurn } from '../../../pages/admin/turn/components/shared/ViewTurn';
 import { useTranslation } from 'react-i18next';
 import DateFnsManager from '../../../services/utils/DateFnsManager';
 
@@ -123,7 +123,7 @@ export const PersonListComponent = (props: PersonListComponentProps) => {
             }
             secondary={
               onTake && (
-                <>
+                <div className="flex flex-col">
                   <span>
                     {turn?.timeAppointment && (
                       <span className=" bg-green-400 p-2 mr-2 rounded">
@@ -143,12 +143,13 @@ export const PersonListComponent = (props: PersonListComponentProps) => {
                         : ''}{' '}
                     </b>{' '}
                   </span>
+                  <b className="text-black text-lg"> {turn?.note} </b>
                   <BorderLinearProgress
                     className="mt-3"
                     variant="determinate"
                     value={getPercentage()}
                   />
-                </>
+                </div>
               )
             }
           />

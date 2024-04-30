@@ -66,7 +66,7 @@
     "list_inventory": "Lista de inventarios",
     "quantity": "Cantidad",
     "add": "Agregar",
-    "created_at": "Fecha de creación",
+    "created_at": "Creación",
     "created_by": "Creado por",
     "incorrect_field": "El campo es incorrecto",
     "avatar": "Avatar",
@@ -270,8 +270,8 @@
     "clear": "Limpiar",
     "attended": "Atendido",
     "attended_by" : "Atendido por",
-    "started_at" : "Creado a",
-    "finish_at" :  "Finalizado a",
+    "started_at" : "Creado",
+    "finish_at" :  "Finalizado",
     "has_appointment": "Tiene cita",
     "time_appointment" : "Hora de la cita",
     "full_name": "Nombre completo",
@@ -289,7 +289,13 @@
     "room": "Sala",
     "update": "Actualizar",
     "delete_config": "Eliminar configuración.",
-    "reassign": "Reasignar"
-
-
+    "reassign": "Reasignar",
+    "view_rooms": "Ver salas",
+    "average": "Promedio",
+    "minutes": "Minutos",
+    "list_turns": "Lista de Turnos",
+    "total": "Total",
+    "compare": "Comparar",
+    "turn_report": "Reporte del Turnero",
+    "unlock": "Liberar"
 }

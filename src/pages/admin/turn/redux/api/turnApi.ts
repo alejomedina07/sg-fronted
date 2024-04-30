@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQueryWithReauth from '../../../../../utils/api/apiConst';
+import { paginationProps } from '../../../../../components/sgTable/dto/SgTableProps';
 
 export const turnApi = createApi({
   reducerPath: 'turnApi',
@@ -7,8 +8,23 @@ export const turnApi = createApi({
   baseQuery: baseQueryWithReauth,
 
   endpoints: (build) => ({
+    getAttention: build.query({
+      query: (turnId: number) => `/turn/attention/${turnId}`,
+      keepUnusedDataFor: 0,
+    }),
+    getTurn: build.query({
+      query: (params: paginationProps) =>
+        `/turn?page=${params?.page + 1}&limit=${params?.pageSize}${
+          params?.order || ''
+        }${params?.filters || ''}`,
+      keepUnusedDataFor: 0,
+    }),
     getTurnTypes: build.query({
       query: () => '/turn/type',
+      keepUnusedDataFor: 0,
+    }),
+    getCountTurnTypes: build.query({
+      query: () => '/turn/type/count',
       keepUnusedDataFor: 0,
     }),
     getTurnTypesList: build.query({
@@ -54,7 +70,10 @@ export const turnApi = createApi({
 });
 
 export const {
+  useGetAttentionQuery,
+  useGetTurnQuery,
   useGetTurnTypesQuery,
+  useGetCountTurnTypesQuery,
   useGetTurnTypesListQuery,
   useAddTurnTypeMutation,
   useAddTurnMutation,

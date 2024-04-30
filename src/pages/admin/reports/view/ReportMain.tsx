@@ -7,10 +7,12 @@ import { SgTabPanel } from '../../../../components/utils/tabs/SgTabPanel';
 import { SgButton } from '../../../../components/form/button/SgButton';
 import { ReportMainComponent } from '../components/ReportMainComponent';
 import { ReportDashboardComponent } from '../components/ReportDashboardComponent';
+import { ReportTurnComponent } from '../components/ReportTurnComponent';
 
 export const ReportMain = () => {
   const [value, setValue] = useState(0);
   const [graphs, setGraphs] = useState([0]);
+  const [graphsTurn, setGraphsTurn] = useState([0]);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -53,6 +55,11 @@ export const ReportMain = () => {
           <Tab
             icon={<PermContactCalendarIcon />}
             iconPosition="start"
+            label={t('turn_report')}
+          />
+          <Tab
+            icon={<PermContactCalendarIcon />}
+            iconPosition="start"
             label={t('main_report')}
           />
           <Tab
@@ -62,7 +69,25 @@ export const ReportMain = () => {
           />
         </Tabs>
       </Box>
+
       <SgTabPanel value={value} index={0}>
+        <SgButton
+          label={t('compare')}
+          onClickAction={() =>
+            setGraphsTurn([...graphsTurn, graphsTurn.length + 1])
+          }
+        />
+        <span id={'report-main'}>
+          {graphsTurn.length > 0 &&
+            graphsTurn.map((item, index) => (
+              <ReportTurnComponent
+                key={index}
+                idDiv={`graph-combined-turn-number-${index}`}
+              />
+            ))}
+        </span>
+      </SgTabPanel>
+      <SgTabPanel value={value} index={1}>
         {/* <FilterDates onChange={refresh} /> */}
         {/* /!* <div className="flex flex-row items-center"> *!/ */}
         {/* /!*   <SgButton label={t('refresh')} onClickAction={refresh} /> *!/ */}
@@ -87,7 +112,7 @@ export const ReportMain = () => {
             ))}
         </span>
       </SgTabPanel>
-      <SgTabPanel value={value} index={1}>
+      <SgTabPanel value={value} index={2}>
         <ReportDashboardComponent />
         {/* <SgAmchartDonut */}
         {/*   data={dataDonut} */}

@@ -7,6 +7,7 @@ import { TurnsTaken } from '../dto/turn.dto';
 import { CallTurnComponent } from '../components/CallTurnComponent';
 import { Environment } from '../../../../utils/env/Environment';
 import { Person } from '../../../admin/turn/dto/Person';
+import { SgToolbar } from '../../../../components/shared/toolbar/SgToolbar';
 
 const env = new Environment();
 
@@ -105,31 +106,36 @@ export const MainTurnView = () => {
     };
   }, []);
   return (
-    <div className="p-8">
-      <Grid item xs={12} md={8}>
-        <Typography sx={{ mb: 2 }} variant="h4" component="div">
-          Turnos
-        </Typography>
-        {turnos?.length &&
-          turnos
-            .slice()
-            .reverse()
-            .map((turno, index) => (
-              <PersonListComponent
-                key={turno.id}
-                user={turno.name}
-                roomAppointMent={turno.roomAppointMent}
-              />
-            ))}
-      </Grid>
-      {/* <audio */}
-      {/*   ref={audioRef} */}
-      {/*   src={`${env.basePatch}/sounds/initTurner.mp3`} */}
-      {/* ></audio> */}
-      {callTurn && text && <CallTurnComponent isOpen={callTurn} text={text} />}
-      <button onClick={speakText} disabled={speaking}>
-        Realizar prueba.
-      </button>
-    </div>
+    <>
+      <SgToolbar />
+      <div className="p-8">
+        <Grid item xs={12} md={8}>
+          <Typography sx={{ mb: 2 }} variant="h4" component="div">
+            Turnos
+          </Typography>
+          {turnos?.length &&
+            turnos
+              .slice()
+              .reverse()
+              .map((turno, index) => (
+                <PersonListComponent
+                  key={turno.id}
+                  user={turno.name}
+                  roomAppointMent={turno.roomAppointMent}
+                />
+              ))}
+        </Grid>
+        {/* <audio */}
+        {/*   ref={audioRef} */}
+        {/*   src={`${env.basePatch}/sounds/initTurner.mp3`} */}
+        {/* ></audio> */}
+        {callTurn && text && (
+          <CallTurnComponent isOpen={callTurn} text={text} />
+        )}
+        <button onClick={speakText} disabled={speaking}>
+          Realizar prueba.
+        </button>
+      </div>
+    </>
   );
 };

@@ -47,19 +47,19 @@ export const AdminView = () => {
             secondLink: '/admin/config/config-options',
           },
         },
-        {
-          id: 13,
-          name: 'config_survey',
-          link: '/admin/survey/config',
-          icon: <PostAddIcon />,
-          iconMenu: <PostAddIcon sx={{ fontSize: 50 }} />,
-          onlyAdmin: true,
-          privileges: {
-            main: 'Admin',
-            second: 'Admin',
-            secondLink: '/admin/survey/config',
-          },
-        },
+        // {
+        //   id: 13,
+        //   name: 'config_survey',
+        //   link: '/admin/survey/config',
+        //   icon: <PostAddIcon />,
+        //   iconMenu: <PostAddIcon sx={{ fontSize: 50 }} />,
+        //   onlyAdmin: true,
+        //   privileges: {
+        //     main: 'Admin',
+        //     second: 'Admin',
+        //     secondLink: '/admin/survey/config',
+        //   },
+        // },
       ].map((option: NavItem) => {
         if (
           userConnected.rol === 'Admin' ||

@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SgInput } from '../../../../components/form/SgInput';
-import { SgButton } from '../../../../components/form/button/SgButton';
-import { Person } from '../dto/Person';
-import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
-import { PersonSchema } from '../validation/personSchema';
+import { SgInput } from '../../../../../components/form/SgInput';
+import { SgButton } from '../../../../../components/form/button/SgButton';
+import { Person } from '../../dto/Person';
+import useSnackbar from '../../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { PersonSchema } from '../../validation/personSchema';
 import {
   Accordion,
   AccordionDetails,
@@ -17,21 +17,22 @@ import React, { useEffect, useState } from 'react';
 import {
   useAddTurnMutation,
   useGetTurnTypesListQuery,
-} from '../redux/api/turnApi';
-import { TransferList } from './TransferList';
-import { TypeTurn } from '../dto/TypeTurn';
+} from '../../redux/api/turnApi';
+import { TypeTurn } from '../../dto/TypeTurn';
 import { useTranslation } from 'react-i18next';
-import { SgTimePicker } from '../../../../components/form/SgTimePicker';
-import { SgCheckboxGroup } from '../../../../components/form/SgCheckboxGroup';
+import { SgTimePicker } from '../../../../../components/form/SgTimePicker';
+import { SgCheckboxGroup } from '../../../../../components/form/SgCheckboxGroup';
+import { LoadingTurn } from '../shared/LoadingTurn';
 
 interface AdminTurnFormComponentProps {
   onSave: (data: Person) => void;
   setPerson: (data: Person | undefined) => void;
   person?: Person;
+  loadingRooms: boolean;
 }
 
 export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
-  const { onSave, person, setPerson } = props;
+  const { onSave, person, setPerson, loadingRooms } = props;
   const { openSnackbarAction } = useSnackbar();
   const [typeTurnsSelected, setTypeTurnsSelected] = useState<TypeTurn[]>([]);
   const { t } = useTranslation();
@@ -85,6 +86,7 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
         document: data.document,
         company: data.company,
         timeAppointment: timeAppointmentSelect,
+        note: data.note,
       }).unwrap();
       console.log('Save new data');
       onSave({
@@ -116,6 +118,7 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
         <Typography>{t('add_turn')}</Typography>
       </AccordionSummary>
       <AccordionDetails>
+        {!!loadingRooms && <LoadingTurn />}
         <form onSubmit={handleSubmit(submitForm)}>
           {/* firstName lastname */}
           <div className="flex flex-row items-center">

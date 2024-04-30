@@ -8,11 +8,11 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { t } from 'i18next';
-import { SgButton } from '../../../../components/form/button/SgButton';
+import { SgButton } from '../../../../../components/form/button/SgButton';
 import React, { useEffect, useState } from 'react';
-import { SgAutocomplete } from '../../../../components/form/SgAutocomplete';
-import { useAdminTurnViewContext } from '../view/AdminTurnView';
-import { ApplicationConst } from '../../router/consts/ApplicationConst';
+import { SgAutocomplete } from '../../../../../components/form/SgAutocomplete';
+import { useAdminTurnViewContext } from '../../view/AdminTurnView';
+import { ApplicationConst } from '../../../router/consts/ApplicationConst';
 
 interface ConfigTurnFormProps {
   onSave: (data: any) => void;

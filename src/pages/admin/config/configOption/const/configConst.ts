@@ -8,6 +8,7 @@ export const CONFIG_CONST = {
     ENTITY_APPOINTMENT_TYPE: 'appointment_type',
     ENTITY_APPOINTMENT: 'appointment',
     ENTITY_TYPE_TURN: 'type_turn',
+    ENTITY_TURN: 'turn',
     ENTITY_PROVIDER: 'provider',
   },
 };

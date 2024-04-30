@@ -1,9 +1,9 @@
-import { Person } from '../dto/Person';
+import { Person } from '../../dto/Person';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { SgInput } from '../../../../components/form/SgInput';
-import { SgButton } from '../../../../components/form/button/SgButton';
-import React from 'react';
+import { SgInput } from '../../../../../components/form/SgInput';
+import { SgButton } from '../../../../../components/form/button/SgButton';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   Typography,
@@ -11,17 +11,29 @@ import {
   CardContent,
   Divider,
 } from '@mui/material';
-import { useAddFinishAttentionMutation } from '../redux/api/turnApi';
+import { useAddFinishAttentionMutation } from '../../redux/api/turnApi';
+import { useAdminTurnViewContext } from '../../view/AdminTurnView';
 
 interface MyTurnProps {
   turnSelected: Person;
   onFinishTurn: (person: Person) => void;
   config: any;
   callAgain: (person: Person) => void;
+  // setTurnSelected: (person: Person | undefined) => void;
+  // turnsTaken: Person[];
 }
 
 export const MyTurn = (props: MyTurnProps) => {
-  const { turnSelected, onFinishTurn, config, callAgain } = props;
+  const {
+    turnSelected,
+    onFinishTurn,
+    config,
+    callAgain,
+    // turnsTaken,
+    // setTurnSelected,
+  } = props;
+  const { setTurnSelected, turnsTaken, handleUnlock } =
+    useAdminTurnViewContext();
   const { t } = useTranslation();
   const [addFinishAttention, { isLoading }] = useAddFinishAttentionMutation();
   const {
@@ -29,6 +41,24 @@ export const MyTurn = (props: MyTurnProps) => {
     control,
     formState: { errors },
   } = useForm();
+
+  const [disabled, setDisabled] = useState(false);
+
+  // useEffect(() => {
+  //   // let deleteTurnSelected =
+  //   console.log(123456, turnSelected);
+  //   if (turnSelected && turnsTaken?.length) {
+  //     const turnTaken = turnsTaken.filter(
+  //       (item) => item.id === turnSelected.id
+  //     );
+  //     console.log('UseEffect:::', !turnTaken?.length);
+  //     if (!turnTaken?.length) {
+  //       setTurnSelected(undefined);
+  //       setDisabled(true);
+  //     }
+  //   }
+  //   // else if (!turnsTaken?.length) setDisabled(true);
+  // }, [turnsTaken]);
 
   const submitForm = async (data: any) => {
     try {
@@ -70,6 +100,32 @@ export const MyTurn = (props: MyTurnProps) => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const handleUnlockAction = () => {
+    let newTypeTurns: any = [];
+    turnSelected.typeTurns.forEach((item: any) => {
+      if (item.id === config.typeTurnId) {
+        newTypeTurns.push({
+          ...item,
+          inAttention: false,
+          attended: false,
+          takeBy: null,
+          startedAt: null,
+        });
+      } else newTypeTurns.push({ ...item });
+    });
+
+    handleUnlock({
+      ...turnSelected,
+      inAttention: false,
+      typeTurns: [...newTypeTurns],
+    });
+    setTurnSelected(undefined);
+  };
+
+  const handleDisabled = () => {
+    return turnsTaken.some((turn: any) => turn.id === turnSelected.id);
   };
 
   return (
@@ -120,7 +176,15 @@ export const MyTurn = (props: MyTurnProps) => {
             color="primary"
             type="submit"
             label={t('finish_turn')}
+            disabled={disabled}
             sending={isLoading}
+          />
+          <SgButton
+            variant="contained"
+            color="warning"
+            label={t('unlock')}
+            onClickAction={handleUnlockAction}
+            classes="!ml-2"
           />
         </CardActions>
       </form>

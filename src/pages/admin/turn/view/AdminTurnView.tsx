@@ -1,25 +1,25 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { AddTurnForm } from '../components/AddTurnForm';
+import { AddTurnForm } from '../components/reception/AddTurnForm';
 import { Person } from '../dto/Person';
 import useAuth from '../../../public/auth/redux/hooks/useAuth';
-import { ConfigTurnForm } from '../components/ConfigTurnForm';
-import { MyTurn } from '../components/MyTurn';
-import { ListTurns } from '../components/ListTurns';
+import { ConfigTurnForm } from '../components/config/ConfigTurnForm';
+import { MyTurn } from '../components/config/MyTurn';
+import { ListTurns } from '../components/list/ListTurns';
 import { Environment } from '../../../../utils/env/Environment';
-import { ListPreTurns } from '../components/ListPreTurns';
+import { ListPreTurns } from '../components/list/ListPreTurns';
 import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { TurnsTaken } from '../../../public/turn/dto/turn.dto';
-import { ListTakenTurns } from '../components/ListTakenTurns';
+import { ListTakenTurns } from '../components/list/ListTakenTurns';
 import {
   useAddAttentionMutation,
   useGetTurnTypesListQuery,
 } from '../redux/api/turnApi';
-import { LinearProgress, Skeleton } from '@mui/material';
 import useTurn from '../redux/hooks/useTurn';
-import { SgButton } from '../../../../components/form/button/SgButton';
 import { deleteConfig } from '../redux/slices/turnSlice';
+import { ConfigInfo } from '../components/config/ConfigInfo';
+import { LoadingTurn } from '../components/shared/LoadingTurn';
 
 const env = new Environment();
 
@@ -31,6 +31,9 @@ interface AdminTurnViewContextProps {
   userConnected: any;
   rooms: any;
   handleReassign: (person: Person) => void;
+  handleUnlock: (person: Person) => void;
+  setTurnSelected: (person: Person | undefined) => void;
+  turnsTaken: Person[];
 }
 
 const AdminTurnViewContext = createContext<
@@ -47,7 +50,8 @@ export const AdminTurnView = () => {
   const { openSnackbarAction } = useSnackbar();
   const { t } = useTranslation();
   const [addAttention, { isLoading }] = useAddAttentionMutation();
-  const { data: rooms } = useGetTurnTypesListQuery(true);
+  const { data: rooms, isLoading: isLoadingRooms } =
+    useGetTurnTypesListQuery(true);
   const { userConnected } = useAuth();
 
   const {
@@ -96,6 +100,11 @@ export const AdminTurnView = () => {
       socket.off('connect');
     };
   }, []);
+
+  const handleUnlock = (person: Person) => {
+    console.log(789, person);
+    socket.emit('unlock', person);
+  };
 
   const handleNewTurn = (data: Person) => {
     // Enviar un nuevo turno al servidor
@@ -163,8 +172,11 @@ export const AdminTurnView = () => {
     setConfigAction(data);
   };
 
+  // console.log('turnSelected:::', turnSelected);
+
   const handleFinishTurn = (person: Person) => {
-    socket.emit('finishTurn', person);
+    if (turnsTaken.some((turn: any) => turn.id === person.id))
+      socket.emit('finishTurn', person);
     setTurnSelected(undefined);
     finishTurnAction();
   };
@@ -196,28 +208,25 @@ export const AdminTurnView = () => {
 
   return (
     <AdminTurnViewContext.Provider
-      value={{ userConnected, handleReassign, config, rooms }}
+      value={{
+        userConnected,
+        handleReassign,
+        config,
+        rooms,
+        handleUnlock,
+        turnsTaken,
+        setTurnSelected,
+      }}
     >
       {!!config && (
-        <div className="flex flex-row items-center justify-between !bg-white p-2">
-          <b> {config.roomAppointMent || t('reception')} </b>
-          <SgButton
-            variant="outlined"
-            color="error"
-            onClickAction={handleDeleteConfig}
-            label={t('delete_config')}
-            disabled={!!turnSelected?.id}
-          />
-        </div>
+        <ConfigInfo
+          handleDeleteConfig={handleDeleteConfig}
+          config={config}
+          turnSelected={turnSelected}
+        />
       )}
 
-      {!!isLoading && (
-        <>
-          <LinearProgress />
-          <Skeleton className="my-4" variant="rounded" height={100} />
-          <Skeleton variant="rounded" height={100} />
-        </>
-      )}
+      {!!isLoading && <LoadingTurn />}
 
       {!config && <ConfigTurnForm onSave={handleSaveConfig} />}
       {turnSelected?.id && (
@@ -235,6 +244,7 @@ export const AdminTurnView = () => {
               onSave={handleNewTurn}
               person={preTurnSelected}
               setPerson={setPreTurnSelected}
+              loadingRooms={isLoadingRooms}
             />
           )}
           {!turnSelected && (

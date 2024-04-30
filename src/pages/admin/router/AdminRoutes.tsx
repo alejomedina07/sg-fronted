@@ -35,6 +35,8 @@ import { EditProvider } from '../provider/views/EditProvider';
 import { ListAccountPayable } from '../provider/views/ListAccountPayable';
 import { ListPayment } from '../provider/views/ListPayment';
 import { EditAccountPayable } from '../provider/views/EditAccountPayable';
+import { ListTurnView } from '../turn/view/ListTurnView';
+import { FormUpdateProfile } from '../user/views/FormUpdateProfile';
 
 const Application = new ApplicationConst();
 
@@ -64,6 +66,7 @@ export const AdminRoutes = () => {
         }
       >
         <Route path="" element={<AdminView />}></Route>
+        <Route path="profile" element={<FormUpdateProfile />}></Route>
         <Route path="appointment-type">
           {validatePermission(Application.PRIVILEGES.configList, false) && (
             <Route path="" element={<ListAppointmentType />} />
@@ -162,6 +165,10 @@ export const AdminRoutes = () => {
           ],
           true
         ) && <Route path="turn" element={<AdminTurnView />} />}
+        {validatePermission(Application.PRIVILEGES.turnList, false) && (
+          <Route path="turn-list" element={<ListTurnView />} />
+        )}
+
         {validatePermission(Application.PRIVILEGES.reportList, false) && (
           <Route path="report" element={<ReportMain />} />
         )}

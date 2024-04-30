@@ -12,6 +12,7 @@ export interface ColumnsProps {
   filterParams?: any;
   filterOperators?: any;
   editable?: boolean;
+  disableColumnMenu?: boolean;
   type?: string;
   headerClassName?: string;
 }

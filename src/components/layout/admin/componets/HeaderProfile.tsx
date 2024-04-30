@@ -80,7 +80,7 @@ export const HeaderProfile = () => {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            <Link to="/profile" className="link-nav-bar">
+            <Link to="/admin/profile" className="link-nav-bar">
               <MenuItem>
                 <Avatar /> {t('my_profile')}
               </MenuItem>

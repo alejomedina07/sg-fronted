@@ -1,4 +1,4 @@
-import { Person } from '../dto/Person';
+import { Person } from '../../dto/Person';
 import {
   Accordion,
   AccordionDetails,
@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { PersonListComponent } from '../../../../components/shared/turn/PersonListComponent';
+import { PersonListComponent } from '../../../../../components/shared/turn/PersonListComponent';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchIcon from '@mui/icons-material/Search';

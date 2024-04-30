@@ -7,10 +7,10 @@ import {
   Radio,
   RadioGroup,
 } from '@mui/material';
-import { Person } from '../dto/Person';
-import { useAdminTurnViewContext } from '../view/AdminTurnView';
+import { Person } from '../../dto/Person';
+import { useAdminTurnViewContext } from '../../view/AdminTurnView';
 import { useState } from 'react';
-import { SgButton } from '../../../../components/form/button/SgButton';
+import { SgButton } from '../../../../../components/form/button/SgButton';
 
 interface ReassignTurnProps {
   turn: Person;
