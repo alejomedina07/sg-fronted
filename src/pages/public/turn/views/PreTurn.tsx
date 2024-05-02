@@ -13,10 +13,12 @@ import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { SgToolbar } from '../../../../components/shared/toolbar/SgToolbar';
+import DateFnsManager from '../../../../services/utils/DateFnsManager';
 
 const env = new Environment();
-const socket = io(env.socket.io); // Reemplaza 'http://localhost:81' con la dirección de tu servidor NestJS
+const socket = io(env.socket.io);
 const room = env.socket.room;
+const dateManage = new DateFnsManager();
 
 export const PreTurn = () => {
   const { openSnackbarAction } = useSnackbar();
@@ -32,10 +34,11 @@ export const PreTurn = () => {
 
   const submitForm = async (data: Person) => {
     try {
-      console.log(data);
+      console.log(777, dateManage.getHour(new Date()));
       socket.emit('newPreTurn', {
         room,
         name: data.name,
+        entryTime: dateManage.getHour(new Date()),
         document: data.document,
         company: data.company,
         id: new Date().getTime(),

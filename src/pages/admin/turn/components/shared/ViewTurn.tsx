@@ -33,13 +33,14 @@ export const ViewTurn = (props: ViewTurnProps) => {
   const { isOpen, setIsOpen, turn, deleteTurn } = props;
   const [roomSelected, setRoomSelected] = useState<any>();
   const { handleUnlock } = useAdminTurnViewContext();
-
+  const { config } = useAdminTurnViewContext();
   const handleDeleteTurn = () => {
     console.log(9898989898, turn);
     if (deleteTurn) deleteTurn(turn);
   };
 
   const handleUnlockAction = (room: any) => {
+    console.log(1234, room);
     const newTypeTurns = turn.typeTurns.filter((item: any) => {
       if (item.id === room.id) {
         item.inAttention = false;
@@ -77,17 +78,17 @@ export const ViewTurn = (props: ViewTurnProps) => {
           <span className="flex-1 mx-1">
             {t('name')}: <b> {turn.name} </b>{' '}
           </span>
-          {!!deleteTurn && (
-            <SgButton
-              variant="contained"
-              color="error"
-              label={t('delete')}
-              onConfirm={handleDeleteTurn}
-              confirmationTitle={`${t('confirmation_title_delete_turn')}`}
-              confirmationMessage={`${t('confirmation_message_delete_turn')}`}
-              // sending={isLoading}
-            />
-          )}
+          {/* {!!deleteTurn && ( */}
+          {/*   <SgButton */}
+          {/*     variant="contained" */}
+          {/*     color="error" */}
+          {/*     label={t('delete')} */}
+          {/*     onConfirm={handleDeleteTurn} */}
+          {/*     confirmationTitle={`${t('confirmation_title_delete_turn')}`} */}
+          {/*     confirmationMessage={`${t('confirmation_message_delete_turn')}`} */}
+          {/*     // sending={isLoading} */}
+          {/*   /> */}
+          {/* )} */}
         </div>
         <div className="flex flex-row items-center">
           <span className="flex-1 mx-1">
@@ -156,7 +157,7 @@ export const ViewTurn = (props: ViewTurnProps) => {
                   </TableCell>
                   <TableCell align="right">
                     <div className="flex flex-row items-center">
-                      {!type.attended && (
+                      {!type.attended && config.reception && (
                         <SgButton
                           variant="contained"
                           color="primary"

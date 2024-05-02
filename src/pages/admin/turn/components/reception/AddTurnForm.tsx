@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { SgTimePicker } from '../../../../../components/form/SgTimePicker';
 import { SgCheckboxGroup } from '../../../../../components/form/SgCheckboxGroup';
 import { LoadingTurn } from '../shared/LoadingTurn';
+import DateFnsManager from '../../../../../services/utils/DateFnsManager';
 
 interface AdminTurnFormComponentProps {
   onSave: (data: Person) => void;
@@ -30,6 +31,7 @@ interface AdminTurnFormComponentProps {
   person?: Person;
   loadingRooms: boolean;
 }
+const dateManage = new DateFnsManager();
 
 export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
   const { onSave, person, setPerson, loadingRooms } = props;
@@ -39,6 +41,7 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
 
   const [timeAppointment, setTimeAppointment] = useState<Date>(new Date());
   const [hasAppointment, setHasAppointment] = useState(false);
+  const [doubleTurn, setDoubleTurn] = useState(false);
 
   const handleTimeChange = (time: Date) => {
     setTimeAppointment(time);
@@ -77,6 +80,7 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
   const submitForm = async (data: Person) => {
     try {
       // let res = await addUser(data).unwrap();
+      console.log('typeTurnsSelected:::', typeTurnsSelected);
       if (!typeTurnsSelected?.length) return;
       const timeAppointmentSelect = hasAppointment
         ? `${timeAppointment.getHours()}:${timeAppointment.getMinutes()}`
@@ -85,8 +89,11 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
         fullName: data.name,
         document: data.document,
         company: data.company,
+        entryTime: person?.entryTime || dateManage.getHour(new Date()),
         timeAppointment: timeAppointmentSelect,
         note: data.note,
+        doubleTurn: hasAppointment ? doubleTurn : false,
+        typeTurns: typeTurnsSelected.map((item) => item.id),
       }).unwrap();
       console.log('Save new data');
       onSave({
@@ -97,7 +104,9 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
         timeAppointment: timeAppointmentSelect,
         note: data.note,
         idPre: data.id,
+        doubleTurn: hasAppointment ? doubleTurn : false,
       });
+      setTypeTurnsSelected([]);
       handleReset();
       openSnackbarAction({
         message: `${t('created')}`,
@@ -130,6 +139,8 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
             <SgCheckboxGroup
               data={typeTurns?.data || []}
               setData={setTypeTurnsSelected}
+              setSelectedData={setTypeTurnsSelected}
+              selectedData={typeTurnsSelected}
             />
           </div>
           <div className="flex flex-row items-center mt-2">
@@ -179,10 +190,19 @@ export const AddTurnForm = (props: AdminTurnFormComponentProps) => {
               {t('has_appointment')}
             </span>
             {hasAppointment && (
-              <SgTimePicker
-                onChange={handleTimeChange}
-                selectedTime={timeAppointment}
-              />
+              <>
+                <Switch
+                  checked={doubleTurn}
+                  onChange={() => setDoubleTurn(!doubleTurn)}
+                  name="hasAppointment"
+                  className="ml-4"
+                />
+                {t('double_turn')}
+                <SgTimePicker
+                  onChange={handleTimeChange}
+                  selectedTime={timeAppointment}
+                />
+              </>
             )}
           </div>
           <div className="mt-4 mb-4 flex flex-row items-end justify-end">

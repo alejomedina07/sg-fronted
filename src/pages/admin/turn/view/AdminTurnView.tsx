@@ -20,11 +20,13 @@ import useTurn from '../redux/hooks/useTurn';
 import { deleteConfig } from '../redux/slices/turnSlice';
 import { ConfigInfo } from '../components/config/ConfigInfo';
 import { LoadingTurn } from '../components/shared/LoadingTurn';
+import DateFnsManager from '../../../../services/utils/DateFnsManager';
 
 const env = new Environment();
 
 const socket = io(env.socket.io);
 const room = env.socket.room;
+const dateManage = new DateFnsManager();
 
 interface AdminTurnViewContextProps {
   config: any;
@@ -72,14 +74,13 @@ export const AdminTurnView = () => {
   }, []);
 
   useEffect(() => {
-    // Manejar eventos cuando la conexión con el servidor WebSocket se establece
     socket.on('connect', () => {
       console.log('Conectado al servidor WebSocket');
     });
 
     // Manejar eventos cuando se actualiza la lista de turnos
     socket.on('turnList', (allTurns: Person[]) => {
-      // console.log('turnList::', allTurns);
+      console.log('turnList::', allTurns);
       setTurns([...allTurns]);
     });
     // Manejar eventos cuando se actualiza la lista de turnos
@@ -91,12 +92,56 @@ export const AdminTurnView = () => {
     socket.emit('eventJoin', room);
 
     socket.on('turnTakenList', (args: TurnsTaken) => {
-      const { turnTaken, turnsTaken } = args;
+      const { turnsTaken } = args;
       setTurnsTaken(turnsTaken);
     });
 
+    const connectSocket = () => {
+      // Manejar eventos cuando la conexión con el servidor WebSocket se establece
+      console.log(1234);
+      socket.on('connect', () => {
+        console.log('Conectado al servidor WebSocket');
+      });
+
+      // Manejar eventos cuando se actualiza la lista de turnos
+      socket.on('turnList', (allTurns: Person[]) => {
+        console.log('turnList::', allTurns);
+        setTurns([...allTurns]);
+      });
+      // Manejar eventos cuando se actualiza la lista de turnos
+      socket.on('preTurnList', (args: any) => {
+        // console.log('preTurnList::::', args);
+        setPreTurns([...args]);
+      });
+
+      socket.emit('eventJoin', room);
+
+      socket.on('turnTakenList', (args: TurnsTaken) => {
+        const { turnsTaken } = args;
+        setTurnsTaken(turnsTaken);
+      });
+    };
+
+    const reconnectSocket = () => {
+      if (socket && !socket.connected) {
+        console.log('Intentando reconectar...');
+        socket.connect();
+        connectSocket();
+      }
+    };
+
+    // connectSocket();
+
+    const reconnectInterval = setInterval(reconnectSocket, 3000);
+
     return () => {
+      if (socket) {
+        socket.close();
+      }
+      clearInterval(reconnectInterval);
       socket.off('turnList');
+      socket.off('turnTakenList');
+      socket.off('preTurnList');
       socket.off('connect');
     };
   }, []);
@@ -119,8 +164,10 @@ export const AdminTurnView = () => {
       id: data.id,
       createdAt: data.createdAt,
       timeAppointment: data.timeAppointment,
+      entryTime: data.entryTime || dateManage.getHour(new Date()),
       idPre: data.idPre,
       note: data.note,
+      doubleTurn: data.doubleTurn,
     });
   };
 
@@ -192,6 +239,7 @@ export const AdminTurnView = () => {
   };
 
   const handleOnTakePreTurn = (person: Person) => {
+    console.log(person);
     setPreTurnSelected(person);
   };
 

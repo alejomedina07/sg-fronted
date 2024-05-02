@@ -52,6 +52,7 @@ export const ListPreTurns = (props: ListTurnsProps) => {
                     <TableRow>
                       <TableCell> {t('name')} </TableCell>
                       <TableCell align="right">{t('company')}</TableCell>
+                      <TableCell align="right">{t('entry_time')}</TableCell>
                       <TableCell align="right">{t('document')}</TableCell>
                       <TableCell align="right">{t('actions')}</TableCell>
                     </TableRow>
@@ -68,6 +69,7 @@ export const ListPreTurns = (props: ListTurnsProps) => {
                           {row.name}
                         </TableCell>
                         <TableCell align="right">{row.company}</TableCell>
+                        <TableCell align="right">{row.entryTime}</TableCell>
                         <TableCell align="right">{row.document}</TableCell>
                         <TableCell align="right">
                           <IconButton

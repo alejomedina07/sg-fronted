@@ -8,6 +8,11 @@ import {
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+interface dataGroupedProps {
+  name: string;
+  data: DataProps[];
+}
+
 interface DataProps {
   id: number;
   name: string;
@@ -18,16 +23,13 @@ interface DataProps {
 interface SgCheckboxGroupProps {
   data: DataProps[];
   setData: (type: DataProps[]) => void;
-}
-
-interface dataGroupedProps {
-  name: string;
-  data: DataProps[];
+  selectedData: any[];
+  setSelectedData: (type: DataProps[]) => void;
 }
 
 export const SgCheckboxGroup = (props: SgCheckboxGroupProps) => {
-  const { data, setData } = props;
-  const [selectedData, setSelectedData] = useState<DataProps[]>([]);
+  const { data, setData, selectedData, setSelectedData } = props;
+  // const [selectedData, setSelectedData] = useState<DataProps[]>([]);
   const [dataGrouped, setDataGrouped] = useState<dataGroupedProps[]>();
   const { t } = useTranslation();
 
@@ -46,18 +48,6 @@ export const SgCheckboxGroup = (props: SgCheckboxGroupProps) => {
     setSelectedData(newSelectedTurns);
     setData(newSelectedTurns);
   };
-
-  const handleSelectAll = () => {
-    setSelectedData(data);
-    setData(data);
-  };
-
-  const handleDeselectAll = () => {
-    setSelectedData([]);
-    setData([]);
-  };
-
-  const isAllSelected = selectedData.length === data.length;
 
   useEffect(() => {
     console.log('data:::', data);

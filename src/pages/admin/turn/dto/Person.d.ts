@@ -10,6 +10,8 @@ export interface Person {
   timeAppointment?: string | null;
   takeBy?: { name: string; id: number };
   typeTurns?: any;
+  entryTime?: string;
   inAttention?: boolean;
   isFinish?: boolean;
+  doubleTurn?: boolean;
 }

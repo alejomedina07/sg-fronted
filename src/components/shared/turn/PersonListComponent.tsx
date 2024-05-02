@@ -132,16 +132,16 @@ export const PersonListComponent = (props: PersonListComponentProps) => {
                       </span>
                     )}{' '}
                     {t('document_number')}: <b> {turn?.document} </b> -{' '}
-                    {t('ingreso')}:{' '}
-                    <b>
-                      {' '}
-                      {turn?.createdAt
-                        ? dateManage.getFormatStandard(
-                            new Date(turn.createdAt),
-                            true
-                          )
-                        : ''}{' '}
-                    </b>{' '}
+                    {t('entry_time')}: <b> {turn?.entryTime} </b>
+                    {/* <b> */}
+                    {/*   {' '} */}
+                    {/*   {turn?.createdAt */}
+                    {/*     ? dateManage.getFormatStandard( */}
+                    {/*         new Date(turn.createdAt), */}
+                    {/*         true */}
+                    {/*       ) */}
+                    {/*     : ''}{' '} */}
+                    {/* </b>{' '} */}
                   </span>
                   <b className="text-black text-lg"> {turn?.note} </b>
                   <BorderLinearProgress

@@ -7,7 +7,6 @@ import { IconButton } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useGetTurnQuery } from '../redux/api/turnApi';
 import { ColumnsTurn } from '../helpers/columnsTurn';
-import { SgButton } from '../../../../components/form/button/SgButton';
 import { ViewTitle } from '../../components/share/title/ViewTitle';
 import { CONFIG_CONST } from '../../config/configOption/const/configConst';
 import { NotesButton } from '../../components/notes/components/NotesButton';

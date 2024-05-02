@@ -37,6 +37,7 @@ import { ListPayment } from '../provider/views/ListPayment';
 import { EditAccountPayable } from '../provider/views/EditAccountPayable';
 import { ListTurnView } from '../turn/view/ListTurnView';
 import { FormUpdateProfile } from '../user/views/FormUpdateProfile';
+import { ListAttentionView } from '../turn/view/attention/ListAttentionView';
 
 const Application = new ApplicationConst();
 
@@ -167,6 +168,9 @@ export const AdminRoutes = () => {
         ) && <Route path="turn" element={<AdminTurnView />} />}
         {validatePermission(Application.PRIVILEGES.turnList, false) && (
           <Route path="turn-list" element={<ListTurnView />} />
+        )}
+        {validatePermission(Application.PRIVILEGES.attentionList, false) && (
+          <Route path="attentions" element={<ListAttentionView />} />
         )}
 
         {validatePermission(Application.PRIVILEGES.reportList, false) && (

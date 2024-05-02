@@ -42,24 +42,6 @@ export const MyTurn = (props: MyTurnProps) => {
     formState: { errors },
   } = useForm();
 
-  const [disabled, setDisabled] = useState(false);
-
-  // useEffect(() => {
-  //   // let deleteTurnSelected =
-  //   console.log(123456, turnSelected);
-  //   if (turnSelected && turnsTaken?.length) {
-  //     const turnTaken = turnsTaken.filter(
-  //       (item) => item.id === turnSelected.id
-  //     );
-  //     console.log('UseEffect:::', !turnTaken?.length);
-  //     if (!turnTaken?.length) {
-  //       setTurnSelected(undefined);
-  //       setDisabled(true);
-  //     }
-  //   }
-  //   // else if (!turnsTaken?.length) setDisabled(true);
-  // }, [turnsTaken]);
-
   const submitForm = async (data: any) => {
     try {
       console.log('MyTurn:::', turnSelected);
@@ -124,10 +106,6 @@ export const MyTurn = (props: MyTurnProps) => {
     setTurnSelected(undefined);
   };
 
-  const handleDisabled = () => {
-    return turnsTaken.some((turn: any) => turn.id === turnSelected.id);
-  };
-
   return (
     <Card>
       <form onSubmit={handleSubmit(submitForm)}>
@@ -166,25 +144,25 @@ export const MyTurn = (props: MyTurnProps) => {
         <CardActions>
           <SgButton
             variant="contained"
+            color="error"
+            label={t('unlock')}
+            onClickAction={handleUnlockAction}
+            classes="!ml-2"
+          />
+          <SgButton
+            variant="contained"
             color="inherit"
             onClickAction={() => callAgain(turnSelected)}
             label={t('call_again')}
             sending={isLoading}
           />
+          <span className="flex-1"></span>
           <SgButton
             variant="contained"
             color="primary"
             type="submit"
             label={t('finish_turn')}
-            disabled={disabled}
             sending={isLoading}
-          />
-          <SgButton
-            variant="contained"
-            color="warning"
-            label={t('unlock')}
-            onClickAction={handleUnlockAction}
-            classes="!ml-2"
           />
         </CardActions>
       </form>

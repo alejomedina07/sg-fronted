@@ -99,8 +99,60 @@ export const MainTurnView = () => {
     });
 
     socket.emit('eventJoin', room);
+    const connectSocket = () => {
+      // Manejar eventos cuando la conexión con el servidor WebSocket se establece
+      socket.on('connect', () => {
+        console.log('Conectado al servidor WebSocket');
+      });
+
+      // Manejar eventos cuando se actualiza la lista de turnos
+      socket.on('callAgain', (person: Person) => {
+        handleCallTurn(`${person.name}, dirigirse a ${person.roomAppointMent}`);
+      });
+
+      // Manejar eventos cuando se actualiza la lista de turnos
+      socket.on('turnTakenList', (args: TurnsTaken) => {
+        console.log('turnTakenList::::', args);
+        const { turnTaken, turnsTaken } = args;
+        setTurnos(turnsTaken);
+        if (turnTaken) {
+          handleCallTurn(
+            `${turnTaken.name}, dirigirse a ${turnTaken.roomAppointMent}`
+          );
+          // setText(`${turnTaken.name}, dirigirse a ${turnTaken.roomAppointMent}`);
+          // // if (audioRef.current) {
+          // //   console.log('audioRef.current');
+          // //   audioRef.current.play(); // Reproducir el sonido
+          // // }
+          // setCallTurn(true);
+          // const timeout = setTimeout(() => {
+          //   setCallTurn(false);
+          //   setText('');
+          // }, 8000);
+        }
+      });
+
+      socket.emit('eventJoin', room);
+    };
+
+    const reconnectSocket = () => {
+      if (socket && !socket.connected) {
+        socket.connect();
+        console.log('Intentando reconectar...');
+        connectSocket();
+      }
+    };
+
+    // connectSocket();
+
+    const reconnectInterval = setInterval(reconnectSocket, 3000);
 
     return () => {
+      if (socket) {
+        socket.close();
+      }
+      clearInterval(reconnectInterval);
+
       socket.off('turnTakenList');
       socket.off('connect');
     };

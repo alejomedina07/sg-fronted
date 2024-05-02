@@ -11,6 +11,7 @@ import { Person } from '../../dto/Person';
 import { useAdminTurnViewContext } from '../../view/AdminTurnView';
 import { useState } from 'react';
 import { SgButton } from '../../../../../components/form/button/SgButton';
+import { useReassignTurnTypeMutation } from '../../redux/api/turnApi';
 
 interface ReassignTurnProps {
   turn: Person;
@@ -25,6 +26,9 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
   const [newRoomSelected, setNewRoomSelected] = useState<any>();
   const { t } = useTranslation();
   const [value, setValue] = useState('');
+
+  const [reassignRoom, { isLoading }] = useReassignTurnTypeMutation();
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newRoom = rooms?.data.filter(
       (item: any) =>
@@ -34,16 +38,27 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
     setNewRoomSelected(newRoom[0]);
   };
 
-  const reassign = () => {
-    const newTypeTurns = turn.typeTurns.filter(
-      (item: any) => item.id !== roomSelected.id
-    );
-    console.log(7894, newTypeTurns);
-    handleReassign({
-      ...turn,
-      typeTurns: [...newTypeTurns, { ...newRoomSelected, attended: false }],
-    });
-    setRoomSelected(null);
+  const reassign = async () => {
+    try {
+      const newTypeTurns = turn.typeTurns.filter(
+        (item: any) => item.id !== roomSelected.id
+      );
+      console.log('newRoomSelected:::', newRoomSelected);
+
+      await reassignRoom({
+        turnId: turn.id,
+        oldRoomId: roomSelected.id,
+        newRoomId: newRoomSelected.id,
+      }).unwrap();
+
+      handleReassign({
+        ...turn,
+        typeTurns: [...newTypeTurns, { ...newRoomSelected, attended: false }],
+      });
+      setRoomSelected(null);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -93,7 +108,7 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
           color="primary"
           label={t('update')}
           onClickAction={reassign}
-          disabled={!newRoomSelected}
+          disabled={!newRoomSelected || isLoading}
         />
       </div>
     </span>

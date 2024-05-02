@@ -19,6 +19,7 @@ import { SgTransition } from '../../../../../components/utils/dialogs/SgTransiti
 import { SgDialogTitle } from '../../../../../components/utils/dialogs/SgDialogTitle';
 import { useGetCountTurnTypesQuery } from '../../redux/api/turnApi';
 import { LoadingTurn } from '../shared/LoadingTurn';
+import { SgLink } from '../../../../../components/form/button/SgLink';
 
 interface ConfigInfoProps {
   turnSelected: Person | undefined;
@@ -32,6 +33,8 @@ export const ConfigInfo = (props: ConfigInfoProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, isLoading } = useGetCountTurnTypesQuery(isOpen);
 
+  console.log(999, config.typeTurnId);
+
   return (
     <>
       <div className="flex flex-row items-center justify-between !bg-white p-2">
@@ -39,14 +42,20 @@ export const ConfigInfo = (props: ConfigInfoProps) => {
         <span>
           {!!config.reception && (
             <SgButton
-              classes="!mr-4"
               variant="outlined"
               color="info"
               onClickAction={() => setIsOpen(true)}
               label={t('view_rooms')}
             />
           )}
+          {!!config.typeTurnId && !turnSelected?.id && (
+            <SgLink
+              label={t('view_attentions')}
+              to={`/admin/attentions?typeTurnId=${config.typeTurnId}`}
+            />
+          )}
           <SgButton
+            classes="!ml-4"
             variant="outlined"
             color="error"
             onClickAction={handleDeleteConfig}
@@ -75,13 +84,14 @@ export const ConfigInfo = (props: ConfigInfoProps) => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">{t('room')}</TableCell>
-                  <TableCell align="left">{t('type_turn')}</TableCell>
-                  <TableCell align="left">{t('quantity')}</TableCell>
-                  <TableCell align="left">{t('average')}</TableCell>
+                  {/* <TableCell align="left">{t('type_turn')}</TableCell> */}
+                  <TableCell align="left">{t('pending')}</TableCell>
+                  <TableCell align="left">{t('attended')}</TableCell>
+                  <TableCell align="left">{t('total')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data?.data.map((type: any) => (
+                {data?.data?.map((type: any) => (
                   <TableRow
                     key={type.id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -89,14 +99,17 @@ export const ConfigInfo = (props: ConfigInfoProps) => {
                     <TableCell component="th" scope="type">
                       {type.room}
                     </TableCell>
+                    {/* <TableCell component="th" scope="type"> */}
+                    {/*   {type.type} */}
+                    {/* </TableCell> */}
                     <TableCell component="th" scope="type">
-                      {type.type}
+                      {type.pending}
                     </TableCell>
                     <TableCell component="th" scope="type">
-                      {type.quantity}
+                      {type.attended}
                     </TableCell>
                     <TableCell component="th" scope="type">
-                      {type.average} {t('minutes')}
+                      {type.total}
                     </TableCell>
                   </TableRow>
                 ))}

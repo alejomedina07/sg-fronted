@@ -297,5 +297,11 @@
     "total": "Total",
     "compare": "Comparar",
     "turn_report": "Reporte del Turnero",
-    "unlock": "Liberar"
+    "unlock": "Liberar",
+    "document" : "Documento",
+    "entry_time": "Entrada",
+    "double_turn": "Doble Turno",
+    "list_attentions": "Lista de Atenciones",
+    "attentions": "Atenciones",
+    "view_attentions": "Ver Atenciones"
 }

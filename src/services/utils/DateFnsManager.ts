@@ -55,6 +55,11 @@ class DateFnsManager {
     return format(date, formatDate);
   }
 
+  getHour(date: Date | number): string {
+    const formatDate =  'hh:mm a';
+    return format(date, formatDate);
+  }
+
   getFormatMonthText(date: Date | number): string {
     return format(date, 'yyyy MMMM dd', { locale: es });
   }

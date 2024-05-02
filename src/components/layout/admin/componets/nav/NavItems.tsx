@@ -1,20 +1,16 @@
 import GroupIcon from '@mui/icons-material/Group.js';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
-import AddCardIcon from '@mui/icons-material/AddCard';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { NavItem } from '../index';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { ApplicationConst } from '../../../../../pages/admin/router/consts/ApplicationConst';
 import AssessmentIcon from '@mui/icons-material/Assessment';
-import TaskIcon from '@mui/icons-material/Task';
-// import ChecklistIcon from '@mui/icons-material/Checklist';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
-import StoreIcon from '@mui/icons-material/Store';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SwipeRightIcon from '@mui/icons-material/SwipeRight';
-import PriceCheckIcon from '@mui/icons-material/PriceCheck';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import React from 'react';
 
@@ -58,6 +54,19 @@ export const navItems: NavItem[] = [
       main: Application.PRIVILEGES.turnList,
       second: Application.PRIVILEGES.attentionCreate,
       secondLink: '/admin/turn-list',
+    },
+  },
+  {
+    id: 18,
+    name: 'attentions',
+    link: '/admin/attentions',
+    icon: <VisibilityIcon />,
+    iconMenu: <VisibilityIcon sx={{ fontSize: 50 }} />,
+    onlyAdmin: true,
+    privileges: {
+      main: Application.PRIVILEGES.attentionList,
+      second: Application.PRIVILEGES.attentionCreate,
+      secondLink: '/admin/attentions',
     },
   },
   {

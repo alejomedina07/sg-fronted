@@ -73,14 +73,15 @@ export const ListAttention = (props: ListAttentionProps) => {
             <TableHead>
               <TableRow>
                 <TableCell className="!font-bold" align="left">
+                  {t('room')}
+                </TableCell>
+                <TableCell className="!font-bold" align="right">
                   {t('attended_by')}
                 </TableCell>
                 <TableCell className="!font-bold" align="right">
                   {t('total')}
                 </TableCell>
-                <TableCell className="!font-bold" align="right">
-                  {t('room')}
-                </TableCell>
+
                 <TableCell className="!font-bold" align="right">
                   {t('started_at')}
                 </TableCell>
@@ -100,12 +101,18 @@ export const ListAttention = (props: ListAttentionProps) => {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell component="th" scope="item">
-                      {item.attentBy?.firstName + ' ' + item.attentBy?.lastName}
+                      {item.typeTurn?.name}
                     </TableCell>
                     <TableCell align="right">
-                      {item.totalTime} {t('minutes')}{' '}
+                      {item.attentBy
+                        ? item.attentBy?.firstName +
+                          ' ' +
+                          item.attentBy?.lastName
+                        : ''}
                     </TableCell>
-                    <TableCell align="right">{item.typeTurn?.name}</TableCell>
+                    <TableCell align="right">
+                      {item.totalTime || 0} {t('minutes')}{' '}
+                    </TableCell>
 
                     <TableCell align="right">
                       {item.createdAt
