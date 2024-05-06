@@ -31,28 +31,17 @@ export const ColumnsTurn = () => {
     {
       field: 'id',
       headerName: `${t('ID')}`,
-      flex: 30,
+      flex: 20,
       // headerClassName: 'bg-header-secondary',
     },
-    { field: 'fullName', headerName: `${t('name')}`, flex: 60 },
+    { field: 'fullName', headerName: `${t('name')}`, flex: 70 },
     { field: 'company', headerName: `${t('company')}`, flex: 70 },
-    { field: 'document', headerName: `${t('document_number')}`, flex: 70 },
-    // {
-    //   field: 'isFinish',
-    //   headerName: `${t('is_finish')}`,
-    //   flex: 50,
-    //   type: 'boolean',
-    //   valueFormatter: (params: GridValueFormatterParams) => {
-    //     if (params.value == null) {
-    //       return '';
-    //     }
-    //     return params.value ? `${t('finish')}` : `${t('pending')}`;
-    //   },
-    // },
+    { field: 'document', headerName: `${t('document')}`, flex: 50 },
+    { field: 'entryTime', headerName: `${t('entry_time')}`, flex: 40 },
     {
       field: 'createdAt',
       headerName: `${t('created_at')}`,
-      flex: 70,
+      flex: 60,
       valueFormatter: (params: GridValueFormatterParams<string>) => {
         if (params.value == null) {
           return '';
@@ -64,7 +53,7 @@ export const ColumnsTurn = () => {
     {
       field: 'finishAt',
       headerName: `${t('finish_at')}`,
-      flex: 70,
+      flex: 60,
       valueFormatter: (params: GridValueFormatterParams<string>) => {
         if (params.value == null) {
           return '';

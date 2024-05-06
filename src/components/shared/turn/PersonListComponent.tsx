@@ -95,7 +95,7 @@ export const PersonListComponent = (props: PersonListComponentProps) => {
                 >
                   <VisibilityIcon />
                 </IconButton>
-                {config && !config.reception && (
+                {config && (
                   <IconButton edge="end" aria-label="delete" onClick={onTake}>
                     <SwipeRightIcon />
                   </IconButton>

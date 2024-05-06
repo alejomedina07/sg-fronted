@@ -82,7 +82,7 @@ export const FormTypeTurn = (props: FormProcedureProps) => {
       TransitionComponent={SgTransition}
     >
       <SgDialogTitle id={'typeTurn-dialog'} onClose={handleClose}>
-        {t('create_type_turn')}
+        {t('create_room')}
       </SgDialogTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         <DialogContent dividers>

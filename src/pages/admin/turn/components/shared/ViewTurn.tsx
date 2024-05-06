@@ -78,17 +78,17 @@ export const ViewTurn = (props: ViewTurnProps) => {
           <span className="flex-1 mx-1">
             {t('name')}: <b> {turn.name} </b>{' '}
           </span>
-          {/* {!!deleteTurn && ( */}
-          {/*   <SgButton */}
-          {/*     variant="contained" */}
-          {/*     color="error" */}
-          {/*     label={t('delete')} */}
-          {/*     onConfirm={handleDeleteTurn} */}
-          {/*     confirmationTitle={`${t('confirmation_title_delete_turn')}`} */}
-          {/*     confirmationMessage={`${t('confirmation_message_delete_turn')}`} */}
-          {/*     // sending={isLoading} */}
-          {/*   /> */}
-          {/* )} */}
+          {!!deleteTurn && (
+            <SgButton
+              variant="contained"
+              color="error"
+              label={t('delete')}
+              onConfirm={handleDeleteTurn}
+              confirmationTitle={`${t('confirmation_title_delete_turn')}`}
+              confirmationMessage={`${t('confirmation_message_delete_turn')}`}
+              // sending={isLoading}
+            />
+          )}
         </div>
         <div className="flex flex-row items-center">
           <span className="flex-1 mx-1">

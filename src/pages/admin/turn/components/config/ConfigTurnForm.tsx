@@ -47,7 +47,7 @@ export const ConfigTurnForm = (props: ConfigTurnFormProps) => {
     );
     if (!isAttention && isReception)
       return onSave({ roomAppointMent: '', reception: true });
-    if (isAttention) {
+    if (isAttention && !isReception) {
       setReception(false);
       setIsUserAttention(true);
     }

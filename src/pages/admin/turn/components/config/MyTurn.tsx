@@ -50,7 +50,7 @@ export const MyTurn = (props: MyTurnProps) => {
         attention: any = {
           turnId: turnSelected.id,
           typeTurnId: config.typeTurnId,
-          description: data.description,
+          description: data?.description || '',
         };
       const updatedTypeTurns = turnSelected.typeTurns?.map((item: any) => {
         if (config.typeTurnId === item.id) {
@@ -135,7 +135,6 @@ export const MyTurn = (props: MyTurnProps) => {
               control={control}
               errors={errors}
               label={t('description')}
-              required
               rows={5}
               size="small"
             />

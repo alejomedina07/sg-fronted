@@ -50,6 +50,13 @@ export const ListAttention = (props: ListAttentionProps) => {
           <span className="flex-1 mx-1">
             {t('name')}: <b> {turn.fullName} </b>{' '}
           </span>
+          <span className="flex-1 mx-1">
+            {t('created_by')}:{' '}
+            <b>
+              {' '}
+              {turn.createdBy?.firstName + ' ' + turn.createdBy?.lastName}{' '}
+            </b>{' '}
+          </span>
         </div>
         <div className="flex flex-row items-center">
           <span className="flex-1 mx-1">

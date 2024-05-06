@@ -51,12 +51,12 @@ class DateFnsManager {
   }
 
   getFormatStandard(date: Date | number, hours: boolean = false): string {
-    const formatDate = hours ? 'yyyy-MM hh:mm a' : 'yyyy-MM-dd';
+    const formatDate = hours ? 'dd-MM hh:mm a' : 'yyyy-MM-dd';
     return format(date, formatDate);
   }
 
   getHour(date: Date | number): string {
-    const formatDate =  'hh:mm a';
+    const formatDate = 'hh:mm a';
     return format(date, formatDate);
   }
 

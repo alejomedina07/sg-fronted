@@ -6,6 +6,7 @@ import { useGetTurnTypesListQuery } from '../../../pages/admin/turn/redux/api/tu
 import { SgAutocomplete } from '../../form/SgAutocomplete';
 import { useForm } from 'react-hook-form';
 import { SgInput } from '../../form/SgInput';
+import DatePicker from 'react-datepicker';
 
 interface SgFilterProps {
   filters: string;
@@ -18,6 +19,8 @@ export const SgFilter = (props: SgFilterProps) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+
   const { data: rooms, isLoading: isLoadingRooms } =
     useGetTurnTypesListQuery(true);
 
@@ -27,18 +30,6 @@ export const SgFilter = (props: SgFilterProps) => {
 
   const onSubmit = (data: any) => {
     console.log(123456, data);
-    // const searchParams = new URLSearchParams();
-    //
-    // for (const key in data) {
-    //   if (data.hasOwnProperty(key)) {
-    //     const value = data[key];
-    //     if (value !== undefined && value !== null && value !== '') {
-    //       searchParams.append(key, value.toString());
-    //     }
-    //   }
-    // }
-    // const queryString = searchParams.toString();
-    // const filterParams = queryString ? `?${queryString}` : '';
     const searchParams = new URLSearchParams();
 
     for (const key in data) {
@@ -64,10 +55,19 @@ export const SgFilter = (props: SgFilterProps) => {
   };
 
   const {
+    setValue,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm();
+
+  const handleChangeDate = (event: Date | null) => {
+    let createdAt = event;
+    createdAt?.setHours(0);
+    createdAt?.setMinutes(0);
+    setValue('createdAt', createdAt);
+    setStartDate(createdAt);
+  };
 
   const handleDrawerClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Si se hace clic dentro del Drawer, no lo cerramos
@@ -99,7 +99,19 @@ export const SgFilter = (props: SgFilterProps) => {
             label={t('name')}
             size="small"
           />
-
+          {/* <span className="w-full flex-1 !m-3 border rounded border-gray-300 pr-3"> */}
+          {/*   <DatePicker */}
+          {/*     selected={startDate} */}
+          {/*     onChange={handleChangeDate} */}
+          {/*     placeholderText={`${t('max_date_of_day')}`} */}
+          {/*     className="m-2 w-full" */}
+          {/*     peekNextMonth */}
+          {/*     showMonthDropdown */}
+          {/*     showYearDropdown */}
+          {/*     dropdownMode="select" */}
+          {/*     locale="es" */}
+          {/*   /> */}
+          {/* </span> */}
           <div className="w-full mt-4 flex flex-row items-center justify-between">
             <SgButton
               variant="outlined"

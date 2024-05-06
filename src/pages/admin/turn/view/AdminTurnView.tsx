@@ -173,7 +173,8 @@ export const AdminTurnView = () => {
 
   const handleOnTake = async (turn: Person) => {
     // console.log(777, turn);
-
+    if (config.reception)
+      return handleCallAgain({ ...turn, roomAppointMent: 'Recepción.' });
     try {
       const takeBy = {
         id: userConnected.id,

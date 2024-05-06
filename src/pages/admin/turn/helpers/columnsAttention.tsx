@@ -40,7 +40,7 @@ export const ColumnsAttention = () => {
     {
       field: 'fullName',
       headerName: `${t('name')}`,
-      flex: 60,
+      flex: 80,
       valueGetter: (params: any) => {
         return `${params.row.turn?.fullName}`;
       },
@@ -48,7 +48,7 @@ export const ColumnsAttention = () => {
     {
       field: 'company',
       headerName: `${t('company')}`,
-      flex: 70,
+      flex: 60,
       valueGetter: (params: any) => {
         return `${params.row.turn?.company}`;
       },
@@ -56,15 +56,23 @@ export const ColumnsAttention = () => {
     {
       field: 'document',
       headerName: `${t('document')}`,
-      flex: 70,
+      flex: 50,
       valueGetter: (params: any) => {
         return `${params.row.turn?.document}`;
       },
     },
     {
+      field: 'entryTime',
+      headerName: `${t('entry_time')}`,
+      flex: 40,
+      valueGetter: (params: any) => {
+        return `${params.row.turn?.entryTime}`;
+      },
+    },
+    {
       field: 'createdAt',
       headerName: `${t('created_at')}`,
-      flex: 70,
+      flex: 60,
       valueFormatter: (params: GridValueFormatterParams<string>) => {
         if (params.value == null) {
           return '';
@@ -76,7 +84,7 @@ export const ColumnsAttention = () => {
     {
       field: 'attendedAt',
       headerName: `${t('attended')}`,
-      flex: 70,
+      flex: 60,
       valueFormatter: (params: GridValueFormatterParams<string>) => {
         if (params.value == null) {
           return '';
