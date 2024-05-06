@@ -30,7 +30,14 @@ export const ListAttentionView = () => {
     const typeTurnId = searchParams.get('typeTurnId');
     console.log(789, typeTurnId);
     if (typeTurnId && parseInt(typeTurnId) > 0) {
-      setFilters(`&filters[typeTurnId]=${parseInt(typeTurnId)}`);
+      const today = new Date();
+      today.setHours(0);
+      today.setMinutes(0);
+      setFilters(
+        `&filters[typeTurnId]=${parseInt(
+          typeTurnId
+        )}&createdAt=${today.toISOString()}`
+      );
     }
   }, [location.search]);
 

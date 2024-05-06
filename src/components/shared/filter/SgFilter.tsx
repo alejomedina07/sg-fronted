@@ -65,7 +65,7 @@ export const SgFilter = (props: SgFilterProps) => {
     let createdAt = event;
     createdAt?.setHours(0);
     createdAt?.setMinutes(0);
-    setValue('createdAt', createdAt);
+    setValue('createdAt', createdAt?.toISOString());
     setStartDate(createdAt);
   };
 
@@ -99,19 +99,19 @@ export const SgFilter = (props: SgFilterProps) => {
             label={t('name')}
             size="small"
           />
-          {/* <span className="w-full flex-1 !m-3 border rounded border-gray-300 pr-3"> */}
-          {/*   <DatePicker */}
-          {/*     selected={startDate} */}
-          {/*     onChange={handleChangeDate} */}
-          {/*     placeholderText={`${t('max_date_of_day')}`} */}
-          {/*     className="m-2 w-full" */}
-          {/*     peekNextMonth */}
-          {/*     showMonthDropdown */}
-          {/*     showYearDropdown */}
-          {/*     dropdownMode="select" */}
-          {/*     locale="es" */}
-          {/*   /> */}
-          {/* </span> */}
+          <span className="w-full flex-1 !m-3 border rounded border-gray-300 pr-3">
+            <DatePicker
+              selected={startDate}
+              onChange={handleChangeDate}
+              placeholderText={`${t('max_date_of_day')}`}
+              className="m-2 w-full"
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              locale="es"
+            />
+          </span>
           <div className="w-full mt-4 flex flex-row items-center justify-between">
             <SgButton
               variant="outlined"
