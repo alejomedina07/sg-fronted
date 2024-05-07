@@ -21,6 +21,7 @@ interface SgTablePaginationServerProps extends SgTableProps {
   rowSelectionAction?: (params: GridRowSelectionModel) => void;
   isRowSelectableAction?: (params: GridRowParams) => boolean;
   getRowClassNameAction?: (params: GridRowParams) => string;
+  disableColumnFilter?: boolean;
 }
 
 export const SgTablePaginationServer = (
@@ -35,6 +36,7 @@ export const SgTablePaginationServer = (
     rowSelectionAction,
     isRowSelectableAction,
     getRowClassNameAction,
+    disableColumnFilter = false,
   } = props;
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -124,6 +126,7 @@ export const SgTablePaginationServer = (
           paginationMode="server"
           filterMode="server"
           onFilterModelChange={onFilterChange}
+          disableColumnFilter={disableColumnFilter}
           sortingMode="server"
           onSortModelChange={handleSortModelChange}
           slots={{ toolbar: GridToolbar, noRowsOverlay: NotFound }}

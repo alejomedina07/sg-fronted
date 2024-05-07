@@ -12,6 +12,7 @@ import { useAdminTurnViewContext } from '../../view/AdminTurnView';
 import { useState } from 'react';
 import { SgButton } from '../../../../../components/form/button/SgButton';
 import { useReassignTurnTypeMutation } from '../../redux/api/turnApi';
+import useSnackbar from '../../../../../store/hooks/notifications/snackbar/useSnackbar';
 
 interface ReassignTurnProps {
   turn: Person;
@@ -21,10 +22,10 @@ interface ReassignTurnProps {
 
 export const ReassignTurn = (props: ReassignTurnProps) => {
   const { turn, roomSelected, setRoomSelected } = props;
-  const { config, handleReassign, userConnected, rooms } =
-    useAdminTurnViewContext();
+  const { handleReassign, rooms } = useAdminTurnViewContext();
   const [newRoomSelected, setNewRoomSelected] = useState<any>();
   const { t } = useTranslation();
+  const { openSnackbarAction } = useSnackbar();
   const [value, setValue] = useState('');
 
   const [reassignRoom, { isLoading }] = useReassignTurnTypeMutation();
@@ -45,18 +46,22 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
       );
       console.log('newRoomSelected:::', newRoomSelected);
 
-      await reassignRoom({
+      const res = await reassignRoom({
         turnId: turn.id,
         oldRoomId: roomSelected.id,
         newRoomId: newRoomSelected.id,
       }).unwrap();
 
-      handleReassign({
-        ...turn,
-        typeTurns: [...newTypeTurns, { ...newRoomSelected, attended: false }],
-      });
-      setRoomSelected(null);
+      console.log(1234, res);
+      if (res.success) {
+        handleReassign({
+          ...turn,
+          typeTurns: [...newTypeTurns, { ...newRoomSelected, attended: false }],
+        });
+        setRoomSelected(null);
+      }
     } catch (e) {
+      openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
       console.log(e);
     }
   };

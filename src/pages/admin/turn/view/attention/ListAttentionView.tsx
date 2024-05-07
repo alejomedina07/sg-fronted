@@ -36,8 +36,9 @@ export const ListAttentionView = () => {
       setFilters(
         `&filters[typeTurnId]=${parseInt(
           typeTurnId
-        )}&createdAt=${today.toISOString()}`
+        )}&filters[createdAt]=${today.toISOString()}&filters[type]=AND`
       );
+      // setFilters(`&filters[typeTurnId]=${parseInt(typeTurnId)}`);
     }
   }, [location.search]);
 
@@ -45,15 +46,46 @@ export const ListAttentionView = () => {
     console.log(turn);
   };
 
+  console.log('filters:::', filters);
+
   const columnsAttention = ColumnsAttention();
 
   useEffect(() => {
     setColumns([...columnsAttention]);
   }, [i18n.language]);
 
-  console.log(data);
+  // console.log(data);
 
-  const handlePaginationChange = useCallback((params: paginationProps) => {
+  const handleSetPagination = (param: paginationProps) => {
+    // return filters;
+    console.log(1234, filters);
+    setPagination({ ...param, filters });
+  };
+
+  // const handlePaginationChange = useCallback((params: paginationProps) => {
+  //   console.log(1, filters);
+  //   if (
+  //     params.page !== pagination.page ||
+  //     params.pageSize !== pagination.pageSize ||
+  //     params.order !== pagination.order ||
+  //     params.filters !== pagination.filters
+  //   ) {
+  //     // setPagination({
+  //     //   pageSize: params.pageSize,
+  //     //   page: params.page,
+  //     //   order: params.order,
+  //     //   filters,
+  //     // });
+  //     handleSetPagination({
+  //       pageSize: params.pageSize,
+  //       page: params.page,
+  //       order: params.order,
+  //     });
+  //   }
+  // }, []);
+
+  const handlePaginationChange = (params: paginationProps) => {
+    console.log(1, filters);
     if (
       params.page !== pagination.page ||
       params.pageSize !== pagination.pageSize ||
@@ -67,7 +99,7 @@ export const ListAttentionView = () => {
         filters,
       });
     }
-  }, []);
+  };
 
   useEffect(() => {
     console.log(1);
@@ -87,6 +119,7 @@ export const ListAttentionView = () => {
           data={data?.data || []}
           isLoading={isLoading}
           total={data?.total || 0}
+          disableColumnFilter
         />
       </div>
     </>

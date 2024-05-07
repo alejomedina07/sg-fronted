@@ -19,7 +19,7 @@ export const SgFilter = (props: SgFilterProps) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>();
 
   const { data: rooms, isLoading: isLoadingRooms } =
     useGetTurnTypesListQuery(true);
@@ -42,7 +42,7 @@ export const SgFilter = (props: SgFilterProps) => {
     }
 
     const queryString = searchParams.toString();
-    const filterParams = queryString ? `&${queryString}` : '';
+    const filterParams = queryString ? `&${queryString}&filters[type]=AND` : '';
 
     console.log(1, filterParams);
     handleSetFilters(filterParams);
@@ -103,7 +103,7 @@ export const SgFilter = (props: SgFilterProps) => {
             <DatePicker
               selected={startDate}
               onChange={handleChangeDate}
-              placeholderText={`${t('max_date_of_day')}`}
+              placeholderText={`${t('date')}`}
               className="m-2 w-full"
               peekNextMonth
               showMonthDropdown
