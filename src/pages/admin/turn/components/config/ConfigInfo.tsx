@@ -33,8 +33,6 @@ export const ConfigInfo = (props: ConfigInfoProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, isLoading } = useGetCountTurnTypesQuery(isOpen);
 
-  console.log(999, config.typeTurnId);
-
   return (
     <>
       <div className="flex flex-row items-center justify-between !bg-white p-2">

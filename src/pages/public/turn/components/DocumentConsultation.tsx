@@ -9,6 +9,7 @@ import io from 'socket.io-client';
 import { Person } from '../../../admin/turn/dto/Person';
 import { TurnsTaken } from '../dto/turn.dto';
 import useSnackbar from '../../../../store/hooks/notifications/snackbar/useSnackbar';
+import { Link } from 'react-router-dom';
 
 interface DocumentConsultationProps {
   setConsultation: (consultation: boolean) => void;
@@ -106,6 +107,14 @@ export const DocumentConsultation = (props: DocumentConsultationProps) => {
         label={t('search')}
         onClickAction={handleSearch}
         classes="w-full"
+      />
+      <SgButton
+        classes="!px-8 !ml-4 hover:underline"
+        variant="outlined"
+        color="primary"
+        label={t('back')}
+        onClickAction={() => setConsultation(false)}
+        // sending={isLoading}
       />
     </>
   );

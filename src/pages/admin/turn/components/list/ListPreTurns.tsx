@@ -29,6 +29,8 @@ export const ListPreTurns = (props: ListTurnsProps) => {
   const { preTurns, handleOnTake } = props;
   const { t } = useTranslation();
 
+  console.log('preTurns:::', preTurns);
+
   return (
     <>
       <Accordion defaultExpanded>
@@ -40,7 +42,7 @@ export const ListPreTurns = (props: ListTurnsProps) => {
           <Typography>{t('available_pre_turns')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-center bg-">
             <Grid item xs={12} md={8} className="flex-1">
               {/* <Typography sx={{ mb: 2 }} variant="h4" component="div"> */}
               {/*   {t('pre_turns')} */}
@@ -60,6 +62,11 @@ export const ListPreTurns = (props: ListTurnsProps) => {
                   <TableBody>
                     {preTurns.map((row: Person) => (
                       <TableRow
+                        className={
+                          row.takePreTurn
+                            ? 'bg-red-100 !bg-opacity-60 line-through'
+                            : ''
+                        }
                         key={row.id}
                         sx={{
                           '&:last-child td, &:last-child th': { border: 0 },

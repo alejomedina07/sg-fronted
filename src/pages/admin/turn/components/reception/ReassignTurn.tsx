@@ -27,6 +27,7 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
   const { t } = useTranslation();
   const { openSnackbarAction } = useSnackbar();
   const [value, setValue] = useState('');
+  const [sending, setSending] = useState(false);
 
   const [reassignRoom, { isLoading }] = useReassignTurnTypeMutation();
 
@@ -41,6 +42,8 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
 
   const reassign = async () => {
     try {
+      if (sending) return;
+      setSending(true);
       const newTypeTurns = turn.typeTurns.filter(
         (item: any) => item.id !== roomSelected.id
       );
@@ -63,6 +66,8 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
     } catch (e) {
       openSnackbarAction({ message: `${t('error_save')}`, type: 'error' });
       console.log(e);
+    } finally {
+      setSending(false);
     }
   };
 
@@ -113,7 +118,7 @@ export const ReassignTurn = (props: ReassignTurnProps) => {
           color="primary"
           label={t('update')}
           onClickAction={reassign}
-          disabled={!newRoomSelected || isLoading}
+          disabled={!newRoomSelected || isLoading || sending}
         />
       </div>
     </span>

@@ -14,4 +14,5 @@ export interface Person {
   inAttention?: boolean;
   isFinish?: boolean;
   doubleTurn?: boolean;
+  takePreTurn?: boolean;
 }

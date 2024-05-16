@@ -50,8 +50,6 @@ export const SgCheckboxGroup = (props: SgCheckboxGroupProps) => {
   };
 
   useEffect(() => {
-    console.log('data:::', data);
-
     const groupedData: dataGroupedProps[] = data.reduce(
       (acc: dataGroupedProps[], curr) => {
         // Buscar si ya existe una entrada para el typeName actual en el array acc
@@ -73,7 +71,6 @@ export const SgCheckboxGroup = (props: SgCheckboxGroupProps) => {
       },
       []
     );
-    console.log(groupedData);
     setDataGrouped(groupedData);
   }, [data]);
 

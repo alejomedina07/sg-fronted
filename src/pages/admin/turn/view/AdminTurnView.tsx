@@ -98,14 +98,12 @@ export const AdminTurnView = () => {
 
     const connectSocket = () => {
       // Manejar eventos cuando la conexión con el servidor WebSocket se establece
-      console.log(1234);
       socket.on('connect', () => {
         console.log('Conectado al servidor WebSocket');
       });
 
       // Manejar eventos cuando se actualiza la lista de turnos
       socket.on('turnList', (allTurns: Person[]) => {
-        console.log('turnList::', allTurns);
         setTurns([...allTurns]);
       });
       // Manejar eventos cuando se actualiza la lista de turnos
@@ -150,6 +148,11 @@ export const AdminTurnView = () => {
     console.log(789, person);
     socket.emit('unlock', person);
   };
+
+  // const handleTakePreTurn = (id: number) => {
+  //   console.log(789, id);
+  //   // socket.emit('takePreTurn', { id, room });
+  // };
 
   const handleNewTurn = (data: Person) => {
     // Enviar un nuevo turno al servidor
@@ -240,8 +243,9 @@ export const AdminTurnView = () => {
   };
 
   const handleOnTakePreTurn = (person: Person) => {
-    console.log(person);
+    console.log('handleOnTakePreTurn:::', person);
     setPreTurnSelected(person);
+    socket.emit('takePreTurn', { id: person.id, room });
   };
 
   const handleReassign = (person: Person) => {

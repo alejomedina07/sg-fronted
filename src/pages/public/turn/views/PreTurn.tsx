@@ -92,8 +92,8 @@ export const PreTurn = () => {
             </div>
           </CardContent>
           <CardActions>
-            <div className="w-full mt-4 mb-4 flex flex-row items-end justify-center">
-              <Link to="/consultation-turn" className=" hover:underline flex-1">
+            <div className="w-full px-8 mt-4 mb-4 flex flex-row items-end justify-center">
+              <Link to="/consultation-turn" className=" hover:underline">
                 <SgButton
                   variant="outlined"
                   color="primary"
@@ -101,6 +101,7 @@ export const PreTurn = () => {
                   // sending={isLoading}
                 />
               </Link>
+              <span className="flex-1"></span>
               <SgButton
                 variant="contained"
                 color="primary"
