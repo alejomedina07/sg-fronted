@@ -25,10 +25,11 @@ interface ConfigInfoProps {
   turnSelected: Person | undefined;
   handleDeleteConfig: () => void;
   config: any;
+  connected: boolean;
 }
 
 export const ConfigInfo = (props: ConfigInfoProps) => {
-  const { turnSelected, handleDeleteConfig, config } = props;
+  const { turnSelected, handleDeleteConfig, config, connected } = props;
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const { data, isLoading } = useGetCountTurnTypesQuery(isOpen);
@@ -37,6 +38,11 @@ export const ConfigInfo = (props: ConfigInfoProps) => {
     <>
       <div className="flex flex-row items-center justify-between !bg-white p-2">
         <b> {config.roomAppointMent || t('reception')} </b>
+        <span
+          className={`h-4 w-4 rounded-full ${
+            connected ? 'bg-green-500' : 'bg-gray-500'
+          }`}
+        ></span>
         <span>
           {!!config.reception && (
             <SgButton

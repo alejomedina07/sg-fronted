@@ -38,6 +38,7 @@ import { EditAccountPayable } from '../provider/views/EditAccountPayable';
 import { ListTurnView } from '../turn/view/ListTurnView';
 import { FormUpdateProfile } from '../user/views/FormUpdateProfile';
 import { ListAttentionView } from '../turn/view/attention/ListAttentionView';
+import { ListBannerView } from '../banner/views/ListBannerView';
 
 const Application = new ApplicationConst();
 
@@ -80,6 +81,11 @@ export const AdminRoutes = () => {
               path="edit/:appointmentTypeId"
               element={<FormAppointmentType />}
             />
+          )}
+        </Route>
+        <Route path="banner">
+          {validatePermission(Application.PRIVILEGES.bannerList, false) && (
+            <Route path="" element={<ListBannerView />} />
           )}
         </Route>
         <Route path="users">

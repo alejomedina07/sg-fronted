@@ -27,6 +27,22 @@ body {
     background-image: url("/public/images/fondo_1.jpeg");
     background-size: cover;
 }
+
+.bg-banner-turn {
+    /*background: linear-gradient(to bottom, #008054, #ffffff);*/
+    /*background: linear-gradient(to bottom, #008054, #00a65a, #ffffff);*/
+    /*background: linear-gradient(to bottom right, #008054, #ffffff);*/
+    background: linear-gradient(to bottom right, #008054, #00a65a);
+    max-height: 50vh;
+}
+
+.image-30vh {
+    max-height: 40vh;
+    max-width: 100vh;
+    width: auto;
+
+}
+
 /*.bg-header-secondary {*/
 /*    background: #f89b1e;*/
 /*}*/

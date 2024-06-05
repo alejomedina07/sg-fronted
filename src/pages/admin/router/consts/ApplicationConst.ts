@@ -1,6 +1,10 @@
 import { NavItem } from '../../../../components/layout/admin/componets';
 
 const PRIVILEGES = {
+  bannerList: 'banner.list',
+  bannerCreate: 'banner.create',
+  bannerEdit: 'banner.edit',
+  bannerDelete: 'banner.delete',
   userList: 'user.list',
   userCreate: 'user.create',
   userEdit: 'user.edit',
@@ -88,14 +92,14 @@ export class ApplicationConst {
       // Si `permission` es un array de permisos, comprobamos si al menos uno de ellos está presente en `privileges`
       return (
         rol === this.MAIN_ROL ||
-        permission.some((p) => privileges.includes(p)) ||
+        permission.some((p) => privileges?.includes(p)) ||
         (sectionUser && rol === this.USER_ROL)
       );
     } else {
       // Si `permission` es un solo permiso, lo comparamos directamente con `privileges`
       return (
         rol === this.MAIN_ROL ||
-        privileges.includes(permission) ||
+        privileges?.includes(permission) ||
         (sectionUser && rol === this.USER_ROL)
       );
     }

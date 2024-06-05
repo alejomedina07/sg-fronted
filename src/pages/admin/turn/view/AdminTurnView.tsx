@@ -43,6 +43,7 @@ const AdminTurnViewContext = createContext<
 >(undefined);
 
 export const AdminTurnView = () => {
+  const [connected, setConnected] = useState(false);
   const [turns, setTurns] = useState<Person[]>([]);
   const [preTurns, setPreTurns] = useState<Person[]>([]);
   const [turnSelected, setTurnSelected] = useState<Person | undefined>();
@@ -100,8 +101,12 @@ export const AdminTurnView = () => {
       // Manejar eventos cuando la conexión con el servidor WebSocket se establece
       socket.on('connect', () => {
         console.log('Conectado al servidor WebSocket');
+        setConnected(true);
       });
-
+      socket.on('disconnect', () => {
+        console.log('Desconectado del servidor WebSocket');
+        setConnected(false);
+      });
       // Manejar eventos cuando se actualiza la lista de turnos
       socket.on('turnList', (allTurns: Person[]) => {
         setTurns([...allTurns]);
@@ -223,7 +228,7 @@ export const AdminTurnView = () => {
     setConfigAction(data);
   };
 
-  // console.log('turnSelected:::', turnSelected);
+  console.log('turnSelected:::', turns);
 
   const handleFinishTurn = (person: Person) => {
     if (turnsTaken.some((turn: any) => turn.id === person.id))
@@ -271,11 +276,17 @@ export const AdminTurnView = () => {
         setTurnSelected,
       }}
     >
+      {/* <span */}
+      {/*   className={`h-4 w-4 rounded-full flex ${ */}
+      {/*     connected ? 'bg-green-500' : 'bg-gray-500' */}
+      {/*   }`} */}
+      {/* ></span> */}
       {!!config && (
         <ConfigInfo
           handleDeleteConfig={handleDeleteConfig}
           config={config}
           turnSelected={turnSelected}
+          connected={connected}
         />
       )}
 

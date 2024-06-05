@@ -10,12 +10,14 @@ import {
   TableHead,
   Table,
   TableBody,
+  IconButton,
 } from '@mui/material';
-import { Person } from '../../dto/Person';
-import { SgButton } from '../../../../../components/form/button/SgButton';
 import DateFnsManager from '../../../../../services/utils/DateFnsManager';
 import { useGetAttentionQuery } from '../../redux/api/turnApi';
 import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react';
+import CloudSyncIcon from '@mui/icons-material/CloudSync';
+import { ReCreateTurn } from './ReCreateTurn';
 
 const dateManage = new DateFnsManager();
 
@@ -28,8 +30,8 @@ export const ListAttention = (props: ListAttentionProps) => {
   const { isOpen, setIsOpen, turn } = props;
   const { t } = useTranslation();
   const { data, isLoading } = useGetAttentionQuery(turn?.id || 0);
-
-  console.log(1234, turn);
+  const [reCreateTurn, setReCreateTurn] = useState(false);
+  console.log(1234, data);
 
   return (
     <Dialog
@@ -44,8 +46,18 @@ export const ListAttention = (props: ListAttentionProps) => {
         onClose={() => setIsOpen(false)}
       >
         {t('view_turn')}
+        <IconButton onClick={() => setReCreateTurn(true)} aria-label="view">
+          <CloudSyncIcon />
+        </IconButton>
       </SgDialogTitle>
       <DialogContent dividers>
+        {reCreateTurn && (
+          <ReCreateTurn
+            turn={turn}
+            setReCreateTurn={setReCreateTurn}
+            attentions={data?.data}
+          />
+        )}
         <div className="flex flex-row items-center">
           <span className="flex-1 mx-1">
             {t('name')}: <b> {turn.fullName} </b>{' '}
@@ -58,6 +70,7 @@ export const ListAttention = (props: ListAttentionProps) => {
             </b>{' '}
           </span>
         </div>
+
         <div className="flex flex-row items-center">
           <span className="flex-1 mx-1">
             {t('company')}: <b> {turn.company} </b>{' '}
@@ -102,44 +115,40 @@ export const ListAttention = (props: ListAttentionProps) => {
             </TableHead>
             <TableBody>
               {data?.data.map((item: any) => (
-                <>
-                  <TableRow
-                    key={item.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="item">
-                      {item.typeTurn?.name}
-                    </TableCell>
-                    <TableCell align="right">
-                      {item.attentBy
-                        ? item.attentBy?.firstName +
-                          ' ' +
-                          item.attentBy?.lastName
-                        : ''}
-                    </TableCell>
-                    <TableCell align="right">
-                      {item.totalTime || 0} {t('minutes')}{' '}
-                    </TableCell>
+                <TableRow
+                  key={item.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="item">
+                    {item.typeTurn?.name}
+                  </TableCell>
+                  <TableCell align="right">
+                    {item.attentBy
+                      ? item.attentBy?.firstName + ' ' + item.attentBy?.lastName
+                      : ''}
+                  </TableCell>
+                  <TableCell align="right">
+                    {item.totalTime || 0} {t('minutes')}{' '}
+                  </TableCell>
 
-                    <TableCell align="right">
-                      {item.createdAt
-                        ? dateManage.getFormatStandard(
-                            new Date(item.createdAt),
-                            true
-                          )
-                        : ''}
-                    </TableCell>
-                    <TableCell align="right">
-                      {item.finishAt
-                        ? dateManage.getFormatStandard(
-                            new Date(item.finishAt),
-                            true
-                          )
-                        : ''}
-                    </TableCell>
-                    <TableCell align="right">{item.description}</TableCell>
-                  </TableRow>
-                </>
+                  <TableCell align="right">
+                    {item.createdAt
+                      ? dateManage.getFormatStandard(
+                          new Date(item.createdAt),
+                          true
+                        )
+                      : ''}
+                  </TableCell>
+                  <TableCell align="right">
+                    {item.finishAt
+                      ? dateManage.getFormatStandard(
+                          new Date(item.finishAt),
+                          true
+                        )
+                      : ''}
+                  </TableCell>
+                  <TableCell align="right">{item.description}</TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>

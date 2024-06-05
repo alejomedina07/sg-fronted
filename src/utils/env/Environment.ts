@@ -1,11 +1,13 @@
 export class Environment {
   baseUrlApi: string;
+  baseBackendUrl: string;
   basePatch: string;
   baseUrlFront: string;
   socket: { io: string; room: string };
 
   constructor() {
     this.baseUrlApi = import.meta.env.VITE_API_URL;
+    this.baseBackendUrl = import.meta.env.VITE_BACKEND_URL;
     this.basePatch = import.meta.env.VITE_STATIC_PATCH;
     this.baseUrlFront = import.meta.env.VITE_FRONT_URL;
     this.socket = {

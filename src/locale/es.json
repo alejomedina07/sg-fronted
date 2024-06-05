@@ -303,5 +303,7 @@
     "double_turn": "Doble Turno",
     "list_attentions": "Lista de Atenciones",
     "attentions": "Atenciones",
-    "view_attentions": "Ver Atenciones"
+    "view_attentions": "Ver Atenciones",
+    "list_banner": "Lista de banners",
+    "create_banner": "Crear banner"
 }

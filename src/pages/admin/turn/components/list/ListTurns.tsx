@@ -25,6 +25,7 @@ export const ListTurns = (props: ListTurnsProps) => {
   const [filterValue, setFilterValue] = useState('');
   const { t } = useTranslation();
   const validateTakeAttention = (data: any) => {
+    console.log(777);
     if (data.inAttention) return false;
     if (config.reception) return true;
     let valid = false;

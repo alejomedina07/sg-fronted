@@ -8,6 +8,8 @@ import { CallTurnComponent } from '../components/CallTurnComponent';
 import { Environment } from '../../../../utils/env/Environment';
 import { Person } from '../../../admin/turn/dto/Person';
 import { SgToolbar } from '../../../../components/shared/toolbar/SgToolbar';
+import { useGetBannerListQuery } from '../../../admin/banner/redux/api/bannerApi';
+import { SgCarousel } from '../../../../components/utils/Carousel/SgCarousel';
 
 const env = new Environment();
 
@@ -20,6 +22,8 @@ export const MainTurnView = () => {
   const [text, setText] = useState<string>('');
   // const audioRef = useRef<HTMLAudioElement | null>(null);
   const isCallingTurnRef = useRef<boolean>(false);
+
+  const { data: banners } = useGetBannerListQuery(true);
 
   const [speaking, setSpeaking] = useState(false);
   const synth = window.speechSynthesis;
@@ -78,7 +82,7 @@ export const MainTurnView = () => {
 
     // Manejar eventos cuando se actualiza la lista de turnos
     socket.on('turnTakenList', (args: TurnsTaken) => {
-      console.log('turnTakenList::::', args);
+      // console.log('turnTakenList::::', args);
       const { turnTaken, turnsTaken } = args;
       setTurnos(turnsTaken);
       if (turnTaken) {
@@ -112,7 +116,7 @@ export const MainTurnView = () => {
 
       // Manejar eventos cuando se actualiza la lista de turnos
       socket.on('turnTakenList', (args: TurnsTaken) => {
-        console.log('turnTakenList::::', args);
+        // console.log('turnTakenList::::', args);
         const { turnTaken, turnsTaken } = args;
         setTurnos(turnsTaken);
         if (turnTaken) {
@@ -159,12 +163,14 @@ export const MainTurnView = () => {
   }, []);
   return (
     <>
-      <SgToolbar />
+      {/* <SgToolbar /> */}
+      {!!banners?.data ? <SgCarousel data={banners.data} /> : <SgToolbar />}
+
       <div className="p-8">
         <Grid item xs={12} md={8}>
-          <Typography sx={{ mb: 2 }} variant="h4" component="div">
-            Turnos
-          </Typography>
+          {/* <Typography sx={{ mb: 2 }} variant="h4" component="div"> */}
+          {/*   Turnos */}
+          {/* </Typography> */}
           {turnos?.length &&
             turnos
               .slice()

@@ -49,3 +49,6 @@ $ yarn build:staging
 ```
 /templates/esvyda_clinic/emails/consent_form_patient_view.html
 ```
+
+
+https://www.iloveimg.com
